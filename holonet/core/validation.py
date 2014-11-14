@@ -26,7 +26,7 @@ def validate_recipient(params=None, recipient='', sys_exit=False):
             'action': {'action': '%s Domain is not handled by holonet' % settings.REJECT_ACTION}
         },
         'valid_recipient': {
-            'exit_code': settings.EXITCODE_UNKNOWN_DOMAIN,
+            'exit_code': 0,
             'action': {'action': '%s' % settings.ACCEPT_ACTION}
         }
     }

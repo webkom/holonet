@@ -1,0 +1,61 @@
+Received: by luke.abakus.no (Postfix, from userid 1010)
+ id 07CFD200179; Thu, 13 Nov 2014 20:54:22 +0100 (CET)
+X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on luke.abakus.no
+X-Spam-Flag: YES
+X-Spam-Level: **********
+X-Spam-Status: Yes, score=10.8 required=3.0 tests=CK_HELO_GENERIC,
+ DATE_IN_PAST_96_XX, DOS_OUTLOOK_TO_MX, HELO_DYNAMIC_DHCP,
+ RCVD_IN_BL_SPAMCOP_NET,
+ RCVD_IN_BRBL_LASTEXT,RCVD_IN_RP_RNBL,RDNS_NONE autolearn=no version=3.3.2
+X-Spam-Report: * 1.0 CK_HELO_GENERIC Relay used name indicative of a Dynamic
+ Pool or *      Generic rPTR
+ *  2.1 DATE_IN_PAST_96_XX Date: is 96 hours or more before Received: date
+ *  1.2 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?186.121.116.103>]
+ *  1.3 RCVD_IN_RP_RNBL RBL: Relay in RNBL,
+ *      https://senderscore.org/blacklistlookup/
+ *      [186.121.116.103 listed in bl.score.senderscore.com]
+ *  1.6 RCVD_IN_BRBL_LASTEXT RBL: RCVD_IN_BRBL_LASTEXT
+ *      [186.121.116.103 listed in bb.barracudacentral.org]
+ *  1.3 RDNS_NONE Delivered to internal network by a host with no rDNS
+ *  0.8 HELO_DYNAMIC_DHCP Relay HELO'd using suspicious hostname (DHCP)
+ *  1.4 DOS_OUTLOOK_TO_MX Delivered direct to MX with Outlook headers
+Received: from adsl-pool117-103.metrotel.net.co (unknown [186.121.116.103])
+ by luke.abakus.no (Postfix) with ESMTP id F27622000D5
+ for <frequencyangelou@abakus.no>; Thu, 13 Nov 2014 20:54:21 +0100 (CET)
+From: <a.menalo@jadrolinija.hr>
+To: <frequencyangelou@abakus.no>
+Subject: ***** SPAM 10.8 :: Scanned by Abakus Mail Service ***** Staff Wanted
+Date: 1 Nov 2014 05:27:42 -0600
+Message-ID: <001301cff5ca$061517f5$42eaba96$@jadrolinija.hr>
+MIME-Version: 1.0
+Content-Type: text/plain;
+	charset="iso-8859-14"
+Content-Transfer-Encoding: 8bit
+X-Mailer: Microsoft Office Outlook 12.0
+Thread-Index: Acun0eg7g361cxyhun0eg7g361cxyh==
+Content-Language: en
+x-cr-hashedpuzzle: 2D4= 0eg7 g361 cxyh un0e g7g3 61cx yhun 0eg7 g361 cxyh un0e
+ g7g3 61cx yhun 0eg7; 1; g361cxyhun0eg7g361cxyhun0eg7g361cxyhun0eg7g361cx;
+ Sosha1_v1; 7; {EAA3DE3F-5E97-42BF-F68B-6A0BC217EAA3};
+ ZQB3AGUAZg0eg7g361cxyhun0eg7g361cxyhun0eg7g361cx; 1 Nov 2014 05:27:42 -0600;
+ yhun0eg7g361cxyh
+x-cr-puzzleid: {EAA3DE3F-5E97-42BF-F68B-6A0BC217EAA3}
+X-Spam-Prev-Subject: Staff Wanted
+
+Good day!
+
+We considered your resume to be very attractive and we thought the vacant position in our company could be interesting for you.
+
+Our firm specializes in consultation services in the matter of bookkeeping and business administration.
+We cooperate with different countries and currently we have many clients in Europe.
+Due to this fact, we need to increase the number of our destination representatives' regular staff.
+
+In their duties will be included the document and payment control of our clients.
+Part-time and full-time employment are both currently important.
+We offer a flat wage from 2000 EUR up to 4,000 EUR per month.
+
+If you are interested in our offer, mail to us your answer on nealy@europejobdays.com,and we will send you an extensive information as soon as possible.
+
+Respectively submitted
+Personnel department

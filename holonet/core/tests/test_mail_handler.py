@@ -50,3 +50,9 @@ class MailHandlerTestCase(TestCase):
             handler_recipients += args[5:]
 
         self.assertListEqual(handler_recipients, mail_mapping.recipients)
+
+    def test_spam_handling(self):
+        file_path = '%s/email_spam.txt' % os.path.dirname(__file__)
+        email_file = open(file_path, 'r')
+        msg = email.message_from_file(email_file)
+        self.assertEqual(handle_mail(msg, 'eirik@sylliaas.no', 'testlist1@test.holonet.no'), True)

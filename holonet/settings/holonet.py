@@ -23,3 +23,9 @@ DEFAULT_FROM_EMAIL = SERVER_EMAIL
 RESTRICTED_PREFIX = 'restricted'
 
 EMAIL_BACKEND = 'holonet.backends.sendmail.EmailBackend'
+
+ELASTICSEARCH = [
+    {'host': '127.0.0.1', 'port': 9200, 'use_ssl': False},
+]
+
+INDEX_NAME = 'holonet'

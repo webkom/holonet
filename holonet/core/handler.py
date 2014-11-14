@@ -7,6 +7,7 @@ from django.conf import settings
 from .message import HolonetEmailMessage
 from .validation import validate_recipient
 from holonet.app.mappings.models import MailingList
+from holonet.core.elasticsearch import store_spam
 
 
 def handle_mail(msg, sender, recipient):
@@ -24,18 +25,21 @@ def handle_mail(msg, sender, recipient):
     if prefix == settings.SERVER_EMAIL.split('@')[0]:
         raise NotImplemented('Bounce handling not implemented')
 
-    raise NotImplemented('Need to implement spam handling')
-
     try:
-        recipients = MailingList.objects.get(prefix=splitted_recipient[0]).recipients
+        recipients = MailingList.objects.get(prefix=prefix).recipients
     except MailingList.DoesNotExist:
         sys.exit(settings.EXITCODE_UNKNOWN_RECIPIENT)
 
     message = HolonetEmailMessage(msg, recipients)
 
+    spam_flag = message.get('X-Spam-Flag', False)
+    if spam_flag == 'YES':
+        return store_spam(message)
+
     if not settings.TESTING:
         message.send()
     else:
+        # Use holonet backend in testing, not locmem
         from holonet.backends.sendmail import EmailBackend
         backend = EmailBackend()
         backend.send_messages([message])

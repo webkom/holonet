@@ -25,6 +25,12 @@ class HolonetEmailMessage(object):
     def __contains__(self, item):
         return item in self.msg
 
+    def get(self, key, default=None):
+        if key in self:
+            return self[key]
+        else:
+            return default
+
     def recipients(self):
         return self.list_recipients
 
@@ -49,3 +55,14 @@ class HolonetEmailMessage(object):
         g = BytesGenerator(fp, mangle_from_=False, policy=policy)
         g.flatten(self.msg, unixfrom=unixfrom, linesep=linesep)
         return fp.getvalue()
+
+    def index(self):
+        body = {
+            'source': self.msg.as_string(),
+            'X-List-Recipients': self.recipients()
+        }
+
+        for key in self.keys():
+            body[key] = self[key]
+
+        return body
