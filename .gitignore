@@ -59,3 +59,4 @@ target/
 venv/
 
 holonet/settings/local.py
+database.db
