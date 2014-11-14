@@ -1,6 +1,6 @@
 Abakus Mail Delivery System
 ===========================
-## Holonet
+## Holonet [![Build status](https://ci.frigg.io/badges/webkom/holonet/)](https://ci.frigg.io/webkom/holonet/last/)
 ### Supported Features
 * Index spam in Elasticsearch
 * Policy Service
