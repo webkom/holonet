@@ -1,6 +1,9 @@
 # -*- coding: utf8 -*-
 
 from io import BytesIO
+import time
+
+from django.utils import timezone
 
 
 class HolonetEmailMessage(object):
@@ -59,7 +62,8 @@ class HolonetEmailMessage(object):
     def index(self):
         body = {
             'source': self.msg.as_string(),
-            'X-List-Recipients': self.recipients()
+            'X-List-Recipients': self.recipients(),
+            '@timestamp': int(time.mktime(timezone.now().timetuple()) * 1000)
         }
 
         for key in self.keys():
