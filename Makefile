@@ -4,10 +4,39 @@ help:
 	@echo 'venv       - create virtualenv venv-folder'
 	@echo 'production - deploy production'
 
-dev:
+UGLIFY     = node_modules/.bin/uglifyjs
+BROWSERIFY = node_modules/.bin/browserify
+WATCHIFY   = node_modules/.bin/watchify
+
+BUILD_JS    = holonet/dashboad/static/js/index.js
+JS_MAIN   = holonet/dashboad/static/js/holonet/app.js
+
+JS         = $(shell find holonet/dashboad/static/js/holonet/ -name "*.js")
+
+TRANSFORMS = -t [ reactify --harmony ]
+
+$(BUILD_JS): $(JS)
+ifneq ($(NODE_ENV), development)
+	$(BROWSERIFY) $(TRANSFORMS) $(JS_MAIN) | $(UGLIFY) > $(BUILD_JS)
+else
+	$(BROWSERIFY) $(TRANSFORMS) $(JS_MAIN) > $(BUILD_JS)
+endif
+
+clean:
+	rm -f $(BUILD_JS)
+
+init:
+	npm install
+
+frontend: $(BUILD_JS)
+
+watchify:
+	$(WATCHIFY) $(TRANSFORMS) $(JS_MAIN) -v -o $(BUILD_JS)
+
+dev: init $(BUILD_JS)
 	pip install -r requirements/dev.txt --upgrade
 
-prod:
+prod: init $(BUILD_JS)
 	pip install -r requirements/prod.txt --upgrade
 
 venv:

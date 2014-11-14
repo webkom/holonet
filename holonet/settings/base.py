@@ -42,10 +42,14 @@ INSTALLED_APPS = (
 
     'django_extensions',
     'omnibus',
+    'crispy_forms',
 
     'holonet.core',
-    'holonet.app.mappings',
+    'holonet.mappings',
+    'holonet.dashboad',
 )
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -89,12 +93,19 @@ USE_L10N = True
 
 USE_TZ = True
 
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.7/howto/static-files/
+MEDIA_ROOT = os.path.join(BASE_DIR, 'files', 'media')
+MEDIA_URL = '/media/'
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'files', 'static')
 STATIC_URL = '/static/'
+
 
 OMNIBUS_ENDPOINT_SCHEME = 'http'
 OMNIBUS_WEBAPP_FACTORY = 'omnibus.factories.sockjs_webapp_factory'
 OMNIBUS_CONNECTION_FACTORY = 'omnibus.factories.sockjs_connection_factory'
+OMNIBUS_AUTHENTICATOR_FACTORY = 'omnibus.factories.userauthenticator_factory'
+
+WEBSOCKET_CHANNEL = 'holonet'

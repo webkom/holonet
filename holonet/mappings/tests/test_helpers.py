@@ -2,7 +2,7 @@
 
 from django.test import TestCase
 
-from holonet.app.mappings.helpers import is_prefix_valid
+from holonet.mappings.helpers import is_prefix_valid
 
 
 class HelperTestCase(TestCase):

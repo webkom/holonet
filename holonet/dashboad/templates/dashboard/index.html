@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block styles %}
+    <link href="{% static 'css/index.css' %}" rel="stylesheet">
+    <link href="{% static 'css/animate.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{% static 'omnibus/omnibus.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'omnibus/sockjs.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap-growl.min.js' %}"></script>
+
+    <script type="text/javascript">
+        window.endpoint = '{{ OMNIBUS_ENDPOINT }}';
+        window.auth_token = '{{ OMNIBUS_AUTH_TOKEN }}';
+    </script>
+
+    <script type="text/javascript" src="{% static 'js/index.js' %}"></script>
+{% endblock %}
+
+
+{% block body %}
+
+    <div id="app"></div>
+
+{% endblock %}

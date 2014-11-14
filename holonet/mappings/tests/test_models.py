@@ -3,7 +3,7 @@
 from django.test import TestCase
 from django.db.utils import IntegrityError
 
-from holonet.app.mappings.models import MailingList
+from holonet.mappings.models import MailingList
 
 
 class ModelsTestCase(TestCase):

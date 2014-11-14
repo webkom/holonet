@@ -4,7 +4,7 @@ import sys
 
 from django.conf import settings
 
-from holonet.app.mappings.helpers import is_prefix_valid
+from holonet.mappings.helpers import is_prefix_valid
 
 
 def validate_recipient(params=None, recipient='', sys_exit=False):

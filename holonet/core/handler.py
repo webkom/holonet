@@ -6,7 +6,8 @@ from django.conf import settings
 
 from .message import HolonetEmailMessage
 from .validation import validate_recipient
-from holonet.app.mappings.models import MailingList
+from .notify import notify_spam
+from holonet.mappings.models import MailingList
 from holonet.core.elasticsearch import store_spam
 
 
@@ -34,6 +35,7 @@ def handle_mail(msg, sender, recipient):
 
     spam_flag = message.get('X-Spam-Flag', False)
     if spam_flag == 'YES':
+        notify_spam(message)
         return store_spam(message)
 
     if not settings.TESTING:

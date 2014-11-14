@@ -15,5 +15,6 @@ django-filter
 django-oauth-toolkit
 django-omnibus
 sockjs-tornado
+django-crispy-forms
 
 elasticsearch>=1.0.0,<2.0.0

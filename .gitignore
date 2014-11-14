@@ -60,3 +60,5 @@ venv/
 
 holonet/settings/local.py
 database.db
+
+node_modules/
