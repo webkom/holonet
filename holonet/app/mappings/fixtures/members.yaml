@@ -1,0 +1,20 @@
+- model: mappings.Member
+  pk: 1
+  fields:
+    mailing_list: 1
+    address: testuser1@holonet.no
+- model: mappings.Member
+  pk: 2
+  fields:
+    mailing_list: 1
+    address: testuser2@holonet.no
+- model: mappings.Member
+  pk: 3
+  fields:
+    mailing_list: 1
+    address: testuser3@holonet.no
+- model: mappings.Member
+  pk: 4
+  fields:
+    mailing_list: 2
+    address: testuser4@holonet.no

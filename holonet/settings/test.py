@@ -1,8 +1,5 @@
 # -*- coding: utf8 -*-
 
 MASTER_DOMAINS = [
-    'test.abakus.no',
-    'abakus.no'
+    'test.holonet.no'
 ]
-
-SERVER_EMAIL = 'bounce@abakus.no'

@@ -49,6 +49,10 @@ class EmailBackend(BaseEmailBackend):
             return False
 
     def _sendmail(self, args, msg):
-        process = subprocess.Popen(args, stdin=subprocess.PIPE, close_fds=True)
-        process.stdin.write(msg.as_bytes(linesep='\r\n'))
-        process.stdin.close()
+        if not settings.TESTING:
+            process = subprocess.Popen(args, stdin=subprocess.PIPE, close_fds=True)
+            process.stdin.write(msg.as_bytes(linesep='\r\n'))
+            process.stdin.close()
+        else:
+            from django.core import mail
+            mail.outbox.append({'message': msg, 'args': args})

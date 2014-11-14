@@ -1,27 +1,52 @@
 # -*- coding: utf8 -*-
 
+import os
 import email
+import math
 
 from django.test import TestCase
+from django.conf import settings
+from django.core import mail
 
 from holonet.core.handler import handle_mail
+from holonet.app.mappings.models import MailingList
 
 
 class MailHandlerTestCase(TestCase):
+    fixtures = ['mailing_lists.yaml', 'members.yaml']
 
-    def test_mail_handler(self):
-        res = handle_mail(email.message_from_string("""From eirik@sylliaas.no  Thu Nov 13 17:47:20 2014
-Return-Path: <eirik@sylliaas.no>
-X-Original-To: eirik@test.abakus.no
-From: Eirik Martiniussen Sylliaas <eirik@sylliaas.no>
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Subject: test
-Message-Id: <2901C19D-D44B-4BD8-B0F1-7E9BC283CD93@sylliaas.no>
-Date: Thu, 13 Nov 2014 17:15:27 +0100
-To: eirik@test.abakus.no
-Mime-Version: 1.0 (Mac OS X Mail 8.0 \(1990.1\))
-X-Mailer: Apple Mail (2.1990.1)
+    def setUp(self):
+        file_path = '%s/email.txt' % os.path.dirname(__file__)
+        email_file = open(file_path, 'r')
+        self.message = email.message_from_file(email_file)
 
-tetetete
-"""), 'eirik@sylliaas.no', 'eirik@test.abakus.no')
+    def test_handle_email_unknown_prefix(self):
+        with self.assertRaises(SystemExit) as cm:
+            handle_mail(self.message, 'eirik@sylliaas.no', 'test@test.holonet.no')
+
+        self.assertEqual(cm.exception.code, settings.EXITCODE_UNKNOWN_RECIPIENT)
+
+    def test_handle_email_invalid_domain(self):
+        with self.assertRaises(SystemExit) as cm:
+            handle_mail(self.message, 'eirik@sylliaas.no', 'testlist1@holonetinvalid.no')
+
+        self.assertEqual(cm.exception.code, settings.EXITCODE_UNKNOWN_DOMAIN)
+
+    def test_valid_handler(self):
+        mail_mapping = MailingList.objects.get(pk=1)
+        for i in range(3, 300):
+            mail_mapping.members.create(address='testlist%s@%s' % (i, settings.MASTER_DOMAINS[0]))
+
+        handle_mail(self.message, 'eirik@sylliaas.no', 'testlist1@test.holonet.no')
+
+        recipient_count = mail_mapping.members.count()
+        batches = math.ceil(recipient_count/settings.SENDMAIL_BATCH_LENGTH)
+
+        self.assertEqual(len(mail.outbox), batches)
+
+        handler_recipients = []
+        for message in mail.outbox:
+            args = message['args']
+            handler_recipients += args[5:]
+
+        self.assertListEqual(handler_recipients, mail_mapping.recipients)

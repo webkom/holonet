@@ -10,6 +10,9 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -38,8 +41,10 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'django_extensions',
+    'omnibus',
 
-    'holonet.core'
+    'holonet.core',
+    'holonet.app.mappings',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -50,6 +55,10 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = TEMPLATE_CONTEXT_PROCESSORS + (
+    'omnibus.context_processors.omnibus',
 )
 
 ROOT_URLCONF = 'holonet.urls'
@@ -85,3 +94,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+
+OMNIBUS_ENDPOINT_SCHEME = 'http'
+OMNIBUS_WEBAPP_FACTORY = 'omnibus.factories.sockjs_webapp_factory'
+OMNIBUS_CONNECTION_FACTORY = 'omnibus.factories.sockjs_connection_factory'

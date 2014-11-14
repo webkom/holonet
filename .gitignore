@@ -57,3 +57,5 @@ target/
 .idea/
 
 venv/
+
+holonet/settings/local.py

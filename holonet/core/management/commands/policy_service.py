@@ -7,7 +7,8 @@ import signal
 import time
 
 from django.core.management.base import BaseCommand
-from django.conf import settings
+
+from holonet.core.validation import validate_recipient
 
 
 class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
@@ -15,37 +16,8 @@ class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
 
 
 class HolonetAccessPolicyHandler(object):
-    def consider(self, params, test_allowed_prefix=None):
-        """Consider a set of params sent by postfix and
-           see if we want to hadle mail for the address"""
-
-        if 'recipient' not in params:
-            return {'action': '%s No recipient listed' % settings.REJECT_ACTION}
-
-        recipient = params["recipient"]
-        splitted = recipient.split('@')
-
-        if len(splitted) < 2:
-            return {'action': '%s Address incomplete' % settings.REJECT_ACTION}
-
-        prefix, domain = splitted
-
-        if domain in settings.MASTER_DOMAINS:
-
-            def validate_prefix(prefix):
-                # This is used for testing
-                if test_allowed_prefix:
-                    return prefix in test_allowed_prefix
-                else:
-                    raise NotImplementedError('Prefix system not implemented.')
-
-            if validate_prefix(prefix):
-                return {'action': '%s' % settings.ACCEPT_ACTION}
-            else:
-                return {'action': '%s Address does not exist' % settings.REJECT_ACTION}
-
-        else:
-                return {'action': '%s Domain is not handled by holonet' % settings.REJECT_ACTION}
+    def consider(self, params):
+        return validate_recipient(params=params)
 
 
 class PostfixAccessPolicyHandler(socketserver.BaseRequestHandler, HolonetAccessPolicyHandler):

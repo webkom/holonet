@@ -20,4 +20,6 @@ EMAIL_SUBJECT_PREFIX = u'[%s] ' % 'Holonet'
 SERVER_EMAIL = 'bounce@holonet.no'
 DEFAULT_FROM_EMAIL = SERVER_EMAIL
 
+RESTRICTED_PREFIX = 'restricted'
+
 EMAIL_BACKEND = 'holonet.backends.sendmail.EmailBackend'

@@ -1,0 +1,12 @@
+- model: mappings.MailingList
+  pk: 1
+  fields:
+    prefix: 'testlist1'
+- model: mappings.MailingList
+  pk: 2
+  fields:
+    prefix: 'testlist2'
+- model: mappings.MailingList
+  pk: 3
+  fields:
+    prefix: 'testlist3'

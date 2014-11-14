@@ -13,5 +13,7 @@ django-secure
 django-autoslug
 django-filter
 django-oauth-toolkit
+django-omnibus
+sockjs-tornado
 
 elasticsearch>=1.0.0,<2.0.0
