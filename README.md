@@ -1,4 +1,1 @@
-Holonet
-=======
-
 Abakus Mail Service
