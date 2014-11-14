@@ -7,7 +7,7 @@ Abakus Mail Delivery System
 * Handle mail using pipe
 
 ### Planned Features
-* Expose mailinglist api (Create / Edit / Delete mappings using a json REST API.)
+* Create a mailinglist api (Create / Edit / Delete mappings using a json REST API.)
 * Store statistics in Elasticsearch
 * Stats frontend
 * Send resend messages marked bounce and spam
