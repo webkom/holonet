@@ -9,7 +9,7 @@ from .validators import validate_local_part
 
 class MailingList(models.Model):
     prefix = models.CharField(max_length=64, verbose_name=_('prefix'),
-                              validators=[validate_local_part], unique=True)
+                              validators=[validate_local_part], unique=True, db_index=True)
 
     def __str__(self):
         return '%s@%s' % (self.prefix, settings.MASTER_DOMAINS[0])
