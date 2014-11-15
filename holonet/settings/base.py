@@ -62,7 +62,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = TEMPLATE_CONTEXT_PROCESSORS + (
-    'omnibus.context_processors.omnibus',
+    'holonet.core.context_processors.omnibus',
 )
 
 ROOT_URLCONF = 'holonet.urls'
