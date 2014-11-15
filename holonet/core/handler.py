@@ -34,8 +34,11 @@ def handle_mail(msg, sender, recipient):
 
     spam_flag = message.get('X-Spam-Flag', False)
     if spam_flag == 'YES':
-        index_spam.delay(message)
-        send_spam_notification.delay(message)
+        try:
+            index_spam.delay(message)
+            send_spam_notification.delay(message)
+        except OSError:
+            pass
         return True
 
     if not settings.TESTING:

@@ -11,7 +11,6 @@ def notify_spam(message):
     body_message = 'Holonet received a spam mail.'
 
     from_address = message.get('From')
-    print(from_address)
     if from_address:
         body_message = escape('Mail from %s was marked as spam.' % (from_address, ))
 
