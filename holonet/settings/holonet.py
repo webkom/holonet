@@ -29,3 +29,5 @@ ELASTICSEARCH = [
 ]
 
 INDEX_NAME = 'holonet'
+
+BROKER_URL = 'amqp://guest:guest@localhost:5672/'

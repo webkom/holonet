@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'omnibus',
     'crispy_forms',
+    'djcelery',
 
     'holonet.core',
     'holonet.mappings',
@@ -109,3 +110,6 @@ OMNIBUS_CONNECTION_FACTORY = 'omnibus.factories.sockjs_connection_factory'
 OMNIBUS_AUTHENTICATOR_FACTORY = 'omnibus.factories.userauthenticator_factory'
 
 WEBSOCKET_CHANNEL = 'holonet'
+
+import djcelery
+djcelery.setup_loader()
