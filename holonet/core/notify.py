@@ -4,14 +4,16 @@ from omnibus.api import publish
 from omnibus.exceptions import OmnibusDataException, OmnibusPublisherException
 
 from django.conf import settings
+from django.utils.html import escape
 
 
 def notify_spam(message):
     body_message = 'Holonet received a spam mail.'
 
     from_address = message.get('From')
+    print(from_address)
     if from_address:
-        body_message = 'Mail from {sender} was marked as spam.'.format(sender=from_address)
+        body_message = escape('Mail from %s was marked as spam.' % (from_address, ))
 
     try:
         publish(
