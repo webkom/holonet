@@ -1,20 +1,20 @@
-- model: mappings.Member
+- model: mappings.Recipient
   pk: 1
   fields:
-    mailing_list: 1
     address: testuser1@holonet.no
-- model: mappings.Member
+    tag: 1
+- model: mappings.Recipient
   pk: 2
   fields:
-    mailing_list: 1
     address: testuser2@holonet.no
-- model: mappings.Member
+    tag: 2
+- model: mappings.Recipient
   pk: 3
   fields:
-    mailing_list: 1
     address: testuser3@holonet.no
-- model: mappings.Member
+    tag: 3
+- model: mappings.Recipient
   pk: 4
   fields:
-    mailing_list: 2
     address: testuser4@holonet.no
+    tag: 4

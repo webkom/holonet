@@ -113,3 +113,8 @@ WEBSOCKET_CHANNEL = 'holonet'
 
 import djcelery
 djcelery.setup_loader()
+
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+CELERY_RESULT_BACKEND = 'djcelery.backends.database.DatabaseBackend'
+CELERY_TRACK_STARTED = True
+CELERY_SEND_EVENTS = True

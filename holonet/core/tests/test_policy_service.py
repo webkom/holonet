@@ -7,7 +7,7 @@ from holonet.core.management.commands.policy_service import HolonetAccessPolicyH
 
 
 class PolicyServiceTestCase(TestCase):
-    fixtures = ['mailing_lists.yaml', 'members.yaml']
+    fixtures = ['mailing_lists.yaml', 'recipients.yaml']
 
     def setUp(self):
         self.policy_service = HolonetAccessPolicyHandler()

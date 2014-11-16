@@ -9,11 +9,11 @@ from django.conf import settings
 from django.core import mail
 
 from holonet.core.handler import handle_mail
-from holonet.mappings.models import MailingList
+from holonet.mappings.models import MailingList, Recipient
 
 
 class MailHandlerTestCase(TestCase):
-    fixtures = ['mailing_lists.yaml', 'members.yaml']
+    fixtures = ['mailing_lists.yaml', 'recipients.yaml']
 
     def setUp(self):
         file_path = '%s/email.txt' % os.path.dirname(__file__)
@@ -34,12 +34,15 @@ class MailHandlerTestCase(TestCase):
 
     def test_valid_handler(self):
         mail_mapping = MailingList.objects.get(pk=1)
-        for i in range(3, 300):
-            mail_mapping.members.create(address='testlist%s@%s' % (i, settings.MASTER_DOMAINS[0]))
+        for i in range(5, 300):
+            mail_mapping.recipient_list.create(
+                address='testlist%s@%s' % (i, settings.MASTER_DOMAINS[0]),
+                tag=i
+            )
 
         handle_mail(self.message, 'eirik@sylliaas.no', 'testlist1@test.holonet.no')
 
-        recipient_count = mail_mapping.members.count()
+        recipient_count = mail_mapping.recipient_list.count()
         batches = math.ceil(recipient_count/settings.SENDMAIL_BATCH_LENGTH)
 
         self.assertEqual(len(mail.outbox), batches)

@@ -10,9 +10,10 @@ from django.utils.html import escape
 def notify_spam(message):
     body_message = 'Holonet received a spam mail.'
 
-    from_address = message.get('From')
-    if from_address:
-        body_message = escape('Mail from %s was marked as spam.' % (from_address, ))
+    if message:
+        from_address = message.get('From')
+        if from_address:
+            body_message = escape('Mail from %s was marked as spam.' % (from_address, ))
 
     try:
         publish(

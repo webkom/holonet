@@ -12,5 +12,5 @@ def index_spam(message):
 
 
 @task()
-def send_spam_notification(message):
+def send_spam_notification(message=None):
     notify_spam(message)

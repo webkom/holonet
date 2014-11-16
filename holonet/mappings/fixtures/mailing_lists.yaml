@@ -2,10 +2,12 @@
   pk: 1
   fields:
     prefix: 'testlist1'
+    recipient_list: [1,2,3]
 - model: mappings.MailingList
   pk: 2
   fields:
     prefix: 'testlist2'
+    recipient_list: [4]
 - model: mappings.MailingList
   pk: 3
   fields:

@@ -6,7 +6,7 @@ from holonet.mappings.helpers import is_prefix_valid
 
 
 class HelperTestCase(TestCase):
-    fixtures = ['mailing_lists.yaml', 'members.yaml']
+    fixtures = ['mailing_lists.yaml', 'recipients.yaml']
 
     def test_is_prefix_valid(self):
         self.assertEqual(is_prefix_valid('testlist1'), True)
