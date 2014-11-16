@@ -4,9 +4,11 @@ import sys
 
 from django.conf import settings
 
+from .blacklist import is_blacklisted
 from .message import HolonetEmailMessage
 from .validation import validate_recipient
-from holonet.core.tasks import index_spam, send_spam_notification
+from holonet.core.tasks import index_spam, send_spam_notification, index_blacklisted_mail, \
+    send_blacklist_notification
 from holonet.mappings.models import MailingList
 
 
@@ -37,6 +39,14 @@ def handle_mail(msg, sender, recipient):
         try:
             index_spam.delay(message)
             send_spam_notification.delay(message)
+        except OSError:
+            pass
+        return True
+
+    if is_blacklisted(sender):
+        try:
+            index_blacklisted_mail.delay(message)
+            send_blacklist_notification.delay(message)
         except OSError:
             pass
         return True

@@ -1,6 +1,7 @@
 # -*- coding: utf8 -*-
 
 from elasticsearch import Elasticsearch
+from elasticsearch import ConnectionError
 
 from django.conf import settings
 
@@ -24,6 +25,11 @@ def index_check():
                         "_ttl": {
                             "enabled": True
                         }
+                    },
+                    "blacklisted": {
+                        "_ttl": {
+                            "enabled": True
+                        }
                     }
                 }
             }
@@ -31,7 +37,21 @@ def index_check():
 
 
 def store_spam(message):
-    index_check()
-    connection = get_connection()
-    connection.create(settings.INDEX_NAME, 'spam', message.index(), params={'_ttl': '52w'})
-    return True
+    try:
+        index_check()
+        connection = get_connection()
+        connection.create(settings.INDEX_NAME, 'spam', message.index(), params={'_ttl': '52w'})
+        return True
+    except ConnectionError:
+        return False
+
+
+def store_blacklisted_mail(message):
+    try:
+        index_check()
+        connection = get_connection()
+        connection.create(settings.INDEX_NAME, 'blacklisted', message.index(),
+                          params={'_ttl': '52w'})
+        return True
+    except ConnectionError:
+        return False

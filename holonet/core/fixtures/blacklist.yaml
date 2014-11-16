@@ -1,0 +1,17 @@
+- model: core.SenderBlacklist
+  pk: 1
+  fields:
+    sender: testblacklist1@abakus.no
+- model: core.SenderBlacklist
+  pk: 2
+  fields:
+    sender: testblacklist2@holonet.no
+- model: core.SenderBlacklist
+  pk: 3
+  fields:
+    sender: testblacklist3@holonet.no
+
+- model: core.DomainBlacklist
+  pk: 1
+  fields:
+    domain: blacklisted.no

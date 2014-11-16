@@ -9,7 +9,7 @@ from django.conf import settings
 from django.core import mail
 
 from holonet.core.handler import handle_mail
-from holonet.mappings.models import MailingList, Recipient
+from holonet.mappings.models import MailingList
 
 
 class MailHandlerTestCase(TestCase):

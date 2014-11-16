@@ -1,7 +1,6 @@
 # -*- coding: utf8 -*-
 
 from django.test import TestCase
-from django.db.utils import IntegrityError
 
 from holonet.mappings.models import MailingList
 
