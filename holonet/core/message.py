@@ -4,16 +4,31 @@ from io import BytesIO
 import time
 
 from django.utils import timezone
+from django.conf import settings
 
 
 class HolonetEmailMessage(object):
 
     encoding = None
 
-    def __init__(self, msg, list_recipients, connection=None):
+    def __init__(self, msg, list_recipients, list_name=None, connection=None):
         self.msg = msg
         self.list_recipients = list_recipients
         self.connection = connection
+
+        headers = {
+            'Precedence': 'List',
+            'X-Mail-Processor': 'HOLONET',
+            'List-Unsubscribe': settings.UNSUBSCRIBE_LINK
+        }
+
+        if list_name:
+            headers['List-Id'] = list_name
+            headers['List-Post'] = '<mailto:%s@%s>' % (list_name, settings.MASTER_DOMAINS[0])
+
+        for header in headers.keys():
+            self.msg.add_header(header, headers[header])
+
         super(HolonetEmailMessage, self).__init__()
 
     def __getitem__(self, item):

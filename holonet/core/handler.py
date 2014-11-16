@@ -32,7 +32,7 @@ def handle_mail(msg, sender, recipient):
     except MailingList.DoesNotExist:
         sys.exit(settings.EXITCODE_UNKNOWN_RECIPIENT)
 
-    message = HolonetEmailMessage(msg, recipients)
+    message = HolonetEmailMessage(msg, recipients, list_name=prefix)
 
     spam_flag = message.get('X-Spam-Flag', False)
     if spam_flag == 'YES':

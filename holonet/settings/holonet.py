@@ -22,6 +22,8 @@ DEFAULT_FROM_EMAIL = SERVER_EMAIL
 
 RESTRICTED_PREFIX = 'restricted'
 
+UNSUBSCRIBE_LINK = '<http://holonet.no> - go to your profile and unregister'
+
 EMAIL_BACKEND = 'holonet.backends.sendmail.EmailBackend'
 
 ELASTICSEARCH = [
