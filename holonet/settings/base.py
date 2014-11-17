@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
-from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS, AUTHENTICATION_BACKENDS
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -44,10 +44,15 @@ INSTALLED_APPS = (
     'omnibus',
     'crispy_forms',
     'djcelery',
+    'oauth2_provider',
+    'rest_framework',
+    'corsheaders',
+
 
     'holonet.core',
     'holonet.mappings',
     'holonet.dashboad',
+    'holonet.api'
 )
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
@@ -57,19 +62,28 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'oauth2_provider.middleware.OAuth2TokenMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = TEMPLATE_CONTEXT_PROCESSORS + (
     'holonet.core.context_processors.omnibus',
 )
 
+AUTHENTICATION_BACKENDS = AUTHENTICATION_BACKENDS + (
+    'oauth2_provider.backends.OAuth2Backend',
+)
+
+OAUTH2_PROVIDER_APPLICATION_MODEL = 'api.APIApplication'
+
 ROOT_URLCONF = 'holonet.urls'
 
 WSGI_APPLICATION = 'holonet.wsgi.application'
 
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
@@ -118,3 +132,11 @@ CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 CELERY_RESULT_BACKEND = 'djcelery.backends.database.DatabaseBackend'
 CELERY_TRACK_STARTED = True
 CELERY_SEND_EVENTS = True
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.ext.rest_framework.OAuth2Authentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+}

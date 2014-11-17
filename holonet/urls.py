@@ -8,4 +8,7 @@ urlpatterns = patterns(
     url(r'^logout/$', 'django.contrib.auth.views.logout',
         {'next_page': 'holonet.dashboad.views.index'}),
     url(r'^admin/', include(admin.site.urls)),
+
+    url(r'^oauth/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+    url(r'^', include('holonet.api.urls'))
 )
