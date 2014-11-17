@@ -10,6 +10,7 @@ class ModelsTestCase(TestCase):
 
     def test_invalid_mail(self):
         self.assertFalse(is_blacklisted('invalidmail.com'))
+        self.assertFalse(is_blacklisted('unknown@'))
 
     def test_valid_mail_no_blacklist(self):
         self.assertFalse(is_blacklisted('valid_mail@holonet.no'))

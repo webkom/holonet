@@ -44,6 +44,8 @@ def store_spam(message):
         return True
     except ConnectionError:
         return False
+    except OSError:
+        return False
 
 
 def store_blacklisted_mail(message):
@@ -54,4 +56,6 @@ def store_blacklisted_mail(message):
                           params={'_ttl': '52w'})
         return True
     except ConnectionError:
+        return False
+    except OSError:
         return False

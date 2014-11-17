@@ -2,16 +2,10 @@ django>=1.7,<1.8
 ipython
 
 psycopg2
-markdown
-unicode-slugify
 pyyaml
 
 djangorestframework
-django-basis
 django-extensions
-django-secure
-django-autoslug
-django-filter
 django-oauth-toolkit
 django-omnibus
 sockjs-tornado
