@@ -1,0 +1,5 @@
+- model: api.Token
+  pk: 1
+  fields:
+    token: secret_token
+    application: 1

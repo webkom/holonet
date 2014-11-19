@@ -44,15 +44,15 @@ INSTALLED_APPS = (
     'omnibus',
     'crispy_forms',
     'djcelery',
-    'oauth2_provider',
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
 
 
     'holonet.core',
     'holonet.mappings',
     'holonet.dashboad',
-    'holonet.api'
+    'holonet.api',
 )
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
@@ -62,11 +62,14 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'oauth2_provider.middleware.OAuth2TokenMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+)
+
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, 'templates').replace('\\', '/'),
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = TEMPLATE_CONTEXT_PROCESSORS + (
@@ -74,7 +77,7 @@ TEMPLATE_CONTEXT_PROCESSORS = TEMPLATE_CONTEXT_PROCESSORS + (
 )
 
 AUTHENTICATION_BACKENDS = AUTHENTICATION_BACKENDS + (
-    'oauth2_provider.backends.OAuth2Backend',
+    'django.contrib.auth.backends.ModelBackend',
 )
 
 OAUTH2_PROVIDER_APPLICATION_MODEL = 'api.APIApplication'
@@ -135,8 +138,8 @@ CELERY_SEND_EVENTS = True
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'oauth2_provider.ext.rest_framework.OAuth2Authentication',
         'rest_framework.authentication.SessionAuthentication',
+        'holonet.api.backend.TokenAuthenticationBackend',
     ),
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 }

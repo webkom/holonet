@@ -6,7 +6,6 @@ pyyaml
 
 djangorestframework
 django-extensions
-django-oauth-toolkit
 django-cors-headers
 django-omnibus
 sockjs-tornado

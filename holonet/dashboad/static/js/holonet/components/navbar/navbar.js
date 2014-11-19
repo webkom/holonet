@@ -20,8 +20,10 @@ var Navbar = React.createClass({
                         </div>
                         <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul className="nav navbar-nav">
+
                             </ul>
                             <ul className="nav navbar-nav navbar-right">
+                                <li><a href="/api"><i className="fa fa-link"></i> API</a></li>
                                 <li><a href="/logout"><i className="fa fa-power-off"></i> Logout</a></li>
                             </ul>
                         </div>

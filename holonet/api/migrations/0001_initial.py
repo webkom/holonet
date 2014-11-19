@@ -2,33 +2,34 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-import oauth2_provider.validators
-from django.conf import settings
-import oauth2_provider.generators
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='APIApplication',
+            name='Application',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('client_id', models.CharField(default=oauth2_provider.generators.generate_client_id, max_length=100, db_index=True, unique=True)),
-                ('redirect_uris', models.TextField(help_text='Allowed URIs list, space separated', blank=True, validators=[oauth2_provider.validators.validate_uris])),
-                ('client_type', models.CharField(choices=[('confidential', 'Confidential'), ('public', 'Public')], max_length=32)),
-                ('authorization_grant_type', models.CharField(choices=[('authorization-code', 'Authorization code'), ('implicit', 'Implicit'), ('password', 'Resource owner password-based'), ('client-credentials', 'Client credentials')], max_length=32)),
-                ('client_secret', models.CharField(default=oauth2_provider.generators.generate_client_secret, max_length=255, blank=True, db_index=True)),
-                ('name', models.CharField(max_length=255, blank=True)),
-                ('description', models.CharField(max_length=100, blank=True, verbose_name='application description')),
-                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
+                ('name', models.CharField(max_length=200, verbose_name='name')),
             ],
             options={
-                'abstract': False,
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Token',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
+                ('token', models.CharField(max_length=64, unique=True)),
+                ('valid_from', models.DateTimeField(auto_now_add=True, null=True, verbose_name='valid from')),
+                ('valid_to', models.DateTimeField(blank=True, verbose_name='valid to', null=True)),
+                ('application', models.ForeignKey(to='api.Application', verbose_name='application')),
+            ],
+            options={
             },
             bases=(models.Model,),
         ),
