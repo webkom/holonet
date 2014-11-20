@@ -8,7 +8,7 @@ from .blacklist import is_blacklisted
 from .message import HolonetEmailMessage
 from .validation import validate_recipient
 from holonet.core.tasks import index_spam, send_spam_notification, index_blacklisted_mail, \
-    send_blacklist_notification
+    send_blacklist_notification, index_bounce_mail, send_bounce_notification
 from holonet.mappings.models import MailingList
 
 
@@ -25,7 +25,13 @@ def handle_mail(msg, sender, recipient):
         raise NotImplemented('Restricted mail is not ready')
 
     if prefix == settings.SERVER_EMAIL.split('@')[0]:
-        raise NotImplemented('Bounce handling not implemented')
+        message = HolonetEmailMessage(msg, [], list_name=prefix)
+        try:
+            index_bounce_mail.delay(message)
+            send_bounce_notification.delay(message)
+        except OSError:
+            pass
+        return True
 
     try:
         recipients = MailingList.objects.get(prefix=prefix).recipients

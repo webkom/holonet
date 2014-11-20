@@ -30,6 +30,11 @@ def index_check():
                         "_ttl": {
                             "enabled": True
                         }
+                    },
+                    "bounce": {
+                        "_ttl": {
+                            "enabled": True
+                        }
                     }
                 }
             }
@@ -53,6 +58,19 @@ def store_blacklisted_mail(message):
         index_check()
         connection = get_connection()
         connection.create(settings.INDEX_NAME, 'blacklisted', message.index(),
+                          params={'_ttl': '52w'})
+        return True
+    except ConnectionError:
+        return False
+    except OSError:
+        return False
+
+
+def store_bounce_mail(message):
+    try:
+        index_check()
+        connection = get_connection()
+        connection.create(settings.INDEX_NAME, 'bounce', message.index(),
                           params={'_ttl': '52w'})
         return True
     except ConnectionError:
