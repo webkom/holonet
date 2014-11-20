@@ -1,8 +1,13 @@
 Abakus Mail Delivery System
 ===========================
-## Holonet [![Build status](https://ci.frigg.io/badges/webkom/holonet/)](https://ci.frigg.io/webkom/holonet/last/)
+## Holonet 
+
+[![Build status] (https://ci.frigg.io/badges/webkom/holonet/)](https://ci.frigg.io/webkom/holonet/last/)
+
+Holonet has many features, but it is designed to handle mail as long as the management command mail_handler can connect to the database. Services like rabbitmq, elasticsearch, celery, omnibus and policy_services are not required to handle valid mail, but the bounce, spam and blacklist services may not work properly. Postfix may require services like spamassasin and the policy_service to work properly. This depends on your postfix config. If spamassasin is down postfix will send a bounce message to the sender. Postfix may work without the policy_service if a default value exist in the postfix config, if not send a bounce. The sender will get a bounce if something goes wrong under the mail_handler, mail_handler raises different exit codes based on the result.
+
 ### Supported Features
-* Index spam in Elasticsearch
+* Index spam and blacklisted mail in Elasticsearch
 * Policy Service
 * Handle mail using pipe
 
@@ -10,7 +15,7 @@ Abakus Mail Delivery System
 * Create a mailinglist api (Create / Edit / Delete mappings using a json REST API.)
 * Store statistics in Elasticsearch
 * Stats frontend
-* Send resend messages marked bounce and spam
+* Make it possible to resend blacklisted/spam/bounce mail
 * Restricted mail support
 
 ## Pipeline
