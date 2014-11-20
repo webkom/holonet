@@ -18,7 +18,8 @@ exclude_lines =
     if __name__ == .__main__.:
 
 omit =
-    lego/*/migrations/*
+    holonet/*/migrations/*
     holonet/settings/*
+    holonet/wsgi
 
 show_missing = True

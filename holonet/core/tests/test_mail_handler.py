@@ -10,6 +10,7 @@ from django.core import mail
 
 from holonet.core.handler import handle_mail
 from holonet.mappings.models import MailingList
+from holonet.core.validation import validate_recipient
 
 
 class MailHandlerTestCase(TestCase):
@@ -59,3 +60,9 @@ class MailHandlerTestCase(TestCase):
         email_file = open(file_path, 'r')
         msg = email.message_from_file(email_file)
         self.assertEqual(handle_mail(msg, 'eirik@sylliaas.no', 'testlist1@test.holonet.no'), True)
+
+    def test_validate_recipient(self):
+        with self.assertRaises(SystemExit) as result:
+            validate_recipient(params={'just_a_key': True}, sys_exit=True)
+
+        self.assertEqual(result.exception.code, settings.EXITCODE_UNKNOWN_RECIPIENT)
