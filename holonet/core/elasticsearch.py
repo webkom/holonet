@@ -41,39 +41,25 @@ def index_check():
         )
 
 
-def store_spam(message):
+def store_message(message, type, ttl):
     try:
         index_check()
         connection = get_connection()
-        connection.create(settings.INDEX_NAME, 'spam', message.index(), params={'_ttl': '52w'})
+        connection.create(settings.INDEX_NAME, type, message.index(), params={'_ttl': ttl})
         return True
     except ConnectionError:
         return False
     except OSError:
         return False
+
+
+def store_spam(message):
+    store_message(message, 'spam', '52w')
 
 
 def store_blacklisted_mail(message):
-    try:
-        index_check()
-        connection = get_connection()
-        connection.create(settings.INDEX_NAME, 'blacklisted', message.index(),
-                          params={'_ttl': '52w'})
-        return True
-    except ConnectionError:
-        return False
-    except OSError:
-        return False
+    store_message(message, 'blacklisted', '52w')
 
 
 def store_bounce_mail(message):
-    try:
-        index_check()
-        connection = get_connection()
-        connection.create(settings.INDEX_NAME, 'bounce', message.index(),
-                          params={'_ttl': '52w'})
-        return True
-    except ConnectionError:
-        return False
-    except OSError:
-        return False
+    store_message(message, 'bounce', '52w')

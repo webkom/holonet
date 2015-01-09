@@ -7,6 +7,24 @@ from django.conf import settings
 from django.utils.html import escape
 
 
+def send_notification(title, message, icon='fa fa-information', type='notification'):
+    try:
+        publish(
+            settings.WEBSOCKET_CHANNEL,
+            type,
+            {
+                'title': title,
+                'message': message,
+                'icon': icon
+            },
+            sender='holonet'
+        )
+    except OmnibusDataException:
+        pass
+    except OmnibusPublisherException:
+        pass
+
+
 def notify_spam(message):
     body_message = 'Holonet received a spam mail.'
 
@@ -15,21 +33,7 @@ def notify_spam(message):
         if from_address:
             body_message = escape('Mail from %s was marked as spam.' % (from_address, ))
 
-    try:
-        publish(
-            settings.WEBSOCKET_CHANNEL,
-            'notification',
-            {
-                'title': 'Spam Received',
-                'message': body_message,
-                'icon': 'fa fa-trash'
-            },
-            sender='holonet'
-        )
-    except OmnibusDataException:
-        pass
-    except OmnibusPublisherException:
-        pass
+    send_notification('Spam Received', body_message, 'fa fa-trash')
 
 
 def notify_blacklisted(message):
@@ -40,21 +44,7 @@ def notify_blacklisted(message):
         if from_address:
             body_message = escape('Mail from %s was blacklisted.' % (from_address, ))
 
-    try:
-        publish(
-            settings.WEBSOCKET_CHANNEL,
-            'notification',
-            {
-                'title': 'Blacklisted Mail Received',
-                'message': body_message,
-                'icon': 'fa fa-warning'
-            },
-            sender='holonet'
-        )
-    except OmnibusDataException:
-        pass
-    except OmnibusPublisherException:
-        pass
+    send_notification('Blacklisted Mail Received', body_message, 'fa fa-warning')
 
 
 def notify_bounce(message):
@@ -65,18 +55,4 @@ def notify_bounce(message):
         if from_address:
             body_message = escape('Mail from %s was stores as bounce.' % (from_address, ))
 
-    try:
-        publish(
-            settings.WEBSOCKET_CHANNEL,
-            'notification',
-            {
-                'title': 'Bounce Mail Received',
-                'message': body_message,
-                'icon': 'fa fa-arrows-h'
-            },
-            sender='holonet'
-        )
-    except OmnibusDataException:
-        pass
-    except OmnibusPublisherException:
-        pass
+    send_notification('Bounce Mail Received', body_message, 'fa fa-arrows-h')
