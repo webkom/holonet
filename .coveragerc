@@ -21,5 +21,6 @@ omit =
     holonet/*/migrations/*
     holonet/settings/*
     holonet/wsgi
+    holonet/*/tests/*
 
 show_missing = True
