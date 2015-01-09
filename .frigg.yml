@@ -1,5 +1,10 @@
 tasks:
   - tox
   - flake8
+  - coverage xml
 
 comment: false
+
+coverage:
+  path: coverage.xml
+  parser: python

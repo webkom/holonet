@@ -1,5 +1,5 @@
 # -*- coding: utf8 -*-
 
 ELASTICSEARCH = [
-    {'host': 'prd001.trh.whale.io', 'port': 9200, 'use_ssl': False},
+    {'host': '129.241.209.106', 'port': 9200, 'use_ssl': False},
 ]
