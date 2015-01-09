@@ -3,6 +3,9 @@ help:
 	@echo 'prod       - install prod requirements'
 	@echo 'venv       - create virtualenv venv-folder'
 	@echo 'production - deploy production'
+	@echo 'frontend   - build frontend'
+	@echo 'watchify   - watch style and js files'
+	@echo 'clean      - clean builds'
 
 UGLIFY     = node_modules/.bin/uglifyjs
 BROWSERIFY = node_modules/.bin/browserify
@@ -45,4 +48,4 @@ venv:
 holonet/settings/local.py:
 	touch holonet/settings/local.py
 
-.PHONY: help dev prod venv
+.PHONY: help dev prod venv frontend clean watchify
