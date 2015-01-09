@@ -46,10 +46,15 @@ def validate_recipient(params=None, recipient='', sys_exit=False):
 
         recipient = params["recipient"]
 
-    if len(recipient) == 0:
+    if not recipient:
         return return_result('no_recipient')
 
     splitted = recipient.split('@')
+
+    if len(splitted) == 1:
+        prefix = splitted[0]
+        if prefix in settings.SYSTEM_ALIASES:
+            return return_result('valid_recipient')
 
     if len(splitted) < 2:
         return return_result('incomplete_address')

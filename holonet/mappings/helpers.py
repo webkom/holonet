@@ -10,7 +10,7 @@ def is_prefix_valid(prefix):
         if prefix.lower() in [settings.RESTRICTED_PREFIX, settings.SERVER_EMAIL.split('@')[0]]:
             return True
 
-        mailing_list = MailingList.objects.get(prefix=prefix.lower)
+        mailing_list = MailingList.objects.select_related('recipient_list').get(prefix=prefix.lower)
         if len(mailing_list.recipients) > 0:
             return True
     except MailingList.DoesNotExist:

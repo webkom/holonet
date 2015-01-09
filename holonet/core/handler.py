@@ -13,17 +13,30 @@ from holonet.mappings.models import MailingList
 
 
 def handle_mail(msg, sender, recipient):
+    # Initialize variables
     sender = sender.lower()
     recipient = recipient.lower()
+    domain = settings.MASTER_DOMAINS[0]
 
+    # Check that the recipient is valid and exist in our catalog
     validate_recipient(recipient=recipient, sys_exit=True)
 
-    splitted_recipient = recipient.split('@')
-    prefix, domain = splitted_recipient
+    try:
+        # Spilt the recipient address into prefix an domain
+        splitted_recipient = recipient.split('@')
+        prefix, domain = splitted_recipient
+    except ValueError:
+        # We got no @, this happens when the server sends out a error message.
+        if '@' not in recipient and recipient in settings.SYSTEM_ALIASES:
+            prefix = recipient
+        else:
+            sys.exit(settings.EXITCODE_UNKNOWN_RECIPIENT)
 
+    # Handle restricted mail. Send out new messages based on out lists.
     if prefix == settings.RESTRICTED_PREFIX:
         raise NotImplemented('Restricted mail is not ready')
 
+    # Handle bounce
     if prefix == settings.SERVER_EMAIL.split('@')[0]:
         message = HolonetEmailMessage(msg, [], list_name=prefix)
         try:
@@ -33,13 +46,20 @@ def handle_mail(msg, sender, recipient):
             pass
         return True
 
+    # Lookup valid recipients
     try:
         recipients = MailingList.objects.get(prefix=prefix).recipients
     except MailingList.DoesNotExist:
-        sys.exit(settings.EXITCODE_UNKNOWN_RECIPIENT)
+        # Check SYSTEM_ALIASES, if ok, send to system admins.
+        if prefix in settings.SYSTEM_ALIASES:
+            recipients = [address[1] for address in settings.ADMINS]
+        else:
+            sys.exit(settings.EXITCODE_UNKNOWN_RECIPIENT)
 
+    # Generate the final message
     message = HolonetEmailMessage(msg, recipients, list_name=prefix)
 
+    # Check if spamassasin has marked the message as spam.
     spam_flag = message.get('X-Spam-Flag', False)
     if spam_flag == 'YES':
         try:
@@ -49,6 +69,7 @@ def handle_mail(msg, sender, recipient):
             pass
         return True
 
+    # Check if the sender is blacklisted.
     if is_blacklisted(sender):
         try:
             index_blacklisted_mail.delay(message)
@@ -57,6 +78,7 @@ def handle_mail(msg, sender, recipient):
             pass
         return True
 
+    # Sent the message!
     if not settings.TESTING:
         message.send()
     else:

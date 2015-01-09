@@ -33,3 +33,15 @@ ELASTICSEARCH = [
 INDEX_NAME = 'holonet'
 
 BROKER_URL = 'amqp://guest:guest@localhost:5672/'
+
+SYSTEM_ALIASES = [
+    'root',
+    'postmaster'
+]
+
+# Please don't use emails handled by Holonet. Magic things may happen!
+ADMINS = (
+    ('Eirik Martiniussen Sylliaas', 'eirik@sylliaas.no'),
+)
+
+MANAGERS = ADMINS

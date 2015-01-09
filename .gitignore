@@ -66,3 +66,4 @@ node_modules/
 htmlcov/
 
 holonet/dashboad/static/js/index.js
+holonet/dashboad/static/css/style.css
