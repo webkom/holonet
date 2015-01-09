@@ -64,3 +64,5 @@ database.db
 node_modules/
 
 htmlcov/
+
+holonet/dashboad/static/js/index.js
