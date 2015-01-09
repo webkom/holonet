@@ -1,37 +1,33 @@
 /** @jsx React.DOM */
 
 var React = require('react');
+var ReactBootstrap = require('react-bootstrap');
+
+var Grid = ReactBootstrap.Grid;
+var BootstrapNavbar = ReactBootstrap.Navbar;
+var Nav = ReactBootstrap.Nav;
+var NavItem = ReactBootstrap.NavItem;
+
+var FontAwsome = require('../fontawsome');
 
 var Navbar = React.createClass({
 
     render: function() {
         return (
-            <div className="container-fluid">
-                <nav className="navbar navbar-default navbar-inverse" role="navigation">
-                    <div className="container-fluid">
-                        <div className="navbar-header">
-                            <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                                <span className="sr-only">Toggle navigation</span>
-                                <span className="icon-bar"></span>
-                                <span className="icon-bar"></span>
-                                <span className="icon-bar"></span>
-                            </button>
-                            <a className="navbar-brand" href="/">{this.props.brand}</a>
-                        </div>
-                        <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                            <ul className="nav navbar-nav">
-
-                            </ul>
-                            <ul className="nav navbar-nav navbar-right">
-                                <li><a href="/api"><i className="fa fa-link"></i> API</a></li>
-                                <li><a href="/logout"><i className="fa fa-power-off"></i> Logout</a></li>
-                            </ul>
-                        </div>
+            <Grid fluid={true}>
+                <BootstrapNavbar inverse={true} fluid={true}>
+                    <div className="navbar-header">
+                        <a className="navbar-brand" href="/">{this.props.brand}</a>
                     </div>
-                </nav>
-            </div>
+                    <Nav right={true}>
+                        <NavItem href="/api"><FontAwsome icon='link'/> API</NavItem>
+                        <NavItem href="/logout"><FontAwsome icon='power-off'/> Logout</NavItem>
+                    </Nav>
+                </BootstrapNavbar>
+            </Grid>
         );
     }
+
 });
 
 module.exports = Navbar;
