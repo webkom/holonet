@@ -1,14 +1,13 @@
 # -*- coding: utf8 -*-
 
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 
 from .exceptions import TokenDoesNotExistException
 
 
 class Application(models.Model):
-    name = models.CharField(max_length=200, verbose_name=_('name'))
+    name = models.CharField(max_length=200)
 
     def has_perm(self, *args, **kwargs):
         return True
@@ -21,12 +20,11 @@ class Application(models.Model):
 
 
 class Token(models.Model):
-    application = models.ForeignKey('api.Application', verbose_name=_('application'))
+    application = models.ForeignKey('api.Application')
     token = models.CharField(max_length=64, unique=True)
 
-    valid_from = models.DateTimeField(auto_now_add=True, blank=True, null=True,
-                                      verbose_name=_('valid from'))
-    valid_to = models.DateTimeField(blank=True, null=True, verbose_name=_('valid to'))
+    valid_from = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    valid_to = models.DateTimeField(blank=True, null=True)
 
     @classmethod
     def get_token(cls, token):
