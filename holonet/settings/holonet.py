@@ -45,3 +45,16 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
+
+STATUS_CLASSES = (
+    'holonet.status.ElasticsearchStatus',
+    'holonet.status.CacheStatus',
+    'holonet.status.CeleryStatus',
+    'holonet.status.OmnibusStatus',
+    'holonet.status.PolicyServiceStatus',
+    'holonet.status.PostfixStatus',
+)
+
+POSTFIX_URL = 'tcp://127.0.0.1:25'
+
+POLICYSERVICE_URL = 'tcp://127.0.0.1:10336'

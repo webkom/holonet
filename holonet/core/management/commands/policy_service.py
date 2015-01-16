@@ -5,8 +5,10 @@ import threading
 import socketserver
 import signal
 import time
+from urllib.parse import urlparse
 
 from django.core.management.base import BaseCommand
+from django.conf import settings
 
 from holonet.core.validation import validate_recipient
 
@@ -57,15 +59,13 @@ class Command(BaseCommand):
 
     )
     help = "Start a daemon for verifying access with postfix smtp access policy deligation"
-    args = '<server host> <port> (default localhost 10336'
+    args = 'None'
 
     def handle(self, *args, **options):
-        if args:
-            host = args[0]
-            port = args[1]
-        else:
-            host = "localhost"
-            port = 13000
+        parser = urlparse(settings.POLICYSERVICE_URL)
+        host = parser.hostname
+        port = parser.port
+
         server = ThreadedTCPServer((host, port), PostfixAccessPolicyHandler)
         server_thread = threading.Thread(target=server.serve_forever)
         server_thread.daemon = True

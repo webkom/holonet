@@ -53,6 +53,7 @@ INSTALLED_APPS = (
     'holonet.mappings',
     'holonet.dashboad',
     'holonet.api',
+    'holonet.status',
 )
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
