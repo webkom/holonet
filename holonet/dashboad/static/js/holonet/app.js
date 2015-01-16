@@ -4,7 +4,12 @@ var React = require('react');
 
 var growl = require('./components/growl.js');
 
+var ReactBootstrap = require('react-bootstrap');
+var Grid = ReactBootstrap.Grid;
+var Row = ReactBootstrap.Row;
+
 var Navbar = require('./components/navbar/navbar.js');
+var ServiceStatus = require('./components/servicestatus.js');
 
 var App = React.createClass({
 
@@ -42,6 +47,18 @@ var App = React.createClass({
         return (
             <div>
                 <Navbar brand='Holonet'/>
+
+                <Grid fluid={true}>
+                    <Row>
+                        <ServiceStatus service='elasticsearch' />
+                        <ServiceStatus service='cache' />
+                        <ServiceStatus service='celery' />
+                        <ServiceStatus service='omnibus' />
+                        <ServiceStatus service='policyservice' />
+                        <ServiceStatus service='postfix' />
+                    </Row>
+                </Grid>
+
             </div>
         );
     }
