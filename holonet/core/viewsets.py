@@ -1,19 +1,25 @@
 # -*- coding: utf8 -*-
 
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
+from rest_framework import mixins
 
 from .serializers import SenderBlacklistSerializer, DomainBlacklistSerializer
 from .models import SenderBlacklist, DomainBlacklist
 
 
-class SenderBlacklistViewSet(viewsets.ModelViewSet):
+class SenderBlacklistViewSet(mixins.CreateModelMixin,
+                             mixins.RetrieveModelMixin,
+                             mixins.DestroyModelMixin,
+                             mixins.ListModelMixin,
+                             viewsets.GenericViewSet):
     queryset = SenderBlacklist.objects.all()
     serializer_class = SenderBlacklistSerializer
-    permission_classes = (IsAuthenticated, )
 
 
-class DomainBlacklistViewSet(viewsets.ModelViewSet):
+class DomainBlacklistViewSet(mixins.CreateModelMixin,
+                             mixins.RetrieveModelMixin,
+                             mixins.DestroyModelMixin,
+                             mixins.ListModelMixin,
+                             viewsets.GenericViewSet):
     queryset = DomainBlacklist.objects.all()
     serializer_class = DomainBlacklistSerializer
-    permission_classes = (IsAuthenticated, )
