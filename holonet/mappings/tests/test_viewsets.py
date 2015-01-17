@@ -41,15 +41,12 @@ class ReverseLookupTestCase(APITestCase):
 
         response = self.client.post(self.endpoint, data=data,  format='json')
 
-        self.assertEqual(response.status_code, 404)
+        self.assertEquals(len(response.data), 0)
 
     def test_no_email(self):
         response = self.client.post(self.endpoint, format='json')
 
-        if response.status_code == 404:
-            self.assertEquals(len(response.data), 1)
-        else:
-            self.assertEquals(len(response.data), 0)
+        self.assertEquals(len(response.data), 0)
 
     def test_unsupported_domain(self):
         data = {
@@ -58,7 +55,7 @@ class ReverseLookupTestCase(APITestCase):
 
         response = self.client.post(self.endpoint, data=data,  format='json')
 
-        self.assertEqual(response.status_code, 404)
+        self.assertEquals(len(response.data), 0)
 
     def test_system_alias(self):
         data = {

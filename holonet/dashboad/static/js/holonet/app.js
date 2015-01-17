@@ -7,9 +7,11 @@ var growl = require('./components/growl.js');
 var ReactBootstrap = require('react-bootstrap');
 var Grid = ReactBootstrap.Grid;
 var Row = ReactBootstrap.Row;
+var Col = ReactBootstrap.Col;
 
 var Navbar = require('./components/navbar/navbar.js');
 var ServiceStatus = require('./components/servicestatus.js');
+var ReverseLookup = require('./components/reverselookup.js');
 
 var App = React.createClass({
 
@@ -56,6 +58,14 @@ var App = React.createClass({
                         <ServiceStatus service='omnibus' />
                         <ServiceStatus service='policyservice' />
                         <ServiceStatus service='postfix' />
+                    </Row>
+                </Grid>
+
+                <Grid fluid={true}>
+                    <Row>
+                        <Col lg={3} md={4}>
+                            <ReverseLookup/>
+                        </Col>
                     </Row>
                 </Grid>
 

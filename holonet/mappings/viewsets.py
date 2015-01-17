@@ -22,7 +22,9 @@ class ReverseLookupViewSet(viewsets.ViewSet):
         email = serializer.data.get('email')
 
         if email is None:
-            raise Http404('Please attach a email in the request.')
+            return Response([])
+        else:
+            email = email.strip()
 
         local = email
         domain = settings.MASTER_DOMAINS[0]
@@ -30,10 +32,9 @@ class ReverseLookupViewSet(viewsets.ViewSet):
             try:
                 local, domain = email.split('@')
             except ValueError:
-                raise Http404('Could not find recipients, invalid email.')
-
+                return Response([])
         if domain not in settings.MASTER_DOMAINS:
-            raise Http404('The domain %s is not handled by Holonet.' % domain)
+            return Response([])
 
         recipients = []
 
