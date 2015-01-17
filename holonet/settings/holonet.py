@@ -58,3 +58,5 @@ STATUS_CLASSES = (
 POSTFIX_URL = 'tcp://127.0.0.1:25'
 
 POLICYSERVICE_URL = 'tcp://127.0.0.1:10336'
+
+SYSTEM_OWNER = 'Abakus Linjeforening / Webkom'

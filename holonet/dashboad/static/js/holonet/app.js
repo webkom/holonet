@@ -12,6 +12,7 @@ var Col = ReactBootstrap.Col;
 var Navbar = require('./components/navbar/navbar.js');
 var ServiceStatus = require('./components/servicestatus.js');
 var Lookup = require('./components/lookup.js');
+var SystemInformation = require('./components/systeminformation.js');
 
 var App = React.createClass({
 
@@ -65,6 +66,7 @@ var App = React.createClass({
                     <Row>
                         <Col lg={3} md={4}>
                             <Lookup/>
+                            <SystemInformation/>
                         </Col>
                     </Row>
                 </Grid>

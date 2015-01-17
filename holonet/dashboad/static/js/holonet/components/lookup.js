@@ -58,7 +58,7 @@ var Lookup = React.createClass({
     render: function() {
 
         var title = (
-            <h3>Lookup</h3>
+            <h3 className='panel-title'>Lookup</h3>
         );
 
         var footer = (
@@ -66,16 +66,22 @@ var Lookup = React.createClass({
         );
 
         return (
-            <Panel header={title} footer={footer}>
-                <Input
-                    type='text'
-                    value={this.state.value}
-                    placeholder='Enter email'
-                    label={false}
-                    ref='lookup'
-                    groupClassName='no-padding no-margin'
-                    onChange={this.handleChange} />
-            </Panel>
+            <div className='panel panel-default'>
+                <div className='panel-heading'>
+                    {title}
+                </div>
+                <div className='panel-body'>
+                    <Input
+                        type='text'
+                        value={this.state.value}
+                        placeholder='Enter email'
+                        label={false}
+                        ref='lookup'
+                        groupClassName='no-padding no-margin'
+                        onChange={this.handleChange} />
+                </div>
+                {footer}
+            </div>
         );
     }
 
