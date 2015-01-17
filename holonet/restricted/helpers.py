@@ -11,3 +11,9 @@ def lookup(msg):
     # Cache goes here
 
     return []
+
+
+def reverse_lookup(token):
+    # Cache goes here
+
+    return []

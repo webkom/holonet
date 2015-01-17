@@ -10,7 +10,8 @@ class MailingList(models.Model):
     prefix = models.CharField(max_length=64, validators=[validate_local_part], unique=True,
                               db_index=True)
 
-    recipient_list = models.ManyToManyField('mappings.Recipient', blank=True)
+    recipient_list = models.ManyToManyField('mappings.Recipient', blank=True,
+                                            related_name='mailing_lists')
 
     def __str__(self):
         return '%s@%s' % (self.prefix, settings.MASTER_DOMAIN)
@@ -28,3 +29,9 @@ class Recipient(models.Model):
 
     def __str__(self):
         return '%s' % (self.address, )
+
+    @property
+    def lists(self):
+        # Cache goes here
+
+        return [mailing_list.prefix for mailing_list in self.mailing_lists.all()]

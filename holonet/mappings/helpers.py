@@ -2,7 +2,7 @@
 
 from django.conf import settings
 
-from .models import MailingList
+from .models import MailingList, Recipient
 from holonet.restricted.helpers import is_restricted, lookup as restricted_lookup
 
 
@@ -41,8 +41,16 @@ def lookup(prefix, msg=None):
     return []
 
 
-def reverse_lookup(prefix):
-    # only mapings, for safety
+def reverse_lookup(address):
+    # Cache goes here
+
+    address = clean_address(address)
+    try:
+        recipient = Recipient.objects.get(address=address)
+        return recipient.lists
+    except Recipient.DoesNotExist:
+        pass
+
     return []
 
 

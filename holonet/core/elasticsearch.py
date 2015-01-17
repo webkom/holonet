@@ -24,16 +24,31 @@ def index_check():
                     "spam": {
                         "_ttl": {
                             "enabled": True
+                        },
+                        "properties": {
+                            "@timestamp": {
+                                "type": "date"
+                            }
                         }
                     },
                     "blacklisted": {
                         "_ttl": {
                             "enabled": True
+                        },
+                        "properties": {
+                            "@timestamp": {
+                                "type": "date"
+                            }
                         }
                     },
                     "bounce": {
                         "_ttl": {
                             "enabled": True
+                        },
+                        "properties": {
+                            "@timestamp": {
+                                "type": "date"
+                            }
                         }
                     }
                 }
