@@ -13,8 +13,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Application',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
-                ('name', models.CharField(max_length=200, verbose_name='name')),
+                ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
+                ('name', models.CharField(max_length=200)),
             ],
             options={
             },
@@ -23,11 +23,11 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Token',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
-                ('token', models.CharField(max_length=64, unique=True)),
-                ('valid_from', models.DateTimeField(auto_now_add=True, null=True, verbose_name='valid from')),
-                ('valid_to', models.DateTimeField(blank=True, verbose_name='valid to', null=True)),
-                ('application', models.ForeignKey(to='api.Application', verbose_name='application')),
+                ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
+                ('token', models.CharField(unique=True, max_length=64)),
+                ('valid_from', models.DateTimeField(auto_now_add=True, null=True)),
+                ('valid_to', models.DateTimeField(blank=True, null=True)),
+                ('application', models.ForeignKey(to='api.Application')),
             ],
             options={
             },

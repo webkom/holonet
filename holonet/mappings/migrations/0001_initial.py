@@ -14,26 +14,28 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='MailingList',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
-                ('prefix', models.CharField(verbose_name='prefix', validators=[holonet.mappings.validators.validate_local_part], unique=True, max_length=64)),
+                ('id', models.AutoField(primary_key=True, verbose_name='ID', serialize=False, auto_created=True)),
+                ('prefix', models.CharField(max_length=64, validators=[holonet.mappings.validators.validate_local_part], db_index=True, unique=True)),
             ],
             options={
             },
             bases=(models.Model,),
         ),
         migrations.CreateModel(
-            name='Member',
+            name='Recipient',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
-                ('address', models.EmailField(verbose_name='address', max_length=75)),
-                ('mailing_list', models.ForeignKey(related_name='members', verbose_name='mailing list', to='mappings.MailingList')),
+                ('id', models.AutoField(primary_key=True, verbose_name='ID', serialize=False, auto_created=True)),
+                ('address', models.EmailField(max_length=75)),
+                ('tag', models.CharField(max_length=100, unique=True)),
             ],
             options={
             },
             bases=(models.Model,),
         ),
-        migrations.AlterUniqueTogether(
-            name='member',
-            unique_together=set([('mailing_list', 'address')]),
+        migrations.AddField(
+            model_name='mailinglist',
+            name='recipient_list',
+            field=models.ManyToManyField(blank=True, to='mappings.Recipient'),
+            preserve_default=True,
         ),
     ]

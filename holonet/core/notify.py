@@ -1,10 +1,11 @@
 # -*- coding: utf8 -*-
 
-from omnibus.api import publish
 from omnibus.exceptions import OmnibusDataException, OmnibusPublisherException
 
 from django.conf import settings
 from django.utils.html import escape
+
+from holonet.core.omnibus import publish
 
 
 def send_notification(title, message, icon='fa fa-information', type='notification'):
@@ -19,9 +20,7 @@ def send_notification(title, message, icon='fa fa-information', type='notificati
             },
             sender='holonet'
         )
-    except OmnibusDataException:
-        pass
-    except OmnibusPublisherException:
+    except (OmnibusDataException, OmnibusPublisherException):
         pass
 
 

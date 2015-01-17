@@ -11,10 +11,20 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
+            name='DomainBlacklist',
+            fields=[
+                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('domain', models.CharField(max_length=100)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
             name='SenderBlacklist',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, primary_key=True, verbose_name='ID')),
-                ('sender', models.EmailField(unique=True, max_length=75, verbose_name='sender')),
+                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('sender', models.EmailField(max_length=75, unique=True)),
             ],
             options={
             },

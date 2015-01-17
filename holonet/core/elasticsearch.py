@@ -47,9 +47,7 @@ def store_message(message, type, ttl):
         connection = get_connection()
         connection.create(settings.INDEX_NAME, type, message.index(), params={'_ttl': ttl})
         return True
-    except ConnectionError:
-        return False
-    except OSError:
+    except (ConnectionError, OSError):
         return False
 
 
