@@ -5,3 +5,7 @@ MASTER_DOMAINS = [
 ]
 
 TEST_RUNNER = "djcelery.contrib.test_runner.CeleryTestSuiteRunner"
+
+ELASTICSEARCH = [
+    {'host': '129.241.209.106', 'port': 9200, 'use_ssl': False},
+]
