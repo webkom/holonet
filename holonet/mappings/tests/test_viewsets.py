@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.conf import settings
 
 from holonet.mappings.models import MailingList
+from holonet.mappings.helpers import lookup
 
 
 class ReverseLookupTestCase(APITestCase):
@@ -41,12 +42,12 @@ class ReverseLookupTestCase(APITestCase):
 
         response = self.client.post(self.endpoint, data=data,  format='json')
 
-        self.assertEquals(len(response.data), 0)
+        self.assertEquals(len(response.data), len(lookup('testlist1')))
 
     def test_no_email(self):
         response = self.client.post(self.endpoint, format='json')
 
-        self.assertEquals(len(response.data), 0)
+        self.assertListEqual(response.data, [])
 
     def test_unsupported_domain(self):
         data = {
@@ -54,8 +55,9 @@ class ReverseLookupTestCase(APITestCase):
         }
 
         response = self.client.post(self.endpoint, data=data,  format='json')
+        print(response.data)
 
-        self.assertEquals(len(response.data), 0)
+        self.assertListEqual(response.data, [])
 
     def test_system_alias(self):
         data = {
@@ -73,4 +75,4 @@ class ReverseLookupTestCase(APITestCase):
 
         response = self.client.post(self.endpoint, data=data, format='json')
 
-        self.assertEqual(len(response.data), 0)
+        self.assertListEqual(response.data, [])

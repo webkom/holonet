@@ -4,11 +4,8 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import list_route
 
-from django.conf import settings
-
 from .serializers import LookupSerializer
-from .models import MailingList
-from .helpers import LookupAddress
+from .helpers import LookupAddress, clean_address, lookup, split_address, is_managed_domain
 
 
 class LookupViewSet(viewsets.ViewSet):
@@ -23,26 +20,14 @@ class LookupViewSet(viewsets.ViewSet):
         if email is None:
             return Response([])
         else:
-            email = email.strip()
+            email = clean_address(email)
 
-        local = email
-        domain = settings.MASTER_DOMAIN
-        if '@' in email:
-            try:
-                local, domain = email.split('@')
-            except ValueError:
-                return Response([])
-        if domain not in settings.MASTER_DOMAINS:
+        prefix, domain = split_address(email)
+
+        if not is_managed_domain(domain):
             return Response([])
 
-        recipients = []
-
-        try:
-            recipients = MailingList.objects.get(prefix=local).recipients
-        except MailingList.DoesNotExist:
-            # Check SYSTEM_ALIASES, if ok, send to system admins.
-            if local in settings.SYSTEM_ALIASES:
-                recipients = [address[1] for address in settings.ADMINS]
+        recipients = lookup(prefix)
 
         def create_reverse_objects(email):
             return LookupAddress(email)
