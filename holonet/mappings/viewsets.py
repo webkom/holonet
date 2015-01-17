@@ -1,48 +1,57 @@
 # -*- coding: utf8 -*-
 
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.decorators import detail_route
-from rest_framework import status
+from rest_framework.decorators import list_route
 
-from django.shortcuts import get_object_or_404
-from django.core.exceptions import ValidationError
+from django.shortcuts import Http404
+from django.conf import settings
 
-from .serializers import MailingListSerializer, MailingListRetriveSerializer,\
-    MailingListRecipientSerializer, RecipientSerializer
-from .models import MailingList, Recipient
+from .serializers import ReverseLookupSerializer
+from .models import MailingList
+from .helpers import ReverseLookupAddress
 
 
-class MailingListViewSet(viewsets.ModelViewSet):
-    queryset = MailingList.objects.all()
-    serializer_class = MailingListSerializer
-    permission_classes = (IsAuthenticated, )
+class ReverseLookupViewSet(viewsets.ViewSet):
 
-    def retrieve(self, request, pk=None, *args, **kwargs):
-        queryset = MailingList.objects.all()
-        mailing_list = get_object_or_404(queryset, pk=pk)
-        serializer = MailingListRetriveSerializer(mailing_list)
-        return Response(serializer.data)
+    @list_route(methods=['post'])
+    def lookup(self, request, *args, **kwargs):
+        serializer = ReverseLookupSerializer(data=request.data)
+        serializer.is_valid()
 
-    @detail_route(methods=['patch'])
-    def recipients(self, request, *args, **kwargs):
-        mailing_list = self.get_object()
-        serializer = MailingListRecipientSerializer(mailing_list, data=request.DATA,
-                                                    files=request.FILES, partial=True)
-        if not serializer.is_valid():
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        email = serializer.data.get('email')
+
+        if email is None:
+            raise Http404('Please attach a email in the request.')
+
+        local = email
+        domain = settings.MASTER_DOMAINS[0]
+        if '@' in email:
+            try:
+                local, domain = email.split('@')
+            except ValueError:
+                raise Http404('Could not find recipients, invalid email.')
+
+        if domain not in settings.MASTER_DOMAINS:
+            raise Http404('The domain %s is not handled by Holonet.' % domain)
+
+        recipients = []
 
         try:
-            self.pre_save(serializer.object)
-        except ValidationError as err:
-            return Response(err.message_dict, status=status.HTTP_400_BAD_REQUEST)
+            recipients = MailingList.objects.get(prefix=local).recipients
+        except MailingList.DoesNotExist:
+            # Check SYSTEM_ALIASES, if ok, send to system admins.
+            if local in settings.SYSTEM_ALIASES:
+                recipients = [address[1] for address in settings.ADMINS]
 
-        self.object = serializer.save(force_update=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        def create_reverse_objects(email):
+            return ReverseLookupAddress(email)
+
+        object_recipients = map(create_reverse_objects, recipients)
+
+        serializer = ReverseLookupSerializer(data=object_recipients, many=True)
+        serializer.is_valid()
+
+        return Response(serializer.data)
 
 
-class RecipientViewSet(viewsets.ModelViewSet):
-    queryset = Recipient.objects.all()
-    serializer_class = RecipientSerializer
-    permission_classes = (IsAuthenticated, )

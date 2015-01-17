@@ -16,3 +16,9 @@ def is_prefix_valid(prefix):
     except MailingList.DoesNotExist:
         pass
     return False
+
+
+class ReverseLookupAddress(object):
+
+    def __init__(self, address):
+        self.email = address
