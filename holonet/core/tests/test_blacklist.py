@@ -22,4 +22,3 @@ class ModelsTestCase(TestCase):
 
     def test_blacklisted_domain(self):
         self.assertTrue(is_blacklisted('test_balcklist@blacklisted.no'))
-        self.assertTrue(is_blacklisted('blacklisted.no'))

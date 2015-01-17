@@ -10,9 +10,9 @@ class HelperTestCase(TestCase):
     fixtures = ['mailing_lists.yaml', 'recipients.yaml']
 
     def test_is_prefix_valid(self):
-        self.assertEqual(is_prefix_valid('testlist1'), True)
-        self.assertEqual(is_prefix_valid('testlist2'), True)
-        self.assertEqual(is_prefix_valid('testlist3'), False)
-        self.assertEqual(is_prefix_valid('testlist4'), False)
-        self.assertEqual(is_prefix_valid(settings.RESTRICTED_PREFIX), True)
-        self.assertEqual(is_prefix_valid(settings.SERVER_EMAIL.split('@')[0]), True)
+        self.assertTrue(is_prefix_valid('testlist1'))
+        self.assertTrue(is_prefix_valid('testlist2'))
+        self.assertFalse(is_prefix_valid('testlist3'))
+        self.assertFalse(is_prefix_valid('testlist4'))
+        self.assertTrue(is_prefix_valid(settings.RESTRICTED_PREFIX))
+        self.assertTrue(is_prefix_valid(settings.SERVER_EMAIL.split('@')[0]))

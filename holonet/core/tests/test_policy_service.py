@@ -30,7 +30,7 @@ class PolicyServiceTestCase(TestCase):
     def test_consider_unmanaged_recpient(self):
         result = self.policy_service.consider(
             {
-                'recipient': 'test@%s' % settings.MASTER_DOMAINS[0]
+                'recipient': 'test@%s' % settings.MASTER_DOMAIN
             })
 
         action = result['action']
@@ -39,7 +39,7 @@ class PolicyServiceTestCase(TestCase):
     def test_consider_managed_recipient(self):
         result = self.policy_service.consider(
             {
-                'recipient': 'testlist1@%s' % settings.MASTER_DOMAINS[0]
+                'recipient': 'testlist1@%s' % settings.MASTER_DOMAIN
             })
 
         action = result['action']

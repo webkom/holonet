@@ -12,7 +12,7 @@ class InformationViewSet(ViewSet):
         return Response({
             'Master Domains': settings.MASTER_DOMAINS,
             'Server Email': settings.SERVER_EMAIL,
-            'Restricted Email': '%s@%s' % (settings.RESTRICTED_PREFIX, settings.MASTER_DOMAINS[0]),
+            'Restricted Email': '%s@%s' % (settings.RESTRICTED_PREFIX, settings.MASTER_DOMAIN),
             'System Aliases': settings.SYSTEM_ALIASES,
             'Admins': settings.ADMINS,
             'System Owner': settings.SYSTEM_OWNER

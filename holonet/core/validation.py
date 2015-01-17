@@ -3,11 +3,14 @@
 import sys
 
 from django.conf import settings
+from django.core.validators import validate_email, ValidationError
 
-from holonet.mappings.helpers import is_prefix_valid
+from holonet.mappings.helpers import is_prefix_valid, clean_address, split_address, \
+    is_managed_domain
 
 
 def validate_recipient(params=None, recipient='', sys_exit=False):
+
     exit_options = {
         'unknown_recipient': {
             'exit_code': settings.EXITCODE_UNKNOWN_RECIPIENT,
@@ -49,24 +52,18 @@ def validate_recipient(params=None, recipient='', sys_exit=False):
     if not recipient:
         return return_result('no_recipient')
 
-    splitted = recipient.split('@')
+    recipient = clean_address(recipient)
+    prefix, domain = split_address(recipient)
 
-    if len(splitted) == 1:
-        prefix = splitted[0]
-        if prefix in settings.SYSTEM_ALIASES:
-            return return_result('valid_recipient')
-
-    if len(splitted) < 2:
+    try:
+        validate_email(recipient)
+    except ValidationError:
         return return_result('incomplete_address')
 
-    prefix, domain = splitted
-
-    if domain in settings.MASTER_DOMAINS:
-
-        if is_prefix_valid(prefix):
-            return return_result('valid_recipient')
-        else:
-            return return_result('unknown_recipient')
-
-    else:
+    if not is_managed_domain(domain):
         return return_result('unknown_domain')
+
+    if not is_prefix_valid(prefix):
+        return return_result('unknown_recipient')
+
+    return return_result('valid_recipient')

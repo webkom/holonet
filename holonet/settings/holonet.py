@@ -14,6 +14,7 @@ SENDMAIL_BATCH_LENGTH = 40
 MASTER_DOMAINS = [
     'test.holonet.no'
 ]
+MASTER_DOMAIN = MASTER_DOMAINS[0]
 
 
 EMAIL_SUBJECT_PREFIX = u'[%s] ' % 'Holonet'

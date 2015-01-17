@@ -114,7 +114,7 @@ class PolicyServiceStatus(BaseStatusClass):
             socket_connection = socket.socket()
             parser = urlparse(settings.POLICYSERVICE_URL)
             socket_connection.connect((parser.hostname, parser.port))
-            socket_connection.send(('recipient=bwoeuhwfihewfcn@%s\n' % settings.MASTER_DOMAINS[0])
+            socket_connection.send(('recipient=bwoeuhwfihewfcn@%s\n' % settings.MASTER_DOMAIN)
                                    .encode())
             response = (socket_connection.recv(1024)).decode("utf-8")
             socket_connection.close()

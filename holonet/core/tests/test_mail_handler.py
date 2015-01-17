@@ -37,7 +37,7 @@ class MailHandlerTestCase(TestCase):
         mail_mapping = MailingList.objects.get(pk=1)
         for i in range(5, 300):
             mail_mapping.recipient_list.create(
-                address='testlist%s@%s' % (i, settings.MASTER_DOMAINS[0]),
+                address='testlist%s@%s' % (i, settings.MASTER_DOMAIN),
                 tag=i
             )
 

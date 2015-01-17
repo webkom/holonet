@@ -1,7 +1,5 @@
 # -*- coding: utf8 -*-
 
-import sys
-
 from django.conf import settings
 
 from .blacklist import is_blacklisted
@@ -9,76 +7,46 @@ from .message import HolonetEmailMessage
 from .validation import validate_recipient
 from holonet.core.tasks import index_spam, send_spam_notification, index_blacklisted_mail, \
     send_blacklist_notification, index_bounce_mail, send_bounce_notification
-from holonet.mappings.models import MailingList
+from holonet.mappings.helpers import clean_address, split_address, is_bounce, lookup
 
 
 def handle_mail(msg, sender, recipient):
     # Initialize variables
-    sender = sender.lower()
-    recipient = recipient.lower()
-    domain = settings.MASTER_DOMAINS[0]
+    sender = clean_address(sender)
+    recipient = clean_address(recipient)
 
-    # Check that the recipient is valid and exist in our catalog
+    # Check that the recipient is valid and is handled by this server
     validate_recipient(recipient=recipient, sys_exit=True)
 
-    try:
-        # Spilt the recipient address into prefix an domain
-        splitted_recipient = recipient.split('@')
-        prefix, domain = splitted_recipient
-    except ValueError:
-        # We got no @, this happens when the server sends out a error message.
-        if '@' not in recipient and recipient in settings.SYSTEM_ALIASES:
-            prefix = recipient
-        else:
-            sys.exit(settings.EXITCODE_UNKNOWN_RECIPIENT)
-
-    # Handle restricted mail. Send out new messages based on out lists.
-    if prefix == settings.RESTRICTED_PREFIX:
-        raise NotImplemented('Restricted mail is not ready')
-
-    # Handle bounce
-    if prefix == settings.SERVER_EMAIL.split('@')[0]:
-        message = HolonetEmailMessage(msg, [], list_name=prefix)
-        try:
-            index_bounce_mail.delay(message)
-            send_bounce_notification.delay(message)
-        except OSError:
-            pass
-        return True
+    # This prefix and domain is managed by this system.
+    prefix, domain = split_address(recipient)
 
     # Lookup valid recipients
-    try:
-        recipients = MailingList.objects.get(prefix=prefix).recipients
-    except MailingList.DoesNotExist:
-        # Check SYSTEM_ALIASES, if ok, send to system admins.
-        if prefix in settings.SYSTEM_ALIASES:
-            recipients = [address[1] for address in settings.ADMINS]
-        else:
-            sys.exit(settings.EXITCODE_UNKNOWN_RECIPIENT)
+    recipients = lookup(prefix, msg)
 
     # Generate the final message
     message = HolonetEmailMessage(msg, recipients, list_name=prefix)
 
+    # Check if the sender is blacklisted.
+    if is_blacklisted(sender):
+        index_blacklisted_mail.delay(message)
+        send_blacklist_notification.delay(message)
+        return True
+
     # Check if spamassasin has marked the message as spam.
     spam_flag = message.get('X-Spam-Flag', False)
     if spam_flag == 'YES':
-        try:
-            index_spam.delay(message)
-            send_spam_notification.delay(message)
-        except OSError:
-            pass
+        index_spam.delay(message)
+        send_spam_notification.delay(message)
         return True
 
-    # Check if the sender is blacklisted.
-    if is_blacklisted(sender):
-        try:
-            index_blacklisted_mail.delay(message)
-            send_blacklist_notification.delay(message)
-        except OSError:
-            pass
+    # Handle bounce
+    if is_bounce(prefix):
+        index_bounce_mail.delay(message)
+        send_bounce_notification.delay(message)
         return True
 
-    # Sent the message!
+    # Send the message!
     if not settings.TESTING:
         message.send()
     else:

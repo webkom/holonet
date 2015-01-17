@@ -51,6 +51,7 @@ INSTALLED_APPS = (
 
     'holonet.core',
     'holonet.mappings',
+    'holonet.restricted',
     'holonet.dashboad',
     'holonet.api',
     'holonet.status',

@@ -13,10 +13,12 @@ class MailingList(models.Model):
     recipient_list = models.ManyToManyField('mappings.Recipient', blank=True)
 
     def __str__(self):
-        return '%s@%s' % (self.prefix, settings.MASTER_DOMAINS[0])
+        return '%s@%s' % (self.prefix, settings.MASTER_DOMAIN)
 
     @property
     def recipients(self):
+        # Cache goes here
+
         return [recipient.address for recipient in self.recipient_list.all()]
 
 

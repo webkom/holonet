@@ -28,7 +28,7 @@ class ReverseLookupTestCase(APITestCase):
         self.assertEqual(len(response.data), len(stored_recipients))
 
         data = {
-            'email': 'testlist1@%s' % settings.MASTER_DOMAINS[0]
+            'email': 'testlist1@%s' % settings.MASTER_DOMAIN
         }
 
         response = self.client.post(self.endpoint, data=data,  format='json')
@@ -36,7 +36,7 @@ class ReverseLookupTestCase(APITestCase):
         self.assertEqual(len(response.data), len(stored_recipients))
 
         data = {
-            'email': 'testlist1@%s@random' % settings.MASTER_DOMAINS[0]
+            'email': 'testlist1@%s@random' % settings.MASTER_DOMAIN
         }
 
         response = self.client.post(self.endpoint, data=data,  format='json')
@@ -59,7 +59,7 @@ class ReverseLookupTestCase(APITestCase):
 
     def test_system_alias(self):
         data = {
-            'email': '%s@%s' % (settings.SYSTEM_ALIASES[0], settings.MASTER_DOMAINS[0])
+            'email': '%s@%s' % (settings.SYSTEM_ALIASES[0], settings.MASTER_DOMAIN)
         }
 
         response = self.client.post(self.endpoint, data=data, format='json')
@@ -68,7 +68,7 @@ class ReverseLookupTestCase(APITestCase):
 
     def test_no_mailinglist(self):
         data = {
-            'email': 'unknown@%s' % settings.MASTER_DOMAINS[0]
+            'email': 'unknown@%s' % settings.MASTER_DOMAIN
         }
 
         response = self.client.post(self.endpoint, data=data, format='json')

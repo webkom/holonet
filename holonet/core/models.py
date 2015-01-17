@@ -8,4 +8,4 @@ class SenderBlacklist(models.Model):
 
 
 class DomainBlacklist(models.Model):
-    domain = models.CharField(max_length=100)
+    domain = models.CharField(max_length=100, unique=True)

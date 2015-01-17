@@ -24,7 +24,7 @@ class HolonetEmailMessage(object):
 
         if list_name:
             headers['List-Id'] = list_name
-            headers['List-Post'] = '<mailto:%s@%s>' % (list_name, settings.MASTER_DOMAINS[0])
+            headers['List-Post'] = '<mailto:%s@%s>' % (list_name, settings.MASTER_DOMAIN)
 
         for header in headers.keys():
             self.msg.add_header(header, headers[header])

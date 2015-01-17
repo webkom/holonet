@@ -26,7 +26,7 @@ class LookupViewSet(viewsets.ViewSet):
             email = email.strip()
 
         local = email
-        domain = settings.MASTER_DOMAINS[0]
+        domain = settings.MASTER_DOMAIN
         if '@' in email:
             try:
                 local, domain = email.split('@')
