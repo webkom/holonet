@@ -7,16 +7,16 @@ from rest_framework.decorators import list_route
 from django.shortcuts import Http404
 from django.conf import settings
 
-from .serializers import ReverseLookupSerializer
+from .serializers import LookupSerializer
 from .models import MailingList
-from .helpers import ReverseLookupAddress
+from .helpers import LookupAddress
 
 
-class ReverseLookupViewSet(viewsets.ViewSet):
+class LookupViewSet(viewsets.ViewSet):
 
     @list_route(methods=['post'])
     def lookup(self, request, *args, **kwargs):
-        serializer = ReverseLookupSerializer(data=request.data)
+        serializer = LookupSerializer(data=request.data)
         serializer.is_valid()
 
         email = serializer.data.get('email')
@@ -46,11 +46,11 @@ class ReverseLookupViewSet(viewsets.ViewSet):
                 recipients = [address[1] for address in settings.ADMINS]
 
         def create_reverse_objects(email):
-            return ReverseLookupAddress(email)
+            return LookupAddress(email)
 
         object_recipients = map(create_reverse_objects, recipients)
 
-        serializer = ReverseLookupSerializer(data=object_recipients, many=True)
+        serializer = LookupSerializer(data=object_recipients, many=True)
         serializer.is_valid()
 
         return Response(serializer.data)

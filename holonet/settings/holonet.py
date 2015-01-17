@@ -50,7 +50,7 @@ STATUS_CLASSES = (
     'holonet.status.ElasticsearchStatus',
     'holonet.status.CacheStatus',
     'holonet.status.CeleryStatus',
-    'holonet.status.OmnibusStatus',
+    'holonet.status.WebSocketsStatus',
     'holonet.status.PolicyServiceStatus',
     'holonet.status.PostfixStatus',
 )

@@ -11,7 +11,7 @@ var Col = ReactBootstrap.Col;
 
 var Navbar = require('./components/navbar/navbar.js');
 var ServiceStatus = require('./components/servicestatus.js');
-var ReverseLookup = require('./components/reverselookup.js');
+var Lookup = require('./components/lookup.js');
 
 var App = React.createClass({
 
@@ -55,7 +55,7 @@ var App = React.createClass({
                         <ServiceStatus service='elasticsearch' />
                         <ServiceStatus service='cache' />
                         <ServiceStatus service='celery' />
-                        <ServiceStatus service='omnibus' />
+                        <ServiceStatus service='websockets' />
                         <ServiceStatus service='policyservice' />
                         <ServiceStatus service='postfix' />
                     </Row>
@@ -64,7 +64,7 @@ var App = React.createClass({
                 <Grid fluid={true}>
                     <Row>
                         <Col lg={3} md={4}>
-                            <ReverseLookup/>
+                            <Lookup/>
                         </Col>
                     </Row>
                 </Grid>

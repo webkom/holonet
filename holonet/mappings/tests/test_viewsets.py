@@ -14,7 +14,7 @@ class ReverseLookupTestCase(APITestCase):
 
     def setUp(self):
         self.client.force_authenticate(user=User.objects.get(username='testuser1'))
-        self.endpoint = '/api/reverse-lookup/lookup/'
+        self.endpoint = '/api/lookup/lookup/'
 
     def test_reverse_lookup(self):
         stored_recipients = MailingList.objects.get(prefix='testlist1').recipients

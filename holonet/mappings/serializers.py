@@ -3,5 +3,5 @@
 from rest_framework import serializers
 
 
-class ReverseLookupSerializer(serializers.Serializer):
+class LookupSerializer(serializers.Serializer):
     email = serializers.EmailField()

@@ -11,7 +11,7 @@ var Input = ReactBootstrap.Input;
 var ListGroup = ReactBootstrap.ListGroup;
 var ListGroupItem = ReactBootstrap.ListGroupItem;
 
-var ReverseLookupList = React.createClass({
+var LookupList = React.createClass({
     render: function() {
         var createItem = function(itemText) {
             var href = 'mailto:' + itemText;
@@ -21,7 +21,7 @@ var ReverseLookupList = React.createClass({
     }
 });
 
-var ReverseLookup = React.createClass({
+var Lookup = React.createClass({
 
     getInitialState: function() {
         return {
@@ -32,13 +32,13 @@ var ReverseLookup = React.createClass({
 
     handleChange: function() {
         var self = this;
-        var value = this.refs.reverseLookup.getValue();
+        var value = this.refs.lookup.getValue();
         self.setState({
             value: value
         });
         var cookies = cookie.parse(document.cookie);
         request
-            .post('/api/reverse-lookup/lookup/')
+            .post('/api/lookup/lookup/')
             .set('Accept', 'application/json')
             .set('X-CSRFToken', cookies['csrftoken'])
             .send({
@@ -58,11 +58,11 @@ var ReverseLookup = React.createClass({
     render: function() {
 
         var title = (
-            <h3>Reverse Lookup</h3>
+            <h3>Lookup</h3>
         );
 
         var footer = (
-            <ReverseLookupList items={this.state.items} />
+            <LookupList items={this.state.items} />
         );
 
         return (
@@ -72,7 +72,7 @@ var ReverseLookup = React.createClass({
                     value={this.state.value}
                     placeholder='Enter email'
                     label={false}
-                    ref='reverseLookup'
+                    ref='lookup'
                     groupClassName='no-padding no-margin'
                     onChange={this.handleChange} />
             </Panel>
@@ -81,4 +81,4 @@ var ReverseLookup = React.createClass({
 
 });
 
-module.exports = ReverseLookup;
+module.exports = Lookup;

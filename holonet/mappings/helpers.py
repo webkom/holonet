@@ -18,7 +18,7 @@ def is_prefix_valid(prefix):
     return False
 
 
-class ReverseLookupAddress(object):
+class LookupAddress(object):
 
     def __init__(self, address):
         self.email = address

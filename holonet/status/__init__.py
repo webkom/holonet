@@ -78,9 +78,9 @@ class CeleryStatus(BaseStatusClass):
         return not result.failed()
 
 
-class OmnibusStatus(BaseStatusClass):
+class WebSocketsStatus(BaseStatusClass):
 
-    name = 'omnibus'
+    name = 'websockets'
 
     def status(self):
         try:
