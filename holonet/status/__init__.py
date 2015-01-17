@@ -6,7 +6,6 @@ from builtins import ConnectionAbortedError, ConnectionRefusedError, ConnectionR
 
 from elasticsearch import ConnectionError
 from celery import task
-from omnibus.api import publish
 from omnibus.exceptions import OmnibusPublisherException, OmnibusException
 from omnibus.settings import PUBLISHER_ADDRESS
 
@@ -14,6 +13,7 @@ from django.conf import settings
 from django.core.cache import cache
 
 from holonet.core.elasticsearch import get_connection, index_check
+from holonet.core.omnibus import publish
 
 
 @task
