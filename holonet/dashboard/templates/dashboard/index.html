@@ -3,13 +3,17 @@
 
 {% block styles %}
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
-    <link href="{% static 'css/animate.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/animate.css/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/ricksaw/rickshaw.min.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block scripts %}
     <script type="text/javascript" src="{% static 'omnibus/omnibus.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'omnibus/sockjs.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/bootstrap-growl.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/bootstrap-growl/jquery.bootstrap-growl.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/ricksaw/vendor/d3.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/ricksaw/vendor/d3.layout.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/ricksaw/rickshaw.min.js' %}"></script>
 
     <script type="text/javascript">
         window.endpoint = '{{ OMNIBUS_ENDPOINT }}';

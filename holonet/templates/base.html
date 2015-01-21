@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,8 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Holonet</title>
 
-    <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.0/flatly/bootstrap.min.css" rel="stylesheet">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{% static "lib/bootswatch/flatly/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "lib/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet">
 
     {% block styles %}{% endblock %}
 
@@ -22,8 +24,8 @@
 
     {% endblock %}
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="{% static "lib/jquery/dist/jquery.min.js" %}"></script>
+    <script src="{% static "lib/bootstrap/dist/js/bootstrap.min.js" %}"></script>
 
     {% block scripts %}{% endblock %}
   </body>

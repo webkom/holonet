@@ -65,5 +65,5 @@ node_modules/
 
 htmlcov/
 
-holonet/dashboad/static/js/index.js
-holonet/dashboad/static/css/style.css
+holonet/dashboard/static/js/index.js
+holonet/dashboard/static/css/style.css

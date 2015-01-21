@@ -1,7 +1,8 @@
 {% extends "rest_framework/base.html" %}
+{% load static %}
 
 {% block bootstrap_theme %}
-    <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.0/flatly/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static "lib/bootswatch/flatly/bootstrap.min.css" %}" rel="stylesheet">
 {% endblock %}
 
 {% block title %}Holonet API{% endblock %}

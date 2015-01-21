@@ -1,0 +1,26 @@
+{
+  "name": "holonet",
+  "version": "0.0.0",
+  "homepage": "https://github.com/webkom/holonet",
+  "authors": [
+    "Eirik Martiniussen Sylliaas <eirik@sylliaas.no>"
+  ],
+  "description": "Abakus Mail Delivery System",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "holonet/dashboard/static/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ricksaw": "~1.5.1",
+    "bootswatch": "~3.3.1",
+    "font-awesome": "~4.2.0",
+    "bootstrap-growl": "~1.1.0",
+    "animate.css": "~3.2.0"
+  }
+}

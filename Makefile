@@ -13,14 +13,14 @@ WATCHIFY   = node_modules/.bin/watchify
 STYLUS     = node_modules/.bin/stylus
 NIB        = node_modules/nib/lib
 
-BUILD_JS    = holonet/dashboad/static/js/index.js
-BUILD_CSS   = holonet/dashboad/static/css/style.css
+BUILD_JS    = holonet/dashboard/static/js/index.js
+BUILD_CSS   = holonet/dashboard/static/css/style.css
 
-JS_MAIN   = holonet/dashboad/static/js/holonet/app.js
-CSS_MAIN  = holonet/dashboad/static/styl/style.styl
+JS_MAIN   = holonet/dashboard/static/js/holonet/app.js
+CSS_MAIN  = holonet/dashboard/static/styl/style.styl
 
-JS         = $(shell find holonet/dashboad/static/js/holonet/ -name "*.js")
-CSS        = $(shell find holonet/dashboad/static/styl/ -name "*.styl")
+JS         = $(shell find holonet/dashboard/static/js/holonet/ -name "*.js")
+CSS        = $(shell find holonet/dashboard/static/styl/ -name "*.styl")
 
 TRANSFORMS = -t [ reactify --harmony ]
 
@@ -34,11 +34,11 @@ endif
 $(BUILD_CSS): $(CSS)
 ifneq ($(NODE_ENV), development)
 	$(STYLUS) --include $(NIB) \
-	--include holonet/dashboad/static/styl \
+	--include holonet/dashboard/static/styl \
 	--compress < $(CSS_MAIN) > $(BUILD_CSS)
 else
 	$(STYLUS) --include $(NIB) \
-	--include holonet/dashboad/static/styl \
+	--include holonet/dashboard/static/styl \
 	--include-css < $(CSS_MAIN) > $(BUILD_CSS)
 endif
 
@@ -53,7 +53,7 @@ frontend: $(BUILD_JS) $(BUILD_CSS)
 watchify:
 	$(WATCHIFY) $(TRANSFORMS) $(JS_MAIN) -v -o $(BUILD_JS)
 
-watch-css: holonet/dashboad/static/css/style.css
+watch-css: holonet/dashboard/static/css/style.css
 	@true
 
 watch:

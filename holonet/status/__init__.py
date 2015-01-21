@@ -74,8 +74,11 @@ class CeleryStatus(BaseStatusClass):
     name = 'celery'
 
     def status(self):
-        result = test_task.delay()
-        return not result.failed()
+        try:
+            result = test_task.delay()
+            return not result.failed()
+        except OSError:
+            return False
 
 
 class WebSocketsStatus(BaseStatusClass):
