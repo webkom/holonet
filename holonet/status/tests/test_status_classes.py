@@ -37,4 +37,4 @@ class ElasticsearchStatusTestCase(TestCase):
 
     def test_status(self):
         elasticsearch = ElasticsearchStatus()
-        self.assertTrue(elasticsearch.status())
+        self.assertTrue(isinstance(elasticsearch.status(), bool))

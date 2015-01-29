@@ -29,6 +29,3 @@ class GraphViewSet(ViewSet):
                                          serializer.data['time_to'], serializer.data['query'])
 
         return Response(elasticsearch_data)
-
-
-

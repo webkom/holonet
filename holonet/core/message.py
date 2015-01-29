@@ -1,7 +1,5 @@
 # -*- coding: utf8 -*-
 
-import pytz
-
 from io import BytesIO
 
 from django.utils import timezone
