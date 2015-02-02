@@ -6,7 +6,7 @@ from django.test import TestCase
 from django.utils import timezone
 
 from holonet.api.models import Application, Token
-from holonet.api.exceptions import TokenDoesNotExistException
+from holonet.core.exceptions import TokenDoesNotExistException
 
 
 class ModelsTestCase(TestCase):

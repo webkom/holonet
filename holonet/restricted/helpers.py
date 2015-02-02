@@ -9,11 +9,6 @@ def is_restricted(prefix):
 
 def lookup(msg):
     # Cache goes here
-
-    return []
-
-
-def reverse_lookup(token):
-    # Cache goes here
+    # Lookup in mail attachment
 
     return []
