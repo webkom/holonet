@@ -22,7 +22,7 @@ def handle_mail(msg, sender, recipient):
     prefix, domain = split_address(recipient)
 
     # Lookup valid recipients
-    recipients = lookup(prefix, msg)
+    recipients = lookup(prefix, msg, mark_restricted_as_used=True)
 
     # Generate the final message
     message = HolonetEmailMessage(msg, recipients, list_name=prefix)

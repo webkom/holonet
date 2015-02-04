@@ -22,6 +22,7 @@ SERVER_EMAIL = 'bounce@holonet.no'
 DEFAULT_FROM_EMAIL = SERVER_EMAIL
 
 RESTRICTED_PREFIX = 'restricted'
+RESTRICTED_TOKEN_PREFIX = 'holonet'
 
 UNSUBSCRIBE_LINK = '<http://holonet.no> - go to your profile and unregister'
 

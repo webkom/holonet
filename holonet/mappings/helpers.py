@@ -21,13 +21,13 @@ def is_prefix_valid(prefix):
     return len(lookup(prefix)) > 0
 
 
-def lookup(prefix, msg=None):
+def lookup(prefix, msg=None, mark_restricted_as_used=False):
 
     if is_server_alias(prefix):
         return [address[1] for address in settings.ADMINS]
 
     if is_restricted(prefix) and msg:
-        return restricted_lookup(msg)
+        return restricted_lookup(msg, mark_restricted_as_used)
 
     try:
         # Cache goes here

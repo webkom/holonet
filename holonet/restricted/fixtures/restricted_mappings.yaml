@@ -1,0 +1,6 @@
+- model: restricted.RestrictedMapping
+  pk: 1
+  fields:
+    token: '6375717d-9296-4db8-a0ec-40855cb94d79'
+    from_address: 'test@holonet.no'
+    recipient_list: [1,2,3]

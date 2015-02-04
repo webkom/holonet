@@ -3,7 +3,6 @@
 from rest_framework.authentication import BaseAuthentication
 
 from .models import Token
-from holonet.core.exceptions import TokenDoesNotExistException
 
 
 class TokenAuthenticationBackend(BaseAuthentication):
@@ -16,7 +15,7 @@ class TokenAuthenticationBackend(BaseAuthentication):
         try:
             token_object = Token.get_token(token)
             return token_object.application, request
-        except TokenDoesNotExistException:
+        except Token.DoesNotExist:
             pass
 
         return None

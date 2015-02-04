@@ -3,8 +3,6 @@
 from django.db import models
 from django.utils import timezone
 
-from .exceptions import TokenDoesNotExistException
-
 
 class SenderBlacklist(models.Model):
     sender = models.EmailField(unique=True)
@@ -22,27 +20,23 @@ class TokenModel(models.Model):
 
     @classmethod
     def get_token(cls, token):
-        try:
-            now = timezone.now()
-            token_object = cls.objects.get(token=token)
+        now = timezone.now()
+        token_object = cls.objects.get(token=token)
 
-            def check_valid_to(date):
-                if date is None:
-                    return token_object
-                elif date > now:
-                    return token_object
-                raise TokenDoesNotExistException('The token %s does not exist.' % token)
+        def check_valid_to(date):
+            if date is None:
+                return token_object
+            elif date > now:
+                return token_object
+            raise cls.DoesNotExist()
 
-            if token_object.valid_from is not None:
-                if token_object.valid_from < now:
-                    return check_valid_to(token_object.valid_to)
-            else:
-                    return check_valid_to(token_object.valid_to)
+        if token_object.valid_from is not None:
+            if token_object.valid_from < now:
+                return check_valid_to(token_object.valid_to)
+        else:
+                return check_valid_to(token_object.valid_to)
 
-        except cls.DoesNotExist:
-            pass
-
-        raise TokenDoesNotExistException('The token %s does not exist.' % token)
+        raise cls.DoesNotExist()
 
     class Meta:
         abstract = True

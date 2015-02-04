@@ -1,7 +1,5 @@
 # -*- coding: utf8 -*-
 
-import uuid
-
 from rest_framework import serializers
 
 from .models import RestrictedMapping

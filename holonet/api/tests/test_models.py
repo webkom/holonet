@@ -6,7 +6,6 @@ from django.test import TestCase
 from django.utils import timezone
 
 from holonet.api.models import Application, Token
-from holonet.core.exceptions import TokenDoesNotExistException
 
 
 class ModelsTestCase(TestCase):
@@ -20,7 +19,7 @@ class ModelsTestCase(TestCase):
 
         token.valid_from = now + datetime.timedelta(hours=1)
         token.save()
-        self.assertRaises(TokenDoesNotExistException, Token.get_token, 'secret_token')
+        self.assertRaises(Token.DoesNotExist, Token.get_token, 'secret_token')
 
         token.valid_from = now - datetime.timedelta(hours=1)
         token.save()
@@ -34,7 +33,7 @@ class ModelsTestCase(TestCase):
         token.valid_from = None
         token.valid_to = now - datetime.timedelta(hours=1)
         token.save()
-        self.assertRaises(TokenDoesNotExistException, Token.get_token, 'secret_token')
+        self.assertRaises(Token.DoesNotExist, Token.get_token, 'secret_token')
 
         token.valid_from = now - datetime.timedelta(hours=1)
         token.valid_to = now + datetime.timedelta(hours=1)
@@ -44,10 +43,10 @@ class ModelsTestCase(TestCase):
         token.valid_from = now + datetime.timedelta(hours=1)
         token.valid_to = now - datetime.timedelta(hours=1)
         token.save()
-        self.assertRaises(TokenDoesNotExistException, Token.get_token, 'secret_token')
+        self.assertRaises(Token.DoesNotExist, Token.get_token, 'secret_token')
 
     def test_unknown_token(self):
-        self.assertRaises(TokenDoesNotExistException, Token.get_token, 'unknown')
+        self.assertRaises(Token.DoesNotExist, Token.get_token, 'unknown')
 
     def test_application_perms(self):
         application = Application.objects.first()
