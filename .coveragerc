@@ -1,5 +1,5 @@
 [run]
-nclude = holonet/*
+include = holonet/*
 
 [report]
 exclude_lines =
