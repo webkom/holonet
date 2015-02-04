@@ -1,11 +1,14 @@
 # -*- coding: utf8 -*-
 
+import sys
+
 from django.conf import settings
 
 from holonet.core.tasks import (index_blacklisted_mail, index_bounce_mail, index_spam,
                                 send_blacklist_notification, send_bounce_notification,
                                 send_spam_notification)
 from holonet.mappings.helpers import clean_address, is_bounce, lookup, split_address
+from holonet.restricted.helpers import is_restricted
 
 from .blacklist import is_blacklisted
 from .message import HolonetEmailMessage
@@ -47,6 +50,10 @@ def handle_mail(msg, sender, recipient):
         index_bounce_mail.delay(message)
         send_bounce_notification.delay(message)
         return True
+
+    # Exit with a exitcode if restricted mail don't have any recipents
+    if is_restricted(prefix) and len(recipient) == 0:
+        sys.exit(settings.EXITCODE_UNKNOWN_RECIPIENT)
 
     # Send the message!
     if not settings.TESTING:
