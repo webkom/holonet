@@ -3,11 +3,11 @@
 import email
 import os
 
-from django.test import TestCase, override_settings
 from django.core import mail
+from django.test import TestCase, override_settings
 
-from holonet.core.message import HolonetEmailMessage
 from holonet.backends.sendmail import EmailBackend
+from holonet.core.message import HolonetEmailMessage
 
 
 class HolonetMessageTestCase(TestCase):

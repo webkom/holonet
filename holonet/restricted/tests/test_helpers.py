@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 
-import os
 import email
+import os
 
 from django.test import TestCase
 from django.test.utils import override_settings

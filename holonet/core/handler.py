@@ -2,12 +2,14 @@
 
 from django.conf import settings
 
+from holonet.core.tasks import (index_blacklisted_mail, index_bounce_mail, index_spam,
+                                send_blacklist_notification, send_bounce_notification,
+                                send_spam_notification)
+from holonet.mappings.helpers import clean_address, is_bounce, lookup, split_address
+
 from .blacklist import is_blacklisted
 from .message import HolonetEmailMessage
 from .validation import validate_recipient
-from holonet.core.tasks import index_spam, send_spam_notification, index_blacklisted_mail, \
-    send_blacklist_notification, index_bounce_mail, send_bounce_notification
-from holonet.mappings.helpers import clean_address, split_address, is_bounce, lookup
 
 
 def handle_mail(msg, sender, recipient):

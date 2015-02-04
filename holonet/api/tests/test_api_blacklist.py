@@ -3,8 +3,8 @@
 from django.test import Client, TestCase
 
 from holonet.api.models import Token
-from holonet.core.serializers import DomainBlacklistSerializer, SenderBlacklistSerializer
 from holonet.core.models import DomainBlacklist, SenderBlacklist
+from holonet.core.serializers import DomainBlacklistSerializer, SenderBlacklistSerializer
 
 
 class BlacklistAPITestCase(TestCase):

@@ -2,8 +2,8 @@
 
 from io import BytesIO
 
-from django.utils import timezone
 from django.conf import settings
+from django.utils import timezone
 
 
 class HolonetEmailMessage(object):

@@ -5,8 +5,8 @@ import os
 
 from django.test import TestCase
 
-from holonet.core.tasks import index_blacklisted_mail, send_blacklist_notification
 from holonet.core.message import HolonetEmailMessage
+from holonet.core.tasks import index_blacklisted_mail, send_blacklist_notification
 
 
 class TaskTestCase(TestCase):

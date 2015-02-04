@@ -1,6 +1,6 @@
 # -*- coding: utf8 -*-
 
-from holonet.core.elasticsearch import run_search, generate_interval
+from holonet.core.elasticsearch import generate_interval, run_search
 
 
 def graph_query(types, time_from, time_to, query=None):

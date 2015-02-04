@@ -1,7 +1,8 @@
 # -*- coding: utf8 -*-
 
-from .models import SenderBlacklist, DomainBlacklist
 from holonet.mappings.helpers import clean_address, split_address
+
+from .models import DomainBlacklist, SenderBlacklist
 
 
 def is_blacklisted(sender):

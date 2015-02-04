@@ -1,6 +1,6 @@
 # -*- coding: utf8 -*-
 
-from django.core.validators import validate_email, ValidationError
+from django.core.validators import ValidationError, validate_email
 
 
 def validate_local_part(value):

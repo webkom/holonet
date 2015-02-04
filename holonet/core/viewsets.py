@@ -1,10 +1,9 @@
 # -*- coding: utf8 -*-
 
-from rest_framework import viewsets
-from rest_framework import mixins
+from rest_framework import mixins, viewsets
 
-from .serializers import SenderBlacklistSerializer, DomainBlacklistSerializer
-from .models import SenderBlacklist, DomainBlacklist
+from .models import DomainBlacklist, SenderBlacklist
+from .serializers import DomainBlacklistSerializer, SenderBlacklistSerializer
 
 
 class SenderBlacklistViewSet(mixins.CreateModelMixin,

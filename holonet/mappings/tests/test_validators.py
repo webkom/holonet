@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 
-from django.test import TestCase
 from django.core.validators import ValidationError
+from django.test import TestCase
 
 from holonet.mappings.validators import validate_local_part
 

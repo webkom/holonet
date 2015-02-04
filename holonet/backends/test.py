@@ -1,9 +1,9 @@
 # -*- coding: utf8 -*-
 
-from django.test import TestCase
-from django.core.mail.message import EmailMessage
-from django.core import mail
 from django.conf import settings
+from django.core import mail
+from django.core.mail.message import EmailMessage
+from django.test import TestCase
 
 from .sendmail import EmailBackend
 

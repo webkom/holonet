@@ -1,9 +1,7 @@
 # -*- coding: utf8 -*-
 
-from elasticsearch import Elasticsearch
-from elasticsearch import ConnectionError
-
 from django.conf import settings
+from elasticsearch import ConnectionError, Elasticsearch
 
 
 def get_connection():

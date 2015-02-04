@@ -1,9 +1,8 @@
 # -*- coding: utf8 -*-
 
-from omnibus.exceptions import OmnibusDataException, OmnibusPublisherException
-
 from django.conf import settings
 from django.utils.html import escape
+from omnibus.exceptions import OmnibusDataException, OmnibusPublisherException
 
 from holonet.core.omnibus import publish
 

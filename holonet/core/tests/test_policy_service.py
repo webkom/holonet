@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 
-from django.test import TestCase
 from django.conf import settings
+from django.test import TestCase
 
 from holonet.core.management.commands.policy_service import HolonetAccessPolicyHandler
 

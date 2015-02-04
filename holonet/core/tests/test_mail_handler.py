@@ -1,16 +1,16 @@
 # -*- coding: utf8 -*-
 
-import os
 import email
 import math
+import os
 
-from django.test import TestCase
 from django.conf import settings
 from django.core import mail
+from django.test import TestCase
 
 from holonet.core.handler import handle_mail
-from holonet.mappings.models import MailingList
 from holonet.core.validation import validate_recipient
+from holonet.mappings.models import MailingList
 
 
 class MailHandlerTestCase(TestCase):

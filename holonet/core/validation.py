@@ -3,10 +3,10 @@
 import sys
 
 from django.conf import settings
-from django.core.validators import validate_email, ValidationError
+from django.core.validators import ValidationError, validate_email
 
-from holonet.mappings.helpers import is_prefix_valid, clean_address, split_address, \
-    is_managed_domain
+from holonet.mappings.helpers import (clean_address, is_managed_domain, is_prefix_valid,
+                                      split_address)
 
 
 def validate_recipient(params=None, recipient='', sys_exit=False):

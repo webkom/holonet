@@ -1,10 +1,9 @@
 # -*- coding: utf8 -*-
 
-from rest_framework.test import APITestCase
-
-from django.contrib.auth.models import User
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.utils.module_loading import import_string
+from rest_framework.test import APITestCase
 
 
 class TestViewSets(APITestCase):

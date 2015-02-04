@@ -3,9 +3,9 @@
 import email
 import os
 
-from django.test import TestCase
-from django.core import mail
 from django.conf import settings
+from django.core import mail
+from django.test import TestCase
 
 from holonet.core.management.commands.mail_handler import Command as MailCommand
 

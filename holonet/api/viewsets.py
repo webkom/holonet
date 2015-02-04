@@ -1,9 +1,8 @@
 # -*- coding: utf8 -*-
 
-from rest_framework.viewsets import ViewSet
-from rest_framework.response import Response
-
 from django.conf import settings
+from rest_framework.response import Response
+from rest_framework.viewsets import ViewSet
 
 
 class InformationViewSet(ViewSet):

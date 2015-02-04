@@ -2,8 +2,8 @@
 
 from rest_framework import viewsets
 
-from .serializers import RestrictedMappingSerializer
 from .models import RestrictedMapping
+from .serializers import RestrictedMappingSerializer
 
 
 class RestrictedMappingViewSet(viewsets.ModelViewSet):

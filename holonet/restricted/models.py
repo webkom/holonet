@@ -4,8 +4,9 @@ import uuid
 
 from django.db import models
 
-from .managers import RestrictedMappingManager
 from holonet.core.models import TokenModel
+
+from .managers import RestrictedMappingManager
 
 
 class RestrictedMapping(TokenModel):

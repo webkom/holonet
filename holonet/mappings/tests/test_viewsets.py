@@ -1,12 +1,11 @@
 # -*- coding: utf8 -*-
 
+from django.conf import settings
+from django.contrib.auth.models import User
 from rest_framework.test import APITestCase
 
-from django.contrib.auth.models import User
-from django.conf import settings
-
-from holonet.mappings.models import MailingList
 from holonet.mappings.helpers import lookup
+from holonet.mappings.models import MailingList
 
 
 class ReverseLookupTestCase(APITestCase):

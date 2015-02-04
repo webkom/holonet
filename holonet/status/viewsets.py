@@ -1,15 +1,14 @@
 # -*- coding: utf8 -*-
 
-from rest_framework.viewsets import ViewSet
-from rest_framework.response import Response
-from rest_framework.decorators import list_route
-
 from django.conf import settings
-from django.utils.module_loading import import_string
 from django.shortcuts import Http404
+from django.utils.module_loading import import_string
+from rest_framework.decorators import list_route
+from rest_framework.response import Response
+from rest_framework.viewsets import ViewSet
 
-from holonet.status.serializers import StatusSerializer
 from holonet.status import BaseStatusClass
+from holonet.status.serializers import StatusSerializer
 
 
 class StatusViewSet(ViewSet):

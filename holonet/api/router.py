@@ -2,13 +2,13 @@
 
 from rest_framework import routers
 
-from .viewsets import InformationViewSet
-from holonet.core.viewsets import SenderBlacklistViewSet, DomainBlacklistViewSet
-from holonet.status.viewsets import StatusViewSet
-from holonet.mappings.viewsets import LookupViewSet
+from holonet.core.viewsets import DomainBlacklistViewSet, SenderBlacklistViewSet
 from holonet.dashboard.viewsets import GraphViewSet
+from holonet.mappings.viewsets import LookupViewSet
 from holonet.restricted.viewsets import RestrictedMappingViewSet
+from holonet.status.viewsets import StatusViewSet
 
+from .viewsets import InformationViewSet
 
 router = routers.DefaultRouter()
 router.register(r'information', InformationViewSet, base_name='information')

@@ -2,8 +2,8 @@
 
 from celery import task
 
-from .elasticsearch import store_spam, store_blacklisted_mail, store_bounce_mail
-from .notify import notify_spam, notify_blacklisted, notify_bounce
+from .elasticsearch import store_blacklisted_mail, store_bounce_mail, store_spam
+from .notify import notify_blacklisted, notify_bounce, notify_spam
 
 
 @task()

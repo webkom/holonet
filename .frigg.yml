@@ -1,6 +1,7 @@
 tasks:
   - tox
   - flake8
+  - isort -c -rc holonet
   - coverage report --fail-under=75
   - coverage xml
 comment: false

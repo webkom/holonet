@@ -1,15 +1,13 @@
 # -*- coding: utf8 -*-
 
-from omnibus.authenticators import UserAuthenticator
-from omnibus.settings import SERVER_PORT, SERVER_HOST, ENDPOINT_SCHEME, SERVER_BASE_URL
-from omnibus.compat import split_domain_port
-
+from django.conf import settings
+from django.contrib.auth.models import AnonymousUser, User
 from django.test import TestCase
 from django.test.client import RequestFactory
-from django.contrib.auth.models import AnonymousUser
-from django.contrib.auth.models import User
 from django.test.utils import override_settings
-from django.conf import settings
+from omnibus.authenticators import UserAuthenticator
+from omnibus.compat import split_domain_port
+from omnibus.settings import ENDPOINT_SCHEME, SERVER_BASE_URL, SERVER_HOST, SERVER_PORT
 
 from holonet.core.context_processors import omnibus
 

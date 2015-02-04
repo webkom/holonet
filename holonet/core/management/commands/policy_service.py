@@ -1,14 +1,14 @@
 # -*- coding: utf8 -*-
 
+import signal
+import socketserver
 import sys
 import threading
-import socketserver
-import signal
 import time
 from urllib.parse import urlparse
 
-from django.core.management.base import BaseCommand
 from django.conf import settings
+from django.core.management.base import BaseCommand
 
 from holonet.core.validation import validate_recipient
 

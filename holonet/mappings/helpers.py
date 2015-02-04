@@ -2,8 +2,10 @@
 
 from django.conf import settings
 
+from holonet.restricted.helpers import lookup as restricted_lookup
+from holonet.restricted.helpers import is_restricted
+
 from .models import MailingList, Recipient
-from holonet.restricted.helpers import is_restricted, lookup as restricted_lookup
 
 
 def is_prefix_valid(prefix):

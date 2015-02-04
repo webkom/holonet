@@ -1,9 +1,8 @@
 # -*- coding: utf8 -*-
-from omnibus.compat import split_domain_port
-from omnibus.authenticators import UserAuthenticator
-from omnibus.settings import SERVER_HOST, SERVER_PORT, SERVER_BASE_URL
-
 from django.conf import settings
+from omnibus.authenticators import UserAuthenticator
+from omnibus.compat import split_domain_port
+from omnibus.settings import SERVER_BASE_URL, SERVER_HOST, SERVER_PORT
 
 
 def omnibus(request):

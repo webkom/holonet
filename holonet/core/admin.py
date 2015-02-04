@@ -2,8 +2,7 @@
 
 from django.contrib import admin
 
-from .models import SenderBlacklist, DomainBlacklist
-
+from .models import DomainBlacklist, SenderBlacklist
 
 admin.site.register(SenderBlacklist)
 admin.site.register(DomainBlacklist)

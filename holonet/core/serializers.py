@@ -2,7 +2,7 @@
 
 from rest_framework import serializers
 
-from .models import SenderBlacklist, DomainBlacklist
+from .models import DomainBlacklist, SenderBlacklist
 
 
 class SenderBlacklistSerializer(serializers.HyperlinkedModelSerializer):

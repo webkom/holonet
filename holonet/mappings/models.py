@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 
-from django.db import models
 from django.conf import settings
+from django.db import models
 
 from .validators import validate_local_part
 
