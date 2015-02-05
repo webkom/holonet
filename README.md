@@ -8,23 +8,49 @@ Abakus Mail Delivery System
 
 Holonet has many features, but it is designed to handle mail as long as the management command mail_handler can connect to the database. Services like rabbitmq, elasticsearch, celery, omnibus and policy_services are not required to handle valid mail, but the bounce, spam and blacklist services may not work properly. Postfix may require services like spamassasin and the policy_service to work properly. This depends on your postfix config. If spamassasin is down postfix will send a bounce message to the sender. Postfix may work without the policy_service if a default value exist in the postfix config, if not send a bounce. The sender will get a bounce if something goes wrong under the mail_handler, mail_handler raises different exit codes based on the result.
 
-### Supported Features
-* Index spam and blacklisted mail in Elasticsearch
+### Features
+* Index spam, blacklisted and bounce mail in Elasticsearch
 * Policy Service
 * Handle mail using pipe
-
-### Planned Features
-* Create a mailinglist api (Create / Edit / Delete mappings using a json REST API.)
+* Mapping API (Create / Edit / Delete mappings using a json REST API.)
 * Store statistics in Elasticsearch
 * Stats frontend
-* Make it possible to resend blacklisted/spam/bounce mail
-* Restricted mail support
+* Restricted mail
 
 ## Pipeline
 1. Postfix (Recipient validation uses Holonet Policy Service)
 2. Spamassasin
 3. Postfix Pipe (Holonet Mail Handling)
 4. Holonet does a mailinglist lookup and uses sendmail to process mail to it's recipients
+
+## Getting started
+```
+git clone git@github.com:webkom/holonet.git
+cd holonet
+npm install && bower install
+make frontend
+make venv
+source venv/bin/activate
+pip install -r requirements/prod.txt
+```
+
+Now you need to fix the settings file. Override the settings you want in settings/holonet.py.
+Make sure you configure the database, elasticsearch config, celery broker, cache and so on.
+
+```
+python manage.py collectstatic
+```
+
+The django project is now probably ready to run. You can now run it with gunicorn or uwsgi. 
+Now you need to setup postfix to pipe mail into holonet, start the policy service and start the celery worker. This process is described later in this document.
+
+It is recomended to run the scripts with supervisor.
+
+## Holonet Celery Worker
+This worker executes tasks asynchronous. Holonet may work without it, but it is recomended to run it.
+```
+$PROJECT_DIR/venv/bin/python $PROJECT_DIR/manage.py celery worker
+```
 
 ## Holonet Policy Service
 Holonet Policy Service does a lookup in the mailing lists to find if the RCPT TO parameter is handeled by Holonet.
@@ -95,3 +121,6 @@ use_bayes 1
 bayes_auto_learn 1
 add_header ham HAM-Report _REPORT_
 ```
+
+
+### MIT © Abakus Webkom
