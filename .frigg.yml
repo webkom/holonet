@@ -2,7 +2,7 @@ tasks:
   - tox -e py34
   - tox -e docs
   - flake8
-  - isort -c -rc holonet
+  - isort -vb -c -rc holonet
   - coverage report --fail-under=75
   - coverage xml
 comment: false
