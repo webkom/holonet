@@ -48,7 +48,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
-
+    'raven',
 
     'holonet.core',
     'holonet.mappings',
