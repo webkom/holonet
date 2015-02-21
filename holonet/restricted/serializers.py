@@ -7,7 +7,7 @@ from .models import RestrictedMapping
 
 class RestrictedMappingSerializer(serializers.HyperlinkedModelSerializer):
 
-    token = serializers.CharField(max_length=64, allow_blank=True, allow_null=True)
+    token = serializers.ReadOnlyField()
 
     class Meta:
         model = RestrictedMapping
@@ -16,5 +16,6 @@ class RestrictedMappingSerializer(serializers.HyperlinkedModelSerializer):
             'valid_from',
             'valid_to',
             'from_address',
-            'recipients'
+            'recipients',
+            'tag'
         )

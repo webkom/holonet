@@ -16,6 +16,7 @@ class RestrictedMapping(TokenModel):
 
     recipient_list = models.ManyToManyField('mappings.Recipient', blank=True,
                                             related_name='restricted_lists')
+    tag = models.CharField(max_length=100, blank=True)
 
     objects = RestrictedMappingManager()
 
@@ -28,7 +29,13 @@ class RestrictedMapping(TokenModel):
     def save(self, *args, **kwargs):
         if not self.token:
             self.token = uuid.uuid4()
-        super(RestrictedMapping, self).save(*args, **kwargs)
+
+        if self.tag != '':
+            query_length = RestrictedMapping.objects.filter(tag=self.tag).count()
+            if query_length > 0:
+                raise ValueError('Tag field is not unique.')
+
+        return super(RestrictedMapping, self).save(*args, **kwargs)
 
     def regenerate_token(self):
         self.token = uuid.uuid4()

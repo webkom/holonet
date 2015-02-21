@@ -13,6 +13,7 @@ class HelperTestCase(TestCase):
         self.assertTrue(is_prefix_valid('testlist1'))
         self.assertTrue(is_prefix_valid('testlist2'))
         self.assertFalse(is_prefix_valid('testlist3'))
-        self.assertFalse(is_prefix_valid('testlist4'))
+        self.assertTrue(is_prefix_valid('testlist4'))
+        self.assertFalse(is_prefix_valid('testlist5'))
         self.assertTrue(is_prefix_valid(settings.RESTRICTED_PREFIX))
         self.assertTrue(is_prefix_valid(settings.SERVER_EMAIL.split('@')[0]))

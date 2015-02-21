@@ -22,3 +22,24 @@ class ModelsTestCase(TestCase):
     def test_recipient_str(self):
         recipient = Recipient.objects.get(pk=1)
         self.assertEqual(recipient.address, str(recipient))
+
+    def test_duplicate_tags(self):
+        mapping1 = MailingList.objects.get(pk=1)
+        mapping2 = MailingList.objects.get(pk=2)
+
+        mapping1.tag = '1'
+        mapping2.tag = '1'
+
+        mapping1.save()
+
+        self.assertRaises(ValueError, mapping2.save)
+
+        mapping2.tag = ''
+        self.assertIsNone(mapping2.save())
+
+        mapping1.tag = ''
+        self.assertIsNone(mapping1.save())
+
+    def test_recipient_member_lists(self):
+        recipient = Recipient.objects.get(pk=1)
+        self.assertListEqual(recipient.lists, ['testlist1', 'testlist4'])
