@@ -30,6 +30,7 @@ Contents
 .. toctree::
    :maxdepth: 2
 
+    Index <index>
     Holonet Worker <worker>
     Holonet Policy Service <policy_service>
     Postfix <postfix>
