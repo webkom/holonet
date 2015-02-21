@@ -37,3 +37,20 @@ class RestrictedModelTestCase(TestCase):
         mapping.save()
 
         self.assertIsNotNone(mapping.token)
+
+    def test_duplicate_tags(self):
+        mapping1 = RestrictedMapping.objects.get(pk=1)
+        mapping2 = RestrictedMapping.objects.get(pk=2)
+
+        mapping1.tag = '1'
+        mapping2.tag = '1'
+
+        mapping1.save()
+
+        self.assertRaises(ValueError, mapping2.save)
+
+        mapping2.tag = ''
+        self.assertIsNone(mapping2.save())
+
+        mapping1.tag = ''
+        self.assertIsNone(mapping1.save())

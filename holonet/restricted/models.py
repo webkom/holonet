@@ -35,7 +35,7 @@ class RestrictedMapping(TokenModel):
             if query_length > 0:
                 raise ValueError('Tag field is not unique.')
 
-        super(RestrictedMapping, self).save(*args, **kwargs)
+        return super(RestrictedMapping, self).save(*args, **kwargs)
 
     def regenerate_token(self):
         self.token = uuid.uuid4()
