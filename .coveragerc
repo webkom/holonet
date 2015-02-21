@@ -22,5 +22,6 @@ omit =
     holonet/settings/*
     holonet/wsgi
     holonet/*/tests/*
+    holonet/wsgi
 
 show_missing = True
