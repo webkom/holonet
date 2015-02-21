@@ -7,7 +7,6 @@ from django.db import models
 from holonet.core.models import TokenModel
 
 from .managers import RestrictedMappingManager
-from holonet.core.validators import unique_or_blank
 
 
 class RestrictedMapping(TokenModel):
@@ -17,7 +16,7 @@ class RestrictedMapping(TokenModel):
 
     recipient_list = models.ManyToManyField('mappings.Recipient', blank=True,
                                             related_name='restricted_lists')
-    tag = models.CharField(max_length=100, blank=True, validators=[unique_or_blank])
+    tag = models.CharField(max_length=100, blank=True)
 
     objects = RestrictedMappingManager()
 
@@ -30,6 +29,12 @@ class RestrictedMapping(TokenModel):
     def save(self, *args, **kwargs):
         if not self.token:
             self.token = uuid.uuid4()
+
+        if self.tag != '':
+            query_length = RestrictedMapping.objects.filter(tag=self.tag).count()
+            if query_length > 0:
+                raise ValueError('Tag field is not unique.')
+
         super(RestrictedMapping, self).save(*args, **kwargs)
 
     def regenerate_token(self):
