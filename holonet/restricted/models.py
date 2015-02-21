@@ -7,6 +7,7 @@ from django.db import models
 from holonet.core.models import TokenModel
 
 from .managers import RestrictedMappingManager
+from holonet.core.validators import unique_or_blank
 
 
 class RestrictedMapping(TokenModel):
@@ -16,6 +17,7 @@ class RestrictedMapping(TokenModel):
 
     recipient_list = models.ManyToManyField('mappings.Recipient', blank=True,
                                             related_name='restricted_lists')
+    tag = models.CharField(max_length=100, blank=True, validators=[unique_or_blank])
 
     objects = RestrictedMappingManager()
 

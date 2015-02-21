@@ -4,6 +4,7 @@ from django.conf import settings
 from django.db import models
 
 from .validators import validate_local_part
+from holonet.core.validators import unique_or_blank
 
 
 class MailingList(models.Model):
@@ -12,6 +13,7 @@ class MailingList(models.Model):
 
     recipient_list = models.ManyToManyField('mappings.Recipient', blank=True,
                                             related_name='mailing_lists')
+    tag = models.CharField(max_length=100, blank=True, validators=[unique_or_blank])
 
     def __str__(self):
         return '%s@%s' % (self.prefix, settings.MASTER_DOMAIN)
