@@ -301,3 +301,130 @@ Domain Blacklist
 
     :statuscode 204: No content
     :statuscode 404: Sender not found
+
+Status
+------
+
+.. http:get:: /api/status/
+
+    Get the current status for system services.
+
+    **Example request**:
+
+    .. sourcecode:: http
+
+        GET /api/status/ HTTP/1.1
+        Host: holonet.abakus.no
+        Accept: application/json, text/javascript
+
+    **Example response**:
+
+    .. sourcecode:: http
+
+        HTTP 200 OK
+        Content-Type: application/json
+        Allow: GET, HEAD, OPTIONS
+        Vary: Accept
+
+        [
+            {
+                "name": "elasticsearch",
+                "status": 0
+            },
+            {
+                "name": "cache",
+                "status": 1
+            },
+            {
+                "name": "celery",
+                "status": 0
+            },
+            {
+                "name": "websockets",
+                "status": 0
+            },
+            {
+                "name": "policyservice",
+                "status": 0
+            },
+            {
+                "name": "postfix",
+                "status": 1
+            }
+        ]
+
+    :reqheader Authorization: Session auth or token
+
+    :statuscode 200: No error
+
+.. http:get:: /api/status/types
+
+    Get available status codes.
+
+    **Example request**:
+
+    .. sourcecode:: http
+
+        GET /api/status/types HTTP/1.1
+        Host: holonet.abakus.no
+        Accept: application/json, text/javascript
+
+    **Example response**:
+
+    .. sourcecode:: http
+
+        HTTP 200 OK
+        Content-Type: application/json
+        Allow: GET, HEAD, OPTIONS
+        Vary: Accept
+
+        [
+            [
+                0,
+                "Not Responding"
+            ],
+            [
+                1,
+                "Ready"
+            ],
+            [
+                2,
+                "Unknown"
+            ]
+        ]
+
+    :reqheader Authorization: Session auth or token
+
+    :statuscode 200: No error
+
+.. http:get:: /api/status/(str:service_name)
+
+    Get service status for a specific service.
+
+    **Example request**:
+
+    .. sourcecode:: http
+
+        GET /api/status/elasticsearch HTTP/1.1
+        Host: holonet.abakus.no
+        Accept: application/json, text/javascript
+
+    **Example response**:
+
+    .. sourcecode:: http
+
+        HTTP 200 OK
+        Content-Type: application/json
+        Allow: GET, HEAD, OPTIONS
+        Vary: Accept
+
+        {
+            "name": "elasticsearch",
+            "status": 0
+        }
+
+    :reqheader Authorization: Session auth or token
+
+    :statuscode 200: No error
+
+
