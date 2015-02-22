@@ -1,5 +1,6 @@
 # -*- coding: utf8 -*-
 
+from redis.exceptions import ConnectionError as RedisConnectionError
 import socket
 from urllib.parse import urlparse
 from builtins import ConnectionAbortedError, ConnectionRefusedError, ConnectionResetError
@@ -77,7 +78,7 @@ class CeleryStatus(BaseStatusClass):
         try:
             result = test_task.delay()
             return not result.failed()
-        except OSError:
+        except (OSError, RedisConnectionError):
             return False
 
 

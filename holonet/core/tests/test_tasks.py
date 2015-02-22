@@ -6,7 +6,7 @@ import os
 from django.test import TestCase
 
 from holonet.core.message import HolonetEmailMessage
-from holonet.core.tasks import index_blacklisted_mail, send_blacklist_notification
+from holonet.core.tasks import call_task, index_blacklisted_mail, send_blacklist_notification
 
 
 class TaskTestCase(TestCase):
@@ -16,5 +16,5 @@ class TaskTestCase(TestCase):
         raw_message = email.message_from_file(email_file)
         message = HolonetEmailMessage(raw_message, ['test@holonet.no'])
 
-        index_blacklisted_mail.delay(message)
-        send_blacklist_notification.delay(message)
+        call_task(index_blacklisted_mail, message)
+        call_task(send_blacklist_notification, message)

@@ -4,10 +4,11 @@ import sys
 
 from django.conf import settings
 
-from holonet.core.tasks import (index_blacklisted_mail, index_bounce_mail, index_spam,
-                                send_blacklist_notification, send_bounce_notification,
-                                send_spam_notification)
-from holonet.mappings.helpers import clean_address, is_bounce, lookup, split_address
+from holonet.core.tasks import (call_task, index_blacklisted_mail, index_bounce_mail, index_spam,
+                                index_statistics, send_blacklist_notification,
+                                send_bounce_notification, send_spam_notification)
+from holonet.mappings.helpers import (clean_address, is_bounce, is_server_alias, lookup,
+                                      split_address)
 from holonet.restricted.helpers import is_restricted
 
 from .blacklist import is_blacklisted
@@ -16,6 +17,10 @@ from .validation import validate_recipient
 
 
 def handle_mail(msg, sender, recipient):
+    """
+    Process mail. Lookup recipients and forward it using sendmail.
+    """
+
     # Initialize variables
     sender = clean_address(sender)
     recipient = clean_address(recipient)
@@ -34,26 +39,30 @@ def handle_mail(msg, sender, recipient):
 
     # Check if the sender is blacklisted.
     if is_blacklisted(sender):
-        index_blacklisted_mail.delay(message)
-        send_blacklist_notification.delay(message)
+        call_task(index_blacklisted_mail, message)
+        call_task(send_blacklist_notification, message)
         return True
 
     # Check if spamassasin has marked the message as spam.
     spam_flag = message.get('X-Spam-Flag', False)
     if spam_flag == 'YES':
-        index_spam.delay(message)
-        send_spam_notification.delay(message)
+        call_task(index_spam, message)
+        call_task(send_spam_notification, message)
         return True
 
     # Handle bounce
     if is_bounce(prefix):
-        index_bounce_mail.delay(message)
-        send_bounce_notification.delay(message)
+        call_task(index_bounce_mail, message)
+        call_task(send_bounce_notification, message)
         return True
 
-    # Exit with a exitcode if restricted mail don't have any recipents
+    # Exit with a exitcode if restricted mail don't have any recipients
     if is_restricted(prefix) and len(recipient) == 0:
         sys.exit(settings.EXITCODE_UNKNOWN_RECIPIENT)
+
+    # Store statistics
+    if not is_restricted(prefix) and not is_server_alias(prefix):
+        call_task(index_statistics, sender=sender, list=prefix, recipients=recipients)
 
     # Send the message!
     if not settings.TESTING:

@@ -50,6 +50,7 @@ class EmailBackend(BaseEmailBackend):
 
     def _sendmail(self, args, msg):
         if not settings.TESTING:
+            print(args)
             process = subprocess.Popen(args, stdin=subprocess.PIPE, close_fds=True)
             process.stdin.write(msg.as_bytes(linesep='\r\n'))
             process.stdin.close()

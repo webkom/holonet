@@ -1,6 +1,7 @@
 # -*- coding: utf8 -*-
 
 from django.conf import settings
+from django.utils import timezone
 from elasticsearch import ConnectionError, Elasticsearch
 
 
@@ -15,19 +16,21 @@ def generate_interval(timespan):
     elif delta <= 3:
         return '3m'
     elif delta <= 12:
-        return '12m'
+        return '5m'
     elif delta <= 24:
         return '24m'
     elif delta <= 72:
         return '72m'
     elif delta <= 168:
-        return '168m'
+        return '100m'
     elif delta <= 720:
         return '720m'
     elif delta <= 2160:
         return '2160m'
+    elif delta <= 4050:
+        return '1d'
     else:
-        return '1h'
+        return '3d'
 
 
 def index_check():
@@ -70,6 +73,16 @@ def index_check():
                                 "type": "date"
                             }
                         }
+                    },
+                    "statistics": {
+                        "_ttl": {
+                            "enabled": True
+                        },
+                        "properties": {
+                            "@timestamp": {
+                                "type": "date"
+                            }
+                        }
                     }
                 }
             }
@@ -96,6 +109,16 @@ def run_search(query, index=settings.INDEX_NAME, type=None):
         return {}
 
 
+def store_payload(payload, type, ttl):
+    try:
+        index_check()
+        connection = get_connection()
+        connection.index(settings.INDEX_NAME, type, payload, params={'_ttl': ttl})
+        return True
+    except (ConnectionError, OSError):
+        return False
+
+
 def store_spam(message):
     store_message(message, 'spam', '52w')
 
@@ -106,3 +129,13 @@ def store_blacklisted_mail(message):
 
 def store_bounce_mail(message):
     store_message(message, 'bounce', '52w')
+
+
+def store_statistics(sender, list, recipients):
+    payload = {
+        '@timestamp': timezone.now(),
+        'sender': sender,
+        'list': list,
+        'recipients': recipients
+    }
+    store_payload(payload, 'statistics', '52w')

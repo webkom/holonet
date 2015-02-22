@@ -15,6 +15,7 @@ var Lookup = require('./components/lookup.js');
 var ReverseLookup = require('./components/lookupreverse.js');
 var SystemInformation = require('./components/systeminformation.js');
 var Graph = require('./components/graph.js');
+var ProcessedEmails = require('./components/processed_emails.js');
 
 var App = React.createClass({
 
@@ -70,6 +71,9 @@ var App = React.createClass({
                             <Lookup/>
                             <ReverseLookup/>
                             <SystemInformation/>
+                        </Col>
+                        <Col lg={9} md={8}>
+                            <ProcessedEmails/>
                         </Col>
                         <Col lg={9} md={8}>
                             <Graph/>

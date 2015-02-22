@@ -4,6 +4,7 @@ raven
 
 psycopg2
 pyyaml
+redis
 
 djangorestframework
 django-extensions

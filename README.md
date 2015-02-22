@@ -5,6 +5,9 @@ HOLONET - Abakus Mail Delivery System
 [![Coverage status](http://ci.frigg.io/badges/coverage/webkom/holonet/)](https://ci.frigg.io/webkom/holonet/last/)
 [![Documentation Status](https://readthedocs.org/projects/holonet/badge/?version=latest)](http://holonet.readthedocs.org)
 
+
+![web](http://i.imgur.com/tz76uZv.png)
+
 [Documentation](http://holonet.readthedocs.org/)
 
 ---

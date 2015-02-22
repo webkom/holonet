@@ -173,8 +173,6 @@ var Graph = React.createClass({
 
     mapEmailSeries: function(series) {
 
-        console.log(series);
-
         while (emailSeriesSpam.length > 0) {
             emailSeriesSpam.pop();
         }

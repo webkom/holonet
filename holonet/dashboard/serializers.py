@@ -12,3 +12,8 @@ class GraphRequestSerializer(serializers.Serializer):
     spam = serializers.BooleanField()
     bounce = serializers.BooleanField()
     blacklisted = serializers.BooleanField()
+
+
+class ProcessedRequestSerializer(serializers.Serializer):
+    time_from = serializers.IntegerField(default=0)
+    time_to = serializers.IntegerField(default=0)
