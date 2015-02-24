@@ -39,7 +39,6 @@ Contents
     Holonet Handler <handler>
     Spamassasin <spamassasin>
     REST API <rest_api>
-    API reference </apidocs/modules>
 
 Indices and tables
 ------------------
