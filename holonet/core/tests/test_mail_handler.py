@@ -59,7 +59,10 @@ class MailHandlerTestCase(TestCase):
         file_path = '%s/email_spam.txt' % os.path.dirname(__file__)
         email_file = open(file_path, 'r')
         msg = email.message_from_file(email_file)
-        self.assertEqual(handle_mail(msg, 'eirik@sylliaas.no', 'testlist1@test.holonet.no'), True)
+
+        with self.assertRaises(SystemExit) as result:
+            handle_mail(msg, 'eirik@sylliaas.no', 'testlist1@test.holonet.no')
+        self.assertEqual(result.exception.code, 0)
 
     def test_validate_recipient(self):
         with self.assertRaises(SystemExit) as result:
