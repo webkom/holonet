@@ -340,10 +340,6 @@ Status
                 "status": 0
             },
             {
-                "name": "websockets",
-                "status": 0
-            },
-            {
                 "name": "policyservice",
                 "status": 0
             },
