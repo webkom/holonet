@@ -10,7 +10,7 @@ from holonet.mappings.helpers import (clean_address, is_bounce, is_server_alias,
                                       split_address)
 from holonet.restricted.helpers import is_restricted
 
-from .blacklist import is_blacklisted
+from .list_access import is_blacklisted, is_not_whitelisted
 from .message import HolonetEmailMessage
 from .validation import validate_recipient
 
@@ -36,21 +36,21 @@ def handle_mail(msg, sender, recipient):
     # Generate the final message
     message = HolonetEmailMessage(msg, recipients, list_name=prefix)
 
-    # Check if the sender is blacklisted.
-    if is_blacklisted(sender):
+    # Check if the sender is blacklisted or not whitelisted.
+    if is_blacklisted(sender) or is_not_whitelisted(sender):
         call_task(index_blacklisted_mail, message)
-        return True
+        sys.exit(0)
 
     # Check if spamassasin has marked the message as spam.
     spam_flag = message.get('X-Spam-Flag', False)
     if spam_flag == 'YES':
         call_task(index_spam, message)
-        return True
+        sys.exit(0)
 
     # Handle bounce
     if is_bounce(prefix):
         call_task(index_bounce_mail, message)
-        return True
+        sys.exit(0)
 
     # Exit with a exitcode if restricted mail don't have any recipients
     if is_restricted(prefix) and len(recipient) == 0:

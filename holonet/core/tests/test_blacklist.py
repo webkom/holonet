@@ -2,7 +2,7 @@
 
 from django.test import TestCase
 
-from holonet.core.blacklist import is_blacklisted
+from holonet.core.list_access import is_blacklisted
 
 
 class ModelsTestCase(TestCase):

@@ -4,12 +4,40 @@ from django.db import models
 from django.utils import timezone
 
 
-class SenderBlacklist(models.Model):
+class SenderList(models.Model):
     sender = models.EmailField(unique=True)
 
+    def __str__(self):
+        return self.sender
 
-class DomainBlacklist(models.Model):
+    class Meta:
+        abstract = True
+
+
+class DomainList(models.Model):
     domain = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.domain
+
+    class Meta:
+        abstract = True
+
+
+class SenderBlacklist(SenderList):
+    pass
+
+
+class DomainBlacklist(DomainList):
+    pass
+
+
+class SenderWhitelist(SenderList):
+    pass
+
+
+class DomainWhitelist(DomainList):
+    pass
 
 
 class TokenModel(models.Model):

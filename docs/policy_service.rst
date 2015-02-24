@@ -11,6 +11,8 @@ Holonet Policy Service does a lookup in the mailing lists to find if the RCPT TO
             defer_unauth_destination
             check_policy_service inet:127.0.0.1:13000
 
+            check_policy_service { inet:host:port, timeout=10s, default_action=DUNNO } # NB! Postfix Version >= 3.0
+
 
 Then start the policy service with the management command: ::
 
