@@ -2,11 +2,31 @@
 
 from rest_framework import serializers
 
-from .models import MailingList
+from .models import MailingList, Recipient
 
 
 class LookupSerializer(serializers.Serializer):
     email = serializers.EmailField()
+
+
+class RecipientResultSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Recipient
+        fields = (
+            'address',
+            'tag'
+        )
+
+
+class RecipientListSerializer(serializers.Serializer):
+
+    tag = serializers.CharField(max_length=100)
+
+    class Meta:
+        fields = (
+            'tag',
+        )
 
 
 class MappingSerializer(serializers.HyperlinkedModelSerializer):
