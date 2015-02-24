@@ -6,7 +6,6 @@ from celery import task
 from redis.exceptions import ConnectionError
 
 from .elasticsearch import store_blacklisted_mail, store_bounce_mail, store_spam, store_statistics
-from .notify import notify_blacklisted, notify_bounce, notify_spam
 
 log = logging.getLogger(__name__)
 
@@ -31,21 +30,6 @@ def index_blacklisted_mail(message):
 @task()
 def index_bounce_mail(message):
     store_bounce_mail(message)
-
-
-@task()
-def send_spam_notification(message):
-    notify_spam(message)
-
-
-@task()
-def send_blacklist_notification(message):
-    notify_blacklisted(message)
-
-
-@task()
-def send_bounce_notification(message):
-    notify_bounce(message)
 
 
 @task()

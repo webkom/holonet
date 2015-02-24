@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 
 import djcelery
-from django.conf.global_settings import AUTHENTICATION_BACKENDS, TEMPLATE_CONTEXT_PROCESSORS
+from django.conf.global_settings import AUTHENTICATION_BACKENDS
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -42,7 +42,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'django_extensions',
-    'omnibus',
     'crispy_forms',
     'djcelery',
     'rest_framework',
@@ -73,10 +72,6 @@ MIDDLEWARE_CLASSES = (
 
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates').replace('\\', '/'),
-)
-
-TEMPLATE_CONTEXT_PROCESSORS = TEMPLATE_CONTEXT_PROCESSORS + (
-    'holonet.core.context_processors.omnibus',
 )
 
 AUTHENTICATION_BACKENDS = AUTHENTICATION_BACKENDS + (
@@ -122,14 +117,6 @@ MEDIA_URL = '/media/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'files', 'static')
 STATIC_URL = '/static/'
-
-
-OMNIBUS_ENDPOINT_SCHEME = 'http'
-OMNIBUS_WEBAPP_FACTORY = 'omnibus.factories.sockjs_webapp_factory'
-OMNIBUS_CONNECTION_FACTORY = 'omnibus.factories.sockjs_connection_factory'
-OMNIBUS_AUTHENTICATOR_FACTORY = 'omnibus.factories.userauthenticator_factory'
-
-WEBSOCKET_CHANNEL = 'holonet'
 
 djcelery.setup_loader()
 

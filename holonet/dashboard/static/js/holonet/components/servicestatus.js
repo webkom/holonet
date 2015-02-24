@@ -14,6 +14,13 @@ var ServiceStatus = React.createClass({
         };
     },
 
+    getDefaultProps: function() {
+      return {
+        width: 2,
+          small: 4
+      };
+    },
+
     componentDidMount: function() {
         this.getStatus();
         this.interval = setInterval(this.getStatus, 10000);
@@ -34,7 +41,7 @@ var ServiceStatus = React.createClass({
 
     render: function() {
         return (
-            <Col lg={2} xs={4}>
+            <Col lg={this.props.width} sm={this.props.small}>
                 <div className={this.state.status==0 ? 'panel panel-primary status-panel not-responding' : 'panel panel-primary status-panel'}>
                     <div className="panel-heading">
                         <div className="row">

@@ -7,14 +7,11 @@ from builtins import ConnectionAbortedError, ConnectionRefusedError, ConnectionR
 
 from elasticsearch import ConnectionError
 from celery import task
-from omnibus.exceptions import OmnibusPublisherException, OmnibusException
-from omnibus.settings import PUBLISHER_ADDRESS
 
 from django.conf import settings
 from django.core.cache import cache
 
 from holonet.core.elasticsearch import get_connection, index_check
-from holonet.core.omnibus import publish
 
 
 @task
@@ -80,32 +77,6 @@ class CeleryStatus(BaseStatusClass):
             return not result.failed()
         except (OSError, RedisConnectionError):
             return False
-
-
-class WebSocketsStatus(BaseStatusClass):
-
-    name = 'websockets'
-
-    def status(self):
-        try:
-            publish(
-                'test_channel',
-                'test',
-                {'text': 'test message'},
-                sender='test_server'
-            )
-        except (OmnibusPublisherException, OmnibusException):
-            return False
-
-        try:
-            socket_connection = socket.socket()
-            parser = urlparse(PUBLISHER_ADDRESS)
-            socket_connection.connect((parser.hostname, parser.port))
-            socket_connection.close()
-        except (ConnectionRefusedError, ConnectionResetError, ConnectionAbortedError):
-            return False
-
-        return True
 
 
 class PolicyServiceStatus(BaseStatusClass):
