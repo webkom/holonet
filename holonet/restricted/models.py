@@ -31,8 +31,7 @@ class RestrictedMapping(TokenModel):
             self.token = uuid.uuid4()
 
         if self.tag != '':
-            query_length = RestrictedMapping.objects.filter(tag=self.tag).count()
-            if query_length > 0:
+            if RestrictedMapping.objects.filter(tag=self.tag).exclude(pk=self.pk).exists():
                 raise ValueError('Tag field is not unique.')
 
         return super(RestrictedMapping, self).save(*args, **kwargs)

@@ -25,8 +25,7 @@ class MailingList(models.Model):
 
     def save(self, *args, **kwargs):
         if self.tag != '':
-            query_length = MailingList.objects.filter(tag=self.tag).count()
-            if query_length > 0:
+            if MailingList.objects.filter(tag=self.tag).exclude(pk=self.pk).exists():
                 raise ValueError('Tag field is not unique.')
         return super(MailingList, self).save(*args, **kwargs)
 

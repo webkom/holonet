@@ -46,6 +46,7 @@ class RestrictedModelTestCase(TestCase):
         mapping2.tag = '1'
 
         mapping1.save()
+        mapping1.save()
 
         self.assertRaises(ValueError, mapping2.save)
 
