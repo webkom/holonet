@@ -11,17 +11,11 @@ def is_blacklisted(sender):
     sender = clean_address(sender)
     prefix, domain = split_address(sender)
 
-    try:
-        DomainBlacklist.objects.get(domain=domain)
+    if DomainBlacklist.objects.filter(domain=domain).exists():
         return True
-    except DomainBlacklist.DoesNotExist:
-        pass
 
-    try:
-        SenderBlacklist.objects.get(sender=sender)
+    if SenderBlacklist.objects.filter(sender=sender).exists():
         return True
-    except SenderBlacklist.DoesNotExist:
-        pass
 
     return False
 
@@ -31,17 +25,11 @@ def is_not_whitelisted(sender):
     prefix, domain = split_address(sender)
 
     if settings.SENDER_WHITELIST_ENABLED:
-        try:
-            SenderWhitelist.objects.get(sender=sender)
+        if SenderWhitelist.objects.filter(sender=sender).exists():
             return False
-        except SenderWhitelist.DoesNotExist:
-            pass
 
     if settings.DOMAIN_WHITELIST_ENABLED:
-        try:
-            DomainWhitelist.objects.get(domain=domain)
+        if DomainWhitelist.objects.filter(domain=domain).exists():
             return False
-        except DomainWhitelist.DoesNotExist:
-            pass
 
     return bool(settings.SENDER_WHITELIST_ENABLED or settings.DOMAIN_WHITELIST_ENABLED)
