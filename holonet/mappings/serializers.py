@@ -14,6 +14,7 @@ class RecipientResultSerializer(serializers.ModelSerializer):
     class Meta:
         model = Recipient
         fields = (
+            'id',
             'address',
             'tag'
         )
@@ -26,6 +27,18 @@ class RecipientListSerializer(serializers.Serializer):
     class Meta:
         fields = (
             'tag',
+        )
+
+
+class RecipientSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Recipient
+        fields = (
+            'id',
+            'address',
+            'tag',
+            'lists'
         )
 
 

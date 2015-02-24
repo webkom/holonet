@@ -10,7 +10,7 @@ from .helpers import (LookupAddress, clean_address, is_managed_domain, lookup, r
                       split_address)
 from .models import MailingList, Recipient
 from .serializers import (LookupSerializer, MappingSerializer, RecipientListSerializer,
-                          RecipientResultSerializer)
+                          RecipientResultSerializer, RecipientSerializer)
 
 
 class LookupViewSet(viewsets.ViewSet):
@@ -106,3 +106,19 @@ class MappingViewSet(viewsets.ModelViewSet):
         result_serializer = RecipientResultSerializer(mapping.recipient_list, many=True)
 
         return Response(result_serializer.data)
+
+
+class RecipientViewSet(viewsets.ModelViewSet):
+
+    queryset = Recipient.objects.all()
+    serializer_class = RecipientSerializer
+
+    @detail_route(methods=['get'])
+    def tag(self, request, pk):
+        """
+        This method is used for lookup by tag. Use the id if you want to do something with the
+        object.
+        """
+        recipient = get_object_or_404(Recipient, tag=pk)
+        serializer = self.get_serializer(recipient)
+        return Response(serializer.data)
