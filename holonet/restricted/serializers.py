@@ -12,6 +12,7 @@ class RestrictedMappingSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = RestrictedMapping
         fields = (
+            'id',
             'token',
             'valid_from',
             'valid_to',

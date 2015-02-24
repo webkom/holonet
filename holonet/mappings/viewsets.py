@@ -2,12 +2,15 @@
 
 from django.conf import settings
 from rest_framework import viewsets
-from rest_framework.decorators import list_route
+from rest_framework.decorators import list_route, detail_route
 from rest_framework.response import Response
+
+from django.shortcuts import get_object_or_404
 
 from .helpers import (LookupAddress, clean_address, is_managed_domain, lookup, reverse_lookup,
                       split_address)
-from .serializers import LookupSerializer
+from .serializers import LookupSerializer, MappingSerializer
+from .models import MailingList
 
 
 class LookupViewSet(viewsets.ViewSet):
@@ -61,4 +64,20 @@ class LookupViewSet(viewsets.ViewSet):
         serializer = LookupSerializer(data=object_lists, many=True)
         serializer.is_valid()
 
+        return Response(serializer.data)
+
+
+class MappingViewSet(viewsets.ModelViewSet):
+
+    queryset = MailingList.objects.all()
+    serializer_class = MappingSerializer
+
+    @detail_route(methods=['get'])
+    def tag(self, request, pk):
+        """
+        This method is used for lookup by tag. Use the id if you want to do something with the
+        object.
+        """
+        mapping = get_object_or_404(MailingList, tag=pk)
+        serializer = self.get_serializer(mapping)
         return Response(serializer.data)

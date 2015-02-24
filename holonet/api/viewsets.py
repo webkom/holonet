@@ -14,5 +14,7 @@ class InformationViewSet(ViewSet):
             'Restricted Email': '%s@%s' % (settings.RESTRICTED_PREFIX, settings.MASTER_DOMAIN),
             'System Aliases': settings.SYSTEM_ALIASES,
             'Admins': settings.ADMINS,
-            'System Owner': settings.SYSTEM_OWNER
+            'System Owner': settings.SYSTEM_OWNER,
+            'Sender Whitelist': str(settings.SENDER_WHITELIST_ENABLED),
+            'Domain Whitelist': str(settings.DOMAIN_WHITELIST_ENABLED),
         })
