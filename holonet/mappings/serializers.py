@@ -9,7 +9,7 @@ class LookupSerializer(serializers.Serializer):
     email = serializers.EmailField()
 
 
-class RecipientResultSerializer(serializers.ModelSerializer):
+class MappingRecipientSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Recipient
@@ -17,16 +17,6 @@ class RecipientResultSerializer(serializers.ModelSerializer):
             'id',
             'address',
             'tag'
-        )
-
-
-class RecipientListSerializer(serializers.Serializer):
-
-    tag = serializers.CharField(max_length=100)
-
-    class Meta:
-        fields = (
-            'tag',
         )
 
 
@@ -42,7 +32,7 @@ class RecipientSerializer(serializers.ModelSerializer):
         )
 
 
-class MappingSerializer(serializers.HyperlinkedModelSerializer):
+class MappingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MailingList

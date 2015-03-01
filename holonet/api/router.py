@@ -2,7 +2,8 @@
 
 from rest_framework import routers
 
-from holonet.core.viewsets import DomainBlacklistViewSet, SenderBlacklistViewSet
+from holonet.core.viewsets import (DomainBlacklistViewSet, DomainWhitelistViewSet,
+                                   SenderBlacklistViewSet, SenderWhitelistViewSet)
 from holonet.dashboard.viewsets import GraphViewSet, ProcessedViewSet
 from holonet.mappings.viewsets import LookupViewSet, MappingViewSet, RecipientViewSet
 from holonet.restricted.viewsets import RestrictedMappingViewSet
@@ -14,6 +15,8 @@ router = routers.DefaultRouter()
 router.register(r'information', InformationViewSet, base_name='information')
 router.register(r'sender-blacklist', SenderBlacklistViewSet)
 router.register(r'domain-blacklist', DomainBlacklistViewSet)
+router.register(r'sender-whitelist', SenderWhitelistViewSet)
+router.register(r'domain-whitelist', DomainWhitelistViewSet)
 router.register(r'status', StatusViewSet, base_name='status')
 router.register(r'lookup', LookupViewSet, base_name='lookup')
 router.register(r'graph', GraphViewSet, base_name='graph')

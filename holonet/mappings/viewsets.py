@@ -9,8 +9,47 @@ from rest_framework.response import Response
 from .helpers import (LookupAddress, clean_address, is_managed_domain, lookup, reverse_lookup,
                       split_address)
 from .models import MailingList, Recipient
-from .serializers import (LookupSerializer, MappingSerializer, RecipientListSerializer,
-                          RecipientResultSerializer, RecipientSerializer)
+from .serializers import (LookupSerializer, MappingRecipientSerializer, MappingSerializer,
+                          RecipientSerializer)
+
+
+class TagLookupViewSet():
+    @detail_route(methods=['get'])
+    def tag(self, request, pk):
+        """
+        This method is used for lookup by tag. Use the id if you want to do something with the
+        object.
+        """
+        object = get_object_or_404(self.get_queryset().model, tag=pk)
+        serializer = self.get_serializer(object)
+        return Response(serializer.data)
+
+
+class RecipientChangeViewSet():
+    @detail_route(methods=['get', 'post', 'delete'])
+    def recipients(self, request, pk):
+        mapping = get_object_or_404(self.get_queryset().model, pk=pk)
+
+        serializer = self.get_serializer(data=request.data, many=True)
+        serializer.is_valid()
+
+        def get_tag(serializer_element):
+            return serializer_element['tag']
+
+        recipient_tags = map(get_tag, serializer.validated_data)
+        recipients = Recipient.objects.filter(tag__in=recipient_tags)
+
+        if request.method == 'POST':
+            for recipient in recipients:
+                mapping.recipient_list.add(recipient)
+
+        elif request.method == 'DELETE':
+            for recipient in recipients:
+                mapping.recipient_list.remove(recipient)
+
+        result_serializer = MappingRecipientSerializer(mapping.recipient_list, many=True)
+
+        return Response(result_serializer.data)
 
 
 class LookupViewSet(viewsets.ViewSet):
@@ -67,58 +106,13 @@ class LookupViewSet(viewsets.ViewSet):
         return Response(serializer.data)
 
 
-class MappingViewSet(viewsets.ModelViewSet):
+class MappingViewSet(viewsets.ModelViewSet, TagLookupViewSet, RecipientChangeViewSet):
 
     queryset = MailingList.objects.all()
     serializer_class = MappingSerializer
 
-    @detail_route(methods=['get'])
-    def tag(self, request, pk):
-        """
-        This method is used for lookup by tag. Use the id if you want to do something with the
-        object.
-        """
-        mapping = get_object_or_404(MailingList, tag=pk)
-        serializer = self.get_serializer(mapping)
-        return Response(serializer.data)
 
-    @detail_route(methods=['get', 'post', 'delete'])
-    def recipients(self, request, pk):
-        mapping = get_object_or_404(MailingList, pk=pk)
-
-        serializer = RecipientListSerializer(data=request.data, many=True)
-        serializer.is_valid()
-
-        def get_tag(serializer_element):
-            return serializer_element['tag']
-
-        recipient_tags = map(get_tag, serializer.validated_data)
-        recipients = Recipient.objects.filter(tag__in=recipient_tags)
-
-        if request.method == 'POST':
-            for recipient in recipients:
-                mapping.recipient_list.add(recipient)
-
-        elif request.method == 'DELETE':
-            for recipient in recipients:
-                mapping.recipient_list.remove(recipient)
-
-        result_serializer = RecipientResultSerializer(mapping.recipient_list, many=True)
-
-        return Response(result_serializer.data)
-
-
-class RecipientViewSet(viewsets.ModelViewSet):
+class RecipientViewSet(viewsets.ModelViewSet, TagLookupViewSet):
 
     queryset = Recipient.objects.all()
     serializer_class = RecipientSerializer
-
-    @detail_route(methods=['get'])
-    def tag(self, request, pk):
-        """
-        This method is used for lookup by tag. Use the id if you want to do something with the
-        object.
-        """
-        recipient = get_object_or_404(Recipient, tag=pk)
-        serializer = self.get_serializer(recipient)
-        return Response(serializer.data)
