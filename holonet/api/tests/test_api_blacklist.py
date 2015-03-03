@@ -12,7 +12,7 @@ class BlacklistAPITestCase(TestCase):
 
     def setUp(self):
 
-        self.auth_client = Client(HTTP_X_TOKEN=Token.objects.first().token)
+        self.auth_client = Client(HTTP_AUTHORIZATION=Token.objects.first().token)
         self.noauth_client = Client()
 
     def test_list_domain_blacklist_no_auth(self):
