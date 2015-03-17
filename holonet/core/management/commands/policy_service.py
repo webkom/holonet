@@ -61,6 +61,12 @@ class Command(BaseCommand):
     help = "Start a daemon for verifying access with postfix smtp access policy deligation"
     args = 'None'
 
+    def _handle_sigterm(self, signum, frame):
+        sys.exit(0)
+
+    def _handle_sigusr1(self, signum, frame):
+        self._handle_sigterm(signum, frame)
+
     def handle(self, *args, **options):
         parser = urlparse(settings.POLICYSERVICE_URL)
         host = parser.hostname
@@ -71,11 +77,14 @@ class Command(BaseCommand):
         server_thread.daemon = True
         server_thread.start()
 
-        def handler(signum, frame):
-            if signum == signal.SIGTERM:
-                server.shutdown()
-                sys.exit(0)
-        signal.signal(signal.SIGTERM, handler)
+        # Gracefully exit on sigterm.
+        signal.signal(signal.SIGTERM, self._handle_sigterm)
+
+        # A SIGUSR1 signals an exit with an autorestart
+        signal.signal(signal.SIGUSR1, self._handle_sigusr1)
+
+        # Handle Keyboard Interrupt
+        signal.signal(signal.SIGINT, self._handle_sigterm)
 
         while True:
             time.sleep(5.0)
