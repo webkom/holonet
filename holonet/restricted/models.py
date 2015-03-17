@@ -22,8 +22,6 @@ class RestrictedMapping(TokenModel):
 
     @property
     def recipients(self):
-        # Cache goes here
-
         return [recipient.address for recipient in self.recipient_list.all()]
 
     def save(self, *args, **kwargs):

@@ -19,8 +19,6 @@ class MailingList(models.Model):
 
     @property
     def recipients(self):
-        # Cache goes here
-
         return [recipient.address for recipient in self.recipient_list.all()]
 
     def save(self, *args, **kwargs):
@@ -39,6 +37,5 @@ class Recipient(models.Model):
 
     @property
     def lists(self):
-        # Cache goes here
 
         return [mailing_list.prefix for mailing_list in self.mailing_lists.all()]

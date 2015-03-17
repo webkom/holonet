@@ -11,8 +11,6 @@ def is_restricted(prefix):
 
 def lookup(msg, mark_sent=False):
 
-    # Cache goes here
-
     token = get_payload_token(msg, remove_token=True)
 
     if not token:

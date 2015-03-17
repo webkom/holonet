@@ -24,7 +24,6 @@ def is_prefix_valid(prefix):
 
 
 def lookup(prefix, msg=None, mark_restricted_as_used=False):
-
     if is_server_alias(prefix):
         return [address[1] for address in settings.ADMINS]
 
@@ -32,8 +31,6 @@ def lookup(prefix, msg=None, mark_restricted_as_used=False):
         return restricted_lookup(msg, mark_restricted_as_used)
 
     try:
-        # Cache goes here
-
         mapping = MailingList.objects.get(prefix=prefix)
         return mapping.recipients
 
@@ -44,8 +41,6 @@ def lookup(prefix, msg=None, mark_restricted_as_used=False):
 
 
 def reverse_lookup(address):
-    # Cache goes here
-
     address = clean_address(address)
     try:
         recipient = Recipient.objects.get(address=address)
