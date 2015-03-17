@@ -12,5 +12,6 @@ django-cors-headers
 sockjs-tornado
 django-crispy-forms
 django-celery
+django-cachalot
 
 elasticsearch>=1.0.0,<2.0.0

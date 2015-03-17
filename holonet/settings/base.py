@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'cachalot',
     'django_extensions',
     'crispy_forms',
     'djcelery',
