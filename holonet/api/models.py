@@ -17,6 +17,18 @@ class Application(models.Model):
     def is_authenticated(self):
         return True
 
+    def is_staff(self):
+        return True
+
+    def is_superuser(self):
+        return False
+
+    def __str__(self):
+        return self.name
+
 
 class Token(TokenModel):
     application = models.ForeignKey('api.Application')
+
+    def __str__(self):
+        return '%s - %s' % (self.application, self.token)

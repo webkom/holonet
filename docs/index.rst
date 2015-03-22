@@ -34,10 +34,11 @@ Contents
 
     Index <index>
     Holonet Worker <worker>
-    Holonet Policy Service <policy_service>
     Postfix <postfix>
+    Holonet Policy Service <policy_service>
     Holonet Handler <handler>
     Spamassasin <spamassasin>
+    Dovecot SASL <sasl>
     REST API <rest_api>
 
 Indices and tables

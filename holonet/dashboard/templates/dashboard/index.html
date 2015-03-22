@@ -18,6 +18,8 @@
 
 {% block body %}
 
+    {% if user.is_staff %}
     <div id="app"></div>
+    {% endif %}
 
 {% endblock %}

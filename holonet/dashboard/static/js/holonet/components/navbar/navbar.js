@@ -20,6 +20,7 @@ var Navbar = React.createClass({
                         <a className="navbar-brand" href="/">{this.props.brand}</a>
                     </div>
                     <Nav right={true}>
+                        <NavItem href="/admin"><FontAwsome icon='cog'/> Admin</NavItem>
                         <NavItem href="/api"><FontAwsome icon='link'/> API</NavItem>
                         <NavItem href="/logout"><FontAwsome icon='power-off'/> Logout</NavItem>
                     </Nav>

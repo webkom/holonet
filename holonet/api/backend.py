@@ -1,6 +1,7 @@
 # -*- coding: utf8 -*-
 
 from rest_framework.authentication import BaseAuthentication, get_authorization_header
+from rest_framework.permissions import BasePermission
 
 from .models import Token
 
@@ -16,3 +17,11 @@ class TokenAuthenticationBackend(BaseAuthentication):
             pass
 
         return None
+
+
+class StaffRequired(BasePermission):
+
+    def has_permission(self, request, view):
+        valid_auth = request.user and request.user.is_authenticated()
+
+        return valid_auth and request.user.is_staff

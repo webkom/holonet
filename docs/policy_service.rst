@@ -9,7 +9,7 @@ Holonet Policy Service does a lookup in the mailing lists to find if the RCPT TO
             permit_mynetworks
             permit_sasl_authenticated
             defer_unauth_destination
-            check_policy_service inet:127.0.0.1:13000
+            check_policy_service inet:127.0.0.1:10336
 
             check_policy_service { inet:host:port, timeout=10s, default_action=DUNNO } # NB! Postfix Version >= 3.0
 
