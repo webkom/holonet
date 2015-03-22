@@ -9,7 +9,6 @@ redis
 djangorestframework
 django-extensions
 django-cors-headers
-sockjs-tornado
 django-crispy-forms
 django-celery
 django-cachalot
