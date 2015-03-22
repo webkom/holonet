@@ -5,6 +5,7 @@ raven
 psycopg2
 pyyaml
 redis
+pylibmc
 
 djangorestframework
 django-extensions
