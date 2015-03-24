@@ -1,7 +1,11 @@
 Holonet |frigg| |coverage| |deps|
 =================================
 
-Holonet has many features, but it is designed to handle mail as long as the management command mail_handler can connect to the database. Services like rabbitmq/redis, elasticsearch, celery and policy_services are not required to handle valid mail, but the bounce, spam and blacklist services may not work properly. Postfix may require services like spamassasin and the policy_service to work properly. This depends on your postfix config. If spamassasin is down postfix will send a bounce message to the sender. Postfix may work without the policy_service if a default value exist in the postfix config, if not send a bounce. The sender will get a bounce if something goes wrong under the mail_handler, mail_handler raises different exit codes based on the result.
+Holonet has many features, but it is designed to handle mail as long as the management command mail_handler can connect to the database. Services like rabbitmq/redis, elasticsearch, celery, sasl_authentication and policy_services are not required to handle valid mail, but the bounce, spam and blacklist services may not work properly. Postfix may require services like spamassasin and the policy_service to work properly. This depends on your postfix config. If spamassasin is down postfix will send a bounce message to the sender. Postfix may work without the policy_service if a default value exist in the postfix config, if not send a bounce. The sender will get a bounce if something goes wrong under the mail_handler, mail_handler raises different exit codes based on the result.
+
+Goals and the issue we try to solve
+-----------------------------------
+In Abakus linjeforening we don't want to maintain a lagre smtp/imap server with many mailing lists. Our mail system is closely integrated with our webpage. The users recieve mail on their private addresses. Holonet is like a key-value store. We lookup abakus mail and send it to its recipients. We could use a stack like Postfix - Dovecot - Spamassasin - Mailman but we want it to integrate it more closely to our existing systems. Holonet exposes a tiny rest api, this makes it easy for our services to talk to it. We also want to get a better overview over the mail that we handles. Previously we did not have a clue about how many mails we processed in a day. With holonet we stores a tiny log message about every mail. We can now see stats about how many mails we process and its recipients. The system is easy to understand and maintain, we want mail to be more fun not a black box!
 
 .. image:: /_static/web.png
 
@@ -9,6 +13,7 @@ Features
 --------
 * Index spam, blacklisted and bounce mail in Elasticsearch
 * Policy Service
+* SASL Support
 * Handle mail using pipe
 * Mapping API (Create / Edit / Delete mappings using a json REST API.)
 * Store statistics in Elasticsearch
@@ -32,7 +37,6 @@ Contents
 .. toctree::
    :maxdepth: 2
 
-    Index <index>
     Holonet Worker <worker>
     Postfix <postfix>
     Holonet Policy Service <policy_service>
@@ -44,8 +48,6 @@ Contents
 Indices and tables
 ------------------
 
-* :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
 
 

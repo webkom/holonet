@@ -1,6 +1,8 @@
 Spamassasin
 -----------
 
+Spamassasin is a easy way to implement spam validation of mail. Holonet understands the spamassain format, if spamassasin markes the mail as spam, the mail will stop in holonet and be indexed in the Elasticsearch cluster. This servce is not required.
+
 Install Spamassasin: ::
 
     apt-get install spamassassin spamc
@@ -25,3 +27,11 @@ Change /etc/spamassassin/local.cf (Just change the listed parameters): ::
     use_bayes 1
     bayes_auto_learn 1
     add_header ham HAM-Report _REPORT_
+
+Postfix needs do be aware of spamassasin, change /etc/postfix/master.cf: ::
+
+    smtp      inet  n       -       -       -       -       smtpd -o content_filter=spamassassin
+
+    spamassassin unix -     n       n       -       -       pipe
+      user=spamd argv=/usr/bin/spamc -f -e
+        /usr/sbin/sendmail -oi -f ${sender} ${recipient}

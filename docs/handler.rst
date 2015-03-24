@@ -1,6 +1,8 @@
 Holonet Handler
 ---------------
 
+The mail_handler is the main funtion in holonet. Postfix pipes mail into holonet and holonet decides what do do with it and lookup the recipients.
+
 Postfix needs to know where to deliver local mails:
 
 /etc/postfix/main.cf: ::
@@ -11,4 +13,5 @@ Postfix needs to know where to deliver local mails:
 /etc/postfix/master.cf: ::
 
     holonet    unix    -       n       n       -       -       pipe
-      user=$LOCALUSER argv=$PROJECT_DIR/venv/bin/python $PROJECT_DIR/manage.py mail_handler ${sender} ${recipient}
+      user=$LOCALUSER argv=python $PROJECT_DIR/manage.py mail_handler ${sender} ${recipient}
+
