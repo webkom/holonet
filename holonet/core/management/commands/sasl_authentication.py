@@ -5,10 +5,11 @@ import socketserver
 import sys
 import threading
 import time
+import json
+import os
 
 from django.core.management.base import BaseCommand
-
-server_address = '.sasl'
+from django.conf import settings
 
 
 class ThreadedUNIXStreamServer(socketserver.ThreadingMixIn, socketserver.UnixStreamServer):
@@ -16,21 +17,56 @@ class ThreadedUNIXStreamServer(socketserver.ThreadingMixIn, socketserver.UnixStr
 
 
 class HolonetSASLHandler(object):
+
+    DICT_PROTOCOL_CMD_HELLO = 'H'
+    DICT_PROTOCOL_CMD_LOOKUP = 'L'
+
+    DICT_PROTOCOL_REPLY_OK = 'O'
+    DICT_PROTOCOL_REPLY_NOTFOUND = 'N'
+    DICT_PROTOCOL_REPLY_FAIL = 'F'
+
+    def success(self, payload):
+        return "%s%s" % (self.DICT_PROTOCOL_REPLY_OK, json.dumps(payload))
+
+    def not_found(self):
+        return self.DICT_PROTOCOL_REPLY_NOTFOUND
+
+    def failure(self):
+        return self.DICT_PROTOCOL_REPLY_FAIL
+
+    def userdb_payload(self):
+        return {
+            'home': settings.SASL_LUSER_HOME,
+            'uid': settings.SASL_LUSER_UID,
+            'gid': settings.SASL_LUSER_GID
+        }
+
+    def passdb_payload(self, password):
+        return {
+            'password': password,
+            'userdb_home': settings.SASL_LUSER_HOME,
+            'userdb_uid': settings.SASL_LUSER_UID,
+            'userdb_gid': settings.SASL_LUSER_GID
+        }
+
     def consider(self, params):
         for line in params:
-            if line.startswith('H'):
+            start_character = line[1]
+            line_payload = line[1:]
+
+            if start_character == self.DICT_PROTOCOL_CMD_HELLO:
+                # We assume the hello message is valid, do nothing
                 pass
-            elif line.startswith('L'):
-                query = line[1:]
-                namespace, query_type, arg = query.split('/')
 
+            elif start_character == self.DICT_PROTOCOL_CMD_LOOKUP:
+                namespace, query_database, key = line_payload.split('/')
                 if namespace == 'shared':
-                    if query_type == 'passdb':
-                        return 'O{"password": "$1$JrTuEHAY$gZA1y4ElkLHtnsrWNHT/e.", "userdb_home"' \
-                               ': "/home/username/", "userdb_uid": 1000, "userdb_gid": 1000}'
+                    if query_database == 'userdb':
+                        pass
+                    elif query_database == 'passdb':
+                        pass
 
-                    elif query_type == 'userdb':
-                        return 'O{"home": "/home/username/", "uid": 1000, "gid": 1000}'
+        return self.not_found()
 
 
 class DovecotSASLHandler(socketserver.BaseRequestHandler, HolonetSASLHandler):
@@ -62,19 +98,29 @@ class Command(BaseCommand):
     option_list = BaseCommand.option_list + (
 
     )
-    help = "Start a daemon for verifying access with postfix smtp access policy deligation"
+    help = "Start a daemon for verifying access for Dovecot sasl dict."
     args = 'None'
 
+    def __init__(self):
+        super(Command, self).__init__()
+        self.server = ThreadedUNIXStreamServer(settings.SASL_SOCKET_LOCATION, DovecotSASLHandler)
+
     def _handle_sigterm(self, signum, frame):
+        self.close()
         sys.exit(0)
 
     def _handle_sigusr1(self, signum, frame):
         self._handle_sigterm(signum, frame)
 
+    def close(self):
+        self.server.server_close()
+        print(os.path.exists(settings.SASL_SOCKET_LOCATION))
+        if os.path.exists(settings.SASL_SOCKET_LOCATION):
+            os.remove(settings.SASL_SOCKET_LOCATION)
+
     def handle(self, *args, **options):
 
-        server = ThreadedUNIXStreamServer(server_address, DovecotSASLHandler)
-        server_thread = threading.Thread(target=server.serve_forever)
+        server_thread = threading.Thread(target=self.server.serve_forever)
         server_thread.daemon = True
         server_thread.start()
 
@@ -94,3 +140,4 @@ class Command(BaseCommand):
 if __name__ == '__main__':
     command = Command()
     command.handle()
+    command.close()

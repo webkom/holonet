@@ -158,3 +158,5 @@ REST_FRAMEWORK = {
 SUIT_CONFIG = {
     'ADMIN_NAME': 'HOLONET',
 }
+
+AUTH_USER_MODEL = 'core.User'

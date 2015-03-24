@@ -12,7 +12,7 @@ SENDMAIL_EXECUTABLE = '/usr/sbin/sendmail'
 SENDMAIL_BATCH_LENGTH = 40
 
 MASTER_DOMAINS = [
-    'test.holonet.no'
+    'test.holonet.no',
 ]
 MASTER_DOMAIN = MASTER_DOMAINS[0]
 
@@ -60,7 +60,19 @@ POSTFIX_URL = 'tcp://127.0.0.1:25'
 
 POLICYSERVICE_URL = 'tcp://127.0.0.1:10336'
 
+SYSTEM_NAME = 'Abakus Mail Delivery System'
 SYSTEM_OWNER = 'Abakus Linjeforening / Webkom'
+SYSTEM_SUPPORT = 'webkom@abakus.no'
+
+SMTP_SERVER = 'smtp.abakus.no'
+SMTP_PORT = 587
+SMTP_ENCRYPTION_METHOD = 'STARTTLS'
+SMTP_AUTHENTICATION_METHOD = 'plain or login'
 
 SENDER_WHITELIST_ENABLED = True
 DOMAIN_WHITELIST_ENABLED = SENDER_WHITELIST_ENABLED
+
+SASL_SOCKET_LOCATION = 'sasl_socket'
+SASL_LUSER_HOME = '/home/holonet'
+SASL_LUSER_UID = '1001'
+SASL_LUSER_GID = '1001'
