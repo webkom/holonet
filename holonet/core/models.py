@@ -1,11 +1,11 @@
 # -*- coding: utf8 -*-
 
-import string
 import random
+import string
 
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import AbstractUser
 
 
 class SenderList(models.Model):

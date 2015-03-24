@@ -1,8 +1,8 @@
 # -*- coding: utf8 -*-
 
 from django.contrib import admin
-from djcelery.models import CrontabSchedule, IntervalSchedule, PeriodicTask, TaskState, WorkerState
 from django.contrib.auth.admin import UserAdmin as AbstractUserAdmin
+from djcelery.models import CrontabSchedule, IntervalSchedule, PeriodicTask, TaskState, WorkerState
 
 from .models import DomainBlacklist, DomainWhitelist, SenderBlacklist, SenderWhitelist, User
 

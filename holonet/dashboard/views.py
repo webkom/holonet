@@ -1,8 +1,8 @@
 # -*- coding: utf8 -*-
 
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect, render
 
 
 @login_required()

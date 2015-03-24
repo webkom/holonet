@@ -1,15 +1,17 @@
 # -*- coding: utf8 -*-
 
+import json
+import os
 import signal
 import socketserver
 import sys
 import threading
 import time
-import json
-import os
 
-from django.core.management.base import BaseCommand
 from django.conf import settings
+from django.core.management.base import BaseCommand
+
+from holonet.core.models import User
 
 
 class ThreadedUNIXStreamServer(socketserver.ThreadingMixIn, socketserver.UnixStreamServer):
@@ -61,12 +63,24 @@ class HolonetSASLHandler(object):
             elif start_character == self.DICT_PROTOCOL_CMD_LOOKUP:
                 namespace, query_database, key = line_payload.split('/')
                 if namespace == 'shared':
-                    if query_database == 'userdb':
-                        pass
-                    elif query_database == 'passdb':
-                        pass
+                    user = self.user_lookup(key)
+                    if user is not None:
+                        if query_database == 'userdb':
+                            return self.success(self.userdb_payload())
+                        elif query_database == 'passdb':
+                            return self.success(self.passdb_payload(user.sasl_token))
 
         return self.not_found()
+
+    def user_lookup(self, username):
+        try:
+            user = User.objects.get(username=username)
+            if user.valid_sasl_token():
+                return user
+        except User.DoesNotExist:
+            pass
+
+        return None
 
 
 class DovecotSASLHandler(socketserver.BaseRequestHandler, HolonetSASLHandler):
