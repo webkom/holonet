@@ -128,7 +128,6 @@ class Command(BaseCommand):
 
     def close(self):
         self.server.server_close()
-        print(os.path.exists(settings.SASL_SOCKET_LOCATION))
         if os.path.exists(settings.SASL_SOCKET_LOCATION):
             os.remove(settings.SASL_SOCKET_LOCATION)
 
