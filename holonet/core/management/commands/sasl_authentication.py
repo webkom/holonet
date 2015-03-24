@@ -87,20 +87,14 @@ class DovecotSASLHandler(socketserver.BaseRequestHandler, HolonetSASLHandler):
     # Protocol: /src/lib-dict/dict-client.h
 
     def handle(self):
-        data_list = []
-        packet = self.request.recv(1024).decode('utf-8').split("\n")
+        buffer = b''
+        packet = self.request.recv(16)
 
-        while ''.join(packet).strip():
-            data_list.extend(packet)
-            if data_list and not data_list[-1]:
-                break
-            packet = self.request.recv(1024).decode('utf-8').split("\n")
+        while packet:
+            buffer += packet
+            packet = self.request.recv(16)
 
-        data = filter(lambda line: len(line), data_list)
-        if not data:
-            return
-
-        response = self.consider(data)
+        response = self.consider(buffer.decode('utf-8').split('\n'))
 
         self.request.sendall(
             (response + "\n").encode('utf-8')
