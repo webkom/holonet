@@ -17,10 +17,19 @@ class Application(models.Model):
     def is_authenticated(self):
         return True
 
+    @property
     def is_staff(self):
         return True
 
+    @property
     def is_superuser(self):
+        return False
+
+    def is_active(self):
+        tokens = self.tokens.all()
+        for token in tokens:
+            if Token.is_valid(token):
+                return True
         return False
 
     def __str__(self):
@@ -28,7 +37,7 @@ class Application(models.Model):
 
 
 class Token(TokenModel):
-    application = models.ForeignKey('api.Application')
+    application = models.ForeignKey('api.Application', related_name='tokens')
 
     def __str__(self):
         return '%s - %s' % (self.application, self.token)

@@ -71,4 +71,7 @@ venv:
 holonet/settings/local.py:
 	touch holonet/settings/local.py
 
-.PHONY: help dev prod venv frontend clean watchify watch-css watch
+docs:
+	cd docs; make html && open _build/html/index.html; cd ..;
+
+.PHONY: help dev prod venv frontend clean watchify watch-css watch docs

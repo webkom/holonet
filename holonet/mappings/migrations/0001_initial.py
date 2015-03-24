@@ -15,8 +15,9 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='MailingList',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', serialize=False, auto_created=True)),
-                ('prefix', models.CharField(max_length=64, validators=[holonet.mappings.validators.validate_local_part], db_index=True, unique=True)),
+                ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
+                ('prefix', models.CharField(validators=[holonet.mappings.validators.validate_local_part], unique=True, max_length=64, db_index=True)),
+                ('tag', models.CharField(blank=True, max_length=100)),
             ],
             options={
             },
@@ -25,9 +26,9 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Recipient',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', serialize=False, auto_created=True)),
+                ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
                 ('address', models.EmailField(max_length=75)),
-                ('tag', models.CharField(max_length=100, unique=True)),
+                ('tag', models.CharField(unique=True, max_length=100)),
             ],
             options={
             },
@@ -36,7 +37,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='mailinglist',
             name='recipient_list',
-            field=models.ManyToManyField(blank=True, to='mappings.Recipient'),
+            field=models.ManyToManyField(related_name='mailing_lists', blank=True, to='mappings.Recipient'),
             preserve_default=True,
         ),
     ]

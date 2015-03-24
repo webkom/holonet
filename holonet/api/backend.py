@@ -22,6 +22,6 @@ class TokenAuthenticationBackend(BaseAuthentication):
 class StaffRequired(BasePermission):
 
     def has_permission(self, request, view):
-        valid_auth = request.user and request.user.is_authenticated()
+        valid_auth = request.user and request.user.is_authenticated and request.user.is_active
 
-        return valid_auth and request.user.is_staff
+        return valid_auth and (request.user.is_staff or request.user.is_superuser)

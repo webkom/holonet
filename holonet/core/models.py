@@ -52,23 +52,31 @@ class TokenModel(models.Model):
 
     @classmethod
     def get_token(cls, token):
-        now = timezone.now()
         token_object = cls.objects.get(token=token)
+
+        if cls.is_valid(token_object):
+            return token_object
+
+        raise cls.DoesNotExist()
+
+    @classmethod
+    def is_valid(cls, token):
+        now = timezone.now()
 
         def check_valid_to(date):
             if date is None:
-                return token_object
+                return True
             elif date > now:
-                return token_object
-            raise cls.DoesNotExist()
+                return True
+            return False
 
-        if token_object.valid_from is not None:
-            if token_object.valid_from < now:
-                return check_valid_to(token_object.valid_to)
+        if token.valid_from is not None:
+            if token.valid_from < now:
+                return check_valid_to(token.valid_to)
         else:
-                return check_valid_to(token_object.valid_to)
+                return check_valid_to(token.valid_to)
 
-        raise cls.DoesNotExist()
+        return False
 
     class Meta:
         abstract = True

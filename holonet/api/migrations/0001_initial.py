@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Application',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
+                ('id', models.AutoField(auto_created=True, serialize=False, primary_key=True, verbose_name='ID')),
                 ('name', models.CharField(max_length=200)),
             ],
             options={
@@ -23,13 +23,14 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Token',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
-                ('token', models.CharField(unique=True, max_length=64)),
+                ('id', models.AutoField(auto_created=True, serialize=False, primary_key=True, verbose_name='ID')),
+                ('token', models.CharField(max_length=64, unique=True)),
                 ('valid_from', models.DateTimeField(auto_now_add=True, null=True)),
-                ('valid_to', models.DateTimeField(blank=True, null=True)),
+                ('valid_to', models.DateTimeField(null=True, blank=True)),
                 ('application', models.ForeignKey(to='api.Application')),
             ],
             options={
+                'abstract': False,
             },
             bases=(models.Model,),
         ),

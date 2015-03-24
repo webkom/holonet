@@ -51,6 +51,4 @@ class SASLHandlerCommandTestCase(TestCase):
                          self.handler.success(payload))
 
     def test_not_found_string(self):
-        payload = self.handler.userdb_payload()
-        self.assertEqual('%s%s' % (self.handler.DICT_PROTOCOL_REPLY_NOTFOUND, json.dumps(payload)),
-                         self.handler.not_found(payload))
+        self.assertEqual(self.handler.DICT_PROTOCOL_REPLY_NOTFOUND, self.handler.not_found())
