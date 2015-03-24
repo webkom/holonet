@@ -53,7 +53,11 @@ class HolonetSASLHandler(object):
 
     def consider(self, params):
         for line in params:
-            start_character = line[1]
+
+            if len(line) < 3:
+                break
+
+            start_character = line[0]
             line_payload = line[1:]
 
             if start_character == self.DICT_PROTOCOL_CMD_HELLO:
@@ -87,14 +91,12 @@ class DovecotSASLHandler(socketserver.BaseRequestHandler, HolonetSASLHandler):
     # Protocol: /src/lib-dict/dict-client.h
 
     def handle(self):
-        buffer = b''
-        packet = self.request.recv(16)
 
-        while packet:
-            buffer += packet
-            packet = self.request.recv(16)
+        packet = self.request.recv(1024)
+        raw_data = packet.decode()
+        params = raw_data.split('\n')
 
-        response = self.consider(buffer.decode('utf-8').split('\n'))
+        response = self.consider(params)
 
         self.request.sendall(
             (response + "\n").encode('utf-8')
