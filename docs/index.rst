@@ -43,6 +43,7 @@ Contents
     Holonet Handler <handler>
     Spamassasin <spamassasin>
     Dovecot SASL <sasl>
+    Permissions <permissions>
     REST API <rest_api>
 
 Indices and tables
