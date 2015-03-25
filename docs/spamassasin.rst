@@ -1,7 +1,9 @@
 Spamassasin
 -----------
 
-Spamassasin is a easy way to implement spam validation of mail. Holonet understands the spamassain format, if spamassasin markes the mail as spam, the mail will stop in holonet and be indexed in the Elasticsearch cluster. This servce is not required.
+Spamassasin is a easy way to implement spam validation of mail. Holonet understands the spamassassin
+format, if spamassasin marks the mail as spam, the mail will stop in Holonet and be indexed in the
+Elasticsearch cluster. This service is not required.
 
 Install Spamassasin: ::
 

@@ -1,8 +1,10 @@
 Dovecot SASL
 ------------
 
-Holonet integrates with Dovecot SASL, this can be used to make it possible for remote users to login to the Postfix smtp server.
-All active users in the user database gets a token. The user can login on the web interface to see the generated token.
+Holonet integrates with Dovecot SASL, this can be used to make it possible for remote users to
+login to the Postfix smtp server.
+All active users in the user database gets a token. The user can login on the web interface to see
+the generated token.
 
 Install Dovecot: ::
 

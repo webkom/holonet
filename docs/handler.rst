@@ -1,7 +1,8 @@
 Holonet Handler
 ---------------
 
-The mail_handler is the main funtion in holonet. Postfix pipes mail into holonet and holonet decides what do do with it and lookup the recipients.
+The mail_handler is the main function in Holonet. Postfix pipes mail into Holonet and Holonet
+decides what do do with it and lookup the recipients.
 
 Postfix needs to know where to deliver local mails:
 
