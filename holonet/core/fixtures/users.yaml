@@ -4,3 +4,24 @@
     username: testuser1
     is_active: True
     is_staff: True
+- model: core.User
+  pk: 2
+  fields:
+    username: testuser2
+    is_active: True
+    is_staff: True
+    sasl_token: 123
+- model: core.User
+  pk: 3
+  fields:
+    username: testuser3
+    is_active: True
+    is_staff: True
+    sasl_token: KXWKY9C1QKXUE41SMRFFUBHWMSOPAAQX
+- model: core.User
+  pk: 4
+  fields:
+    username: testuser4
+    is_active: False
+    is_staff: True
+    sasl_token: 1SMRFFUBHWMSOPAAQAKXWKY9C1QKXUE4
