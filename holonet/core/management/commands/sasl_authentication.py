@@ -65,7 +65,12 @@ class HolonetSASLHandler(object):
                 pass
 
             elif start_character == self.DICT_PROTOCOL_CMD_LOOKUP:
-                namespace, query_database, key = line_payload.split('/')
+
+                try:
+                    namespace, query_database, key = line_payload.split('/')
+                except ValueError:
+                    break
+
                 if namespace == 'shared':
                     user = self.user_lookup(key)
                     if user is not None:
@@ -78,7 +83,7 @@ class HolonetSASLHandler(object):
 
     def user_lookup(self, username):
         try:
-            user = User.objects.get(username=username)
+            user = User.objects.get(username=username, is_active=True)
             if user.valid_sasl_token():
                 return user
         except User.DoesNotExist:
