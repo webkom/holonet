@@ -34,7 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
-    'suit',
+    'flat',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -155,8 +155,4 @@ REST_FRAMEWORK = {
     )
 }
 
-SUIT_CONFIG = {
-    'ADMIN_NAME': 'HOLONET',
-}
-
-AUTH_USER_MODEL = 'core.User'
+AUTH_USER_MODEL = 'core.HolonetUser'

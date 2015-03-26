@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Application',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, primary_key=True, verbose_name='ID')),
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, serialize=False, primary_key=True)),
                 ('name', models.CharField(max_length=200)),
             ],
             options={
@@ -23,11 +23,11 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Token',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, primary_key=True, verbose_name='ID')),
-                ('token', models.CharField(max_length=64, unique=True)),
-                ('valid_from', models.DateTimeField(auto_now_add=True, null=True)),
-                ('valid_to', models.DateTimeField(null=True, blank=True)),
-                ('application', models.ForeignKey(to='api.Application')),
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, serialize=False, primary_key=True)),
+                ('token', models.CharField(unique=True, max_length=64)),
+                ('valid_from', models.DateTimeField(blank=True, null=True)),
+                ('valid_to', models.DateTimeField(blank=True, null=True)),
+                ('application', models.ForeignKey(related_name='tokens', to='api.Application')),
             ],
             options={
                 'abstract': False,

@@ -14,14 +14,14 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='RestrictedMapping',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
                 ('token', models.CharField(max_length=64, unique=True)),
-                ('valid_from', models.DateTimeField(auto_now_add=True, null=True)),
-                ('valid_to', models.DateTimeField(null=True, blank=True)),
+                ('valid_from', models.DateTimeField(blank=True, null=True)),
+                ('valid_to', models.DateTimeField(blank=True, null=True)),
                 ('from_address', models.EmailField(max_length=75)),
                 ('is_used', models.BooleanField(default=False)),
                 ('tag', models.CharField(max_length=100, blank=True)),
-                ('recipient_list', models.ManyToManyField(related_name='restricted_lists', to='mappings.Recipient', blank=True)),
+                ('recipient_list', models.ManyToManyField(related_name='restricted_lists', blank=True, to='mappings.Recipient')),
             ],
             options={
                 'abstract': False,

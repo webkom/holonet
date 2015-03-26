@@ -47,7 +47,7 @@ class DomainWhitelist(DomainList):
 class TokenModel(models.Model):
     token = models.CharField(max_length=64, unique=True)
 
-    valid_from = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    valid_from = models.DateTimeField(blank=True, null=True)
     valid_to = models.DateTimeField(blank=True, null=True)
 
     @classmethod
@@ -82,7 +82,7 @@ class TokenModel(models.Model):
         abstract = True
 
 
-class User(AbstractUser):
+class HolonetUser(AbstractUser):
 
     SASL_TOKEN_LENGTH = 32
 

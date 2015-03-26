@@ -48,3 +48,6 @@ class RestrictedMapping(TokenModel):
             return object_instance
         else:
             raise cls.DoesNotExist()
+
+    def __str__(self):
+        return '%s - %s' % (self.from_address, self.token)

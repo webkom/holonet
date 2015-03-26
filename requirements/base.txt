@@ -7,12 +7,12 @@ pyyaml
 redis
 python3-memcached
 
+django-flat-theme
 djangorestframework
 django-extensions
 django-cors-headers
 django-crispy-forms
 django-celery
 django-cachalot
-django-suit
 
 elasticsearch>=1.0.0,<2.0.0

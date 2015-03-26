@@ -2,7 +2,7 @@
 
 from django.test import Client, TestCase
 
-from holonet.core.models import User
+from holonet.core.models import HolonetUser as User
 
 
 class ViewsTestCase(TestCase):

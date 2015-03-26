@@ -11,7 +11,7 @@ import time
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
-from holonet.core.models import User
+from holonet.core.models import HolonetUser as User
 
 
 class ThreadedUNIXStreamServer(socketserver.ThreadingMixIn, socketserver.UnixStreamServer):

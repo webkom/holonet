@@ -3,7 +3,7 @@
 from django.conf import settings
 from rest_framework.test import APITestCase
 
-from holonet.core.models import User
+from holonet.core.models import HolonetUser as User
 from holonet.mappings.helpers import lookup
 from holonet.mappings.models import MailingList
 
