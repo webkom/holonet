@@ -24,8 +24,9 @@ var App = React.createClass({
 
                 <Grid fluid={true}>
                     <Row>
-                        <ServiceStatus service='postfix' width={3} small={6} />
-                        <ServiceStatus service='policyservice' width={3} small={6} />
+                        <ServiceStatus service='postfix' />
+                        <ServiceStatus service='policyservice' />
+                        <ServiceStatus service='saslservice' />
                         <ServiceStatus service='elasticsearch' />
                         <ServiceStatus service='cache' />
                         <ServiceStatus service='celery' />
