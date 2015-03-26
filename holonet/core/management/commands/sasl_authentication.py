@@ -27,6 +27,8 @@ class HolonetSASLHandler(object):
     DICT_PROTOCOL_REPLY_NOTFOUND = 'N'
     DICT_PROTOCOL_REPLY_FAIL = 'F'
 
+    DICT_PROTOCOL_HOLONET_TEST_RESPONSE = 'T'
+
     def success(self, payload):
         return "%s%s" % (self.DICT_PROTOCOL_REPLY_OK, json.dumps(payload))
 
@@ -35,6 +37,9 @@ class HolonetSASLHandler(object):
 
     def failure(self):
         return self.DICT_PROTOCOL_REPLY_FAIL
+
+    def test(self, payload):
+        return "%s%s" % (self.DICT_PROTOCOL_HOLONET_TEST_RESPONSE, json.dumps(payload))
 
     def userdb_payload(self):
         return {
@@ -78,6 +83,9 @@ class HolonetSASLHandler(object):
                             return self.success(self.userdb_payload())
                         elif query_database == 'passdb':
                             return self.success(self.passdb_payload(user.sasl_token))
+
+            elif start_character == self.DICT_PROTOCOL_HOLONET_TEST_RESPONSE:
+                return self.test({'content': line_payload})
 
         return self.not_found()
 

@@ -53,6 +53,7 @@ STATUS_CLASSES = (
     'holonet.status.CacheStatus',
     'holonet.status.CeleryStatus',
     'holonet.status.PolicyServiceStatus',
+    'holonet.status.SASLServiceStatus',
     'holonet.status.PostfixStatus',
 )
 
