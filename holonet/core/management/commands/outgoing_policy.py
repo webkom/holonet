@@ -18,7 +18,7 @@ class Handler(object):
             f.write('%s: %s' % (key, value))
         f.close()
 
-        return '%s  Forbidden Address' % (settings.REJECT_ACTION, )
+        return {'action': '%s  Forbidden Address' % (settings.REJECT_ACTION, )}
 
 
 class PostfixPolicyServiceHandler(BasePostfixPolicyServiceHandler):
