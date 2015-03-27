@@ -17,7 +17,7 @@ class ThreadedUNIXStreamServer(socketserver.ThreadingMixIn, socketserver.UnixStr
 
 
 class ThreadedTCPStreamServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
-    pass
+    allow_reuse_address = True
 
 
 class BaseDovecotSASLHandler(socketserver.BaseRequestHandler):
