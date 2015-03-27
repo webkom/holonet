@@ -1,8 +1,7 @@
 # -*- coding: utf8 -*-
 
+from django.contrib.auth.models import User
 from django.test import Client, TestCase
-
-from holonet.core.models import HolonetUser as User
 
 
 class ViewsTestCase(TestCase):

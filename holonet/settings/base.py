@@ -154,5 +154,3 @@ REST_FRAMEWORK = {
         'holonet.api.backend.StaffRequired',
     )
 }
-
-AUTH_USER_MODEL = 'core.HolonetUser'

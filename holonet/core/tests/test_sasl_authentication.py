@@ -1,5 +1,7 @@
 # -*- coding: utf8 -*-
 
+import json
+
 from django.conf import settings
 from django.test import TestCase
 
@@ -20,6 +22,7 @@ class SASLAuthenticationTestCase(TestCase):
         self.assertEqual(self.handler.DICT_PROTOCOL_REPLY_OK, 'O')
         self.assertEqual(self.handler.DICT_PROTOCOL_REPLY_NOTFOUND, 'N')
         self.assertEqual(self.handler.DICT_PROTOCOL_REPLY_FAIL, 'F')
+        self.assertEqual(self.handler.DICT_PROTOCOL_HOLONET_TEST_RESPONSE, 'T')
 
     def test_success(self):
         self.assertEqual('O{}', self.handler.success({}))
@@ -29,6 +32,11 @@ class SASLAuthenticationTestCase(TestCase):
 
     def test_fail(self):
         self.assertEqual(self.handler.DICT_PROTOCOL_REPLY_FAIL, self.handler.failure())
+
+    def test_test(self):
+        self.assertEqual('%s%s' % (self.handler.DICT_PROTOCOL_HOLONET_TEST_RESPONSE,
+                                   json.dumps({'content': 'holonet/test'})),
+                         self.handler.test({'content': 'holonet/test'}))
 
     def test_userdb_payload(self):
         self.assertDictEqual(
@@ -53,17 +61,12 @@ class SASLAuthenticationTestCase(TestCase):
             self.handler.passdb_payload(password)
         )
 
-    def test_user_lookup_not_active_user(self):
-        user = self.handler.user_lookup('testuser4')
-        self.assertIsNone(user)
-
-    def test_user_lookup_ok(self):
-        user = self.handler.user_lookup('testuser3')
-        self.assertEqual(user.get_sasl_token(), 'KXWKY9C1QKXUE41SMRFFUBHWMSOPAAQX')
-
-    def test_user_lookup_invalid_token(self):
-        user = self.handler.user_lookup('testuser2')
-        self.assertIsNone(user)
+    def test_consider_test(self):
+        self.assertEqual(
+            self.handler.consider(['Tholonet/test']),
+            '%s%s' % (self.handler.DICT_PROTOCOL_HOLONET_TEST_RESPONSE,
+                      json.dumps({'content': 'holonet/test'}))
+        )
 
     def test_consider_invalid(self):
         self.assertEqual(self.handler.consider([]), self.handler.DICT_PROTOCOL_REPLY_NOTFOUND)
@@ -85,20 +88,40 @@ class SASLAuthenticationTestCase(TestCase):
             self.handler.DICT_PROTOCOL_REPLY_NOTFOUND
         )
 
-    def test_consider_invalid_user(self):
+    def test_consider_invalid_query_string(self):
         self.assertEqual(
-            self.handler.consider(['H2\t0\t0\tholonet', 'Lshared/userdb/holonet']),
+            self.handler.consider(['H2\t0\t0\tholonet', 'Lshared/passdb/holonet']),
             self.handler.DICT_PROTOCOL_REPLY_NOTFOUND
         )
 
-    def test_consider_userdb_lookup(self):
+    def test_consider_invalid_user_login(self):
         self.assertEqual(
-            self.handler.consider(['H2\t0\t0\tholonet', 'Lshared/userdb/testuser3']),
-            self.handler.success(self.handler.userdb_payload())
+            self.handler.consider(['H2\t0\t0\tholonet', 'Lshared/passdb/holonet/holonet']),
+            self.handler.DICT_PROTOCOL_REPLY_NOTFOUND
         )
 
-    def test_consider_passdb_lookup(self):
+    def test_consider_deactivated_user(self):
         self.assertEqual(
-            self.handler.consider(['H2\t0\t0\tholonet', 'Lshared/passdb/testuser3']),
-            self.handler.success(self.handler.passdb_payload('KXWKY9C1QKXUE41SMRFFUBHWMSOPAAQX'))
+            self.handler.consider(['H2\t0\t0\tholonet', 'Lshared/passdb/testuser2/holonet']),
+            self.handler.DICT_PROTOCOL_REPLY_NOTFOUND
+        )
+
+    def test_consider_activate_user(self):
+        self.assertEqual(
+            self.handler.consider(['H2\t0\t0\tholonet', 'Lshared/passdb/testuser1/holonet']),
+            self.handler.success(self.handler.passdb_payload('holonet'))
+        )
+
+    def test_consider_domain_login(self):
+        self.assertEqual(
+            self.handler.consider(['H2\t0\t0\tholonet',
+                                   'Lshared/passdb/testuser1@test.holonet.no/holonet']),
+            self.handler.success(self.handler.passdb_payload('holonet'))
+        )
+
+    def test_consider_domain_login_unknown_domain(self):
+        self.assertEqual(
+            self.handler.consider(['H2\t0\t0\tholonet',
+                                   'Lshared/passdb/testuser1@unknown.holonet.no/holonet']),
+            self.handler.DICT_PROTOCOL_REPLY_NOTFOUND
         )

@@ -15,14 +15,9 @@ def index(request):
 
 @login_required()
 def profile(request):
-
-    user = request.user
-    token = user.get_sasl_token()
-
     return render(request, 'dashboard/profile.html', {
         'system_name': settings.SYSTEM_NAME,
         'system_owner': settings.SYSTEM_OWNER,
-        'token': token,
         'smtp_server': settings.SMTP_SERVER,
         'smtp_port': settings.SMTP_PORT,
         'smtp_encryption_method': settings.SMTP_ENCRYPTION_METHOD,

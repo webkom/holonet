@@ -1,9 +1,5 @@
 # -*- coding: utf8 -*-
 
-import random
-import string
-
-from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
 
@@ -80,25 +76,3 @@ class TokenModel(models.Model):
 
     class Meta:
         abstract = True
-
-
-class HolonetUser(AbstractUser):
-
-    SASL_TOKEN_LENGTH = 32
-
-    sasl_token = models.CharField('SASL Token', max_length=SASL_TOKEN_LENGTH, unique=True)
-
-    def get_sasl_token(self):
-        if not self.valid_sasl_token():
-            self.sasl_token = self.generate_sasl_token()
-            self.save()
-        return self.sasl_token
-
-    def valid_sasl_token(self):
-        return bool(self.sasl_token is not None and len(self.sasl_token) == self.SASL_TOKEN_LENGTH)
-
-    def generate_sasl_token(self):
-        sasl_token = ''.join(random.SystemRandom().choice
-                             (string.ascii_uppercase + string.digits)
-                             for _ in range(self.SASL_TOKEN_LENGTH))
-        return sasl_token
