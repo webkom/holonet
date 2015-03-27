@@ -9,7 +9,7 @@ from django.core import mail
 from django.test import TestCase
 
 from holonet.core.management.commands.mail_handler import Command as MailCommand
-from holonet.core.management.commands.sasl_authentication import HolonetSASLHandler
+from holonet.core.management.commands.sasl_authentication import Handler
 
 
 class MailHandlerCommandTestCase(TestCase):
@@ -36,7 +36,7 @@ class MailHandlerCommandTestCase(TestCase):
 class SASLHandlerCommandTestCase(TestCase):
 
     def setUp(self):
-        self.handler = HolonetSASLHandler()
+        self.handler = Handler()
 
     def test_constants(self):
         self.assertEqual(self.handler.DICT_PROTOCOL_CMD_HELLO, 'H')

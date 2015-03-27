@@ -13,7 +13,7 @@ from django.conf import settings
 from django.core.cache import cache
 
 from holonet.core.elasticsearch import get_connection, index_check
-from holonet.core.management.commands.sasl_authentication import HolonetSASLHandler
+from holonet.core.management.commands.sasl_authentication import DovecotSASLHandler
 
 
 @task
@@ -87,17 +87,26 @@ class PolicyServiceStatus(BaseStatusClass):
 
     def status(self):
         try:
-            socket_connection = socket.socket()
-            parser = urlparse(settings.POLICYSERVICE_URL)
-            socket_connection.connect((parser.hostname, parser.port))
-            socket_connection.send(('recipient=bwoeuhwfihewfcn@%s\n' % settings.MASTER_DOMAIN)
-                                   .encode())
-            response = (socket_connection.recv(1024)).decode("utf-8")
+            socket_connection = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+            socket_connection.connect(settings.INCOMING_SOCKET_LOCATION)
+            socket_connection.send(('recipient=bwoeuhwfihewfcn@%s\n' %
+                                    settings.MASTER_DOMAIN).encode())
+            response = (socket_connection.recv(1024)).decode()
             socket_connection.close()
-        except (ConnectionRefusedError, ConnectionResetError, ConnectionAbortedError):
+            incoming_result = bool(response.strip() == 'action=REJECT Address does not exist')
+
+            socket_connection = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+            socket_connection.connect(settings.OUTGOING_SOCKET_LOCATION)
+            socket_connection.send(('recipient=bwoeuhwfihewfcn@%s\n' %
+                                    settings.MASTER_DOMAIN).encode())
+            response = (socket_connection.recv(1024)).decode()
+            socket_connection.close()
+            outgoing_result = bool(response.strip() == 'action=REJECT Address does not exist')
+
+        except (ConnectionRefusedError, ConnectionResetError, ConnectionAbortedError, OSError):
             return False
 
-        return bool(response.strip() == 'action=REJECT Address does not exist')
+        return bool(incoming_result and outgoing_result)
 
 
 class SASLServiceStatus(BaseStatusClass):
@@ -116,7 +125,7 @@ class SASLServiceStatus(BaseStatusClass):
             return False
 
         return bool(response.strip() == '%s%s' % (
-            HolonetSASLHandler.DICT_PROTOCOL_HOLONET_TEST_RESPONSE,
+            DovecotSASLHandler.DICT_PROTOCOL_HOLONET_TEST_RESPONSE,
             json.dumps({'content': 'holonet/test'})
         ))
 

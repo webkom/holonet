@@ -59,21 +59,22 @@ STATUS_CLASSES = (
 
 POSTFIX_URL = 'tcp://127.0.0.1:25'
 
-POLICYSERVICE_URL = 'tcp://127.0.0.1:10336'
+INCOMING_SOCKET_LOCATION = 'incoming_policy'
+OUTGOING_SOCKET_LOCATION = 'outgoing_policy'
 
-SYSTEM_NAME = 'Abakus Mail Delivery System'
-SYSTEM_OWNER = 'Abakus Linjeforening / Webkom'
-SYSTEM_SUPPORT = 'webkom@abakus.no'
+SYSTEM_NAME = 'Holonet Mail Delivery System'
+SYSTEM_OWNER = 'Holonet'
+SYSTEM_SUPPORT = 'contact@holonet.no'
 
-SMTP_SERVER = 'smtp.abakus.no'
+SMTP_SERVER = 'smtp.holonet.no'
 SMTP_PORT = 587
 SMTP_ENCRYPTION_METHOD = 'STARTTLS'
 SMTP_AUTHENTICATION_METHOD = 'plain or login'
 
-SENDER_WHITELIST_ENABLED = True
+SENDER_WHITELIST_ENABLED = False
 DOMAIN_WHITELIST_ENABLED = SENDER_WHITELIST_ENABLED
 
-SASL_SOCKET_LOCATION = 'sasl_socket'
+SASL_SOCKET_LOCATION = 'sasl_authentication'
 SASL_LUSER_HOME = '/home/holonet'
 SASL_LUSER_UID = '1001'
 SASL_LUSER_GID = '1001'

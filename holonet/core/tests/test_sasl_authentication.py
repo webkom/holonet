@@ -5,7 +5,7 @@ import json
 from django.conf import settings
 from django.test import TestCase
 
-from holonet.core.management.commands.sasl_authentication import HolonetSASLHandler
+from holonet.core.management.commands.sasl_authentication import Handler
 
 
 class SASLAuthenticationTestCase(TestCase):
@@ -13,7 +13,7 @@ class SASLAuthenticationTestCase(TestCase):
     fixtures = ['users.yaml']
 
     def setUp(self):
-        self.handler = HolonetSASLHandler()
+        self.handler = Handler()
 
     def test_constants(self):
         self.assertEqual(self.handler.DICT_PROTOCOL_CMD_HELLO, 'H')

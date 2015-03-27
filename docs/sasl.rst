@@ -26,7 +26,6 @@ Prepeare Postfix for sasl, change /etc/postfic/main.cf: ::
     smtpd_sasl_path = private/auth
     queue_directory = /var/spool/postfix
     smtpd_sasl_auth_enable = yes
-    smtpd_helo_restrictions = reject_unknown_helo_hostname
 
 Enable submission in Postfix master.cf: ::
 
@@ -38,9 +37,17 @@ Enable submission in Postfix master.cf: ::
       -o smtpd_sasl_path=private/auth
       -o smtpd_sasl_local_domain=
       -o smtpd_client_restrictions=permit_sasl_authenticated,reject
-      -o smtpd_sender_restrictions=reject_unknown_sender_domain
       -o smtpd_relay_restrictions=permit_sasl_authenticated,reject
       -o smtpd_recipient_restrictions=reject_non_fqdn_recipient,permit_sasl_authenticated,reject
+
+If you want to validate submission mail you could use the outgoing policy service. The outgoing
+policy service validates the sasl username and does a lookup to find the lists this user has a
+connection to. Append the following setting to the previous file: ::
+
+    -o smtpd_sender_restrictions=
+        reject_unknown_sender_domain
+        check_policy_service unix:/home/holonet/holonet/outgoing_policy
+        reject
 
 Change the /etc/dovecot/conf.d/10-auth.conf: ::
 

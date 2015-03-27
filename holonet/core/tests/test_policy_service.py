@@ -3,14 +3,14 @@
 from django.conf import settings
 from django.test import TestCase
 
-from holonet.core.management.commands.policy_service import HolonetAccessPolicyHandler
+from holonet.core.management.commands.incoming_policy import Handler
 
 
 class PolicyServiceTestCase(TestCase):
     fixtures = ['mailing_lists.yaml', 'recipients.yaml']
 
     def setUp(self):
-        self.policy_service = HolonetAccessPolicyHandler()
+        self.policy_service = Handler()
 
     def test_consider_no_recipient(self):
         result = self.policy_service.consider({})
