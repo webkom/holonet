@@ -103,7 +103,8 @@ class PolicyServiceStatus(BaseStatusClass):
                                     settings.MASTER_DOMAIN).encode())
             response = (socket_connection.recv(1024)).decode()
             socket_connection.close()
-            outgoing_result = bool(response.strip().startswith('action=REJECT'))
+            outgoing_result = bool(response.strip().
+                                   startswith('action=%s' % settings.ACCEPT_ACTION))
 
         except (ConnectionRefusedError, ConnectionResetError, ConnectionAbortedError, OSError):
             return False
