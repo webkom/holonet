@@ -17,7 +17,6 @@ Incoming policy service, **/etc/postfix/main.cf** ::
             permit_sasl_authenticated
             defer_unauth_destination
             check_policy_service inet:127.0.0.1:10336
-            reject
 
             # NB! Postfix Version >= 3.0
             check_policy_service { inet:host:port, timeout=10s, default_action=DUNNO }
