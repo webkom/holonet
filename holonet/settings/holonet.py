@@ -59,8 +59,8 @@ STATUS_CLASSES = (
 
 POSTFIX_URL = 'tcp://127.0.0.1:25'
 
-INCOMING_SOCKET_LOCATION = 'incoming_policy'
-OUTGOING_SOCKET_LOCATION = 'outgoing_policy'
+INCOMING_SOCKET_LOCATION = 'tcp://127.0.0.1:10336'
+OUTGOING_SOCKET_LOCATION = 'tcp://127.0.0.1:10337'
 
 SYSTEM_NAME = 'Holonet Mail Delivery System'
 SYSTEM_OWNER = 'Holonet'

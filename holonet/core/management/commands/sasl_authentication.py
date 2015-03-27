@@ -4,7 +4,7 @@ import json
 
 from django.conf import settings
 from django.contrib.auth import authenticate
-from . import UnixCommand, BaseDovecotSASLHandler
+from . import SocketCommand, BaseDovecotSASLHandler
 
 
 class Handler(object):
@@ -96,7 +96,7 @@ class DovecotSASLHandler(BaseDovecotSASLHandler):
     handler = Handler()
 
 
-class Command(UnixCommand):
+class Command(SocketCommand):
 
     socket_location = 'sasl_authentication'
     handler_class = DovecotSASLHandler

@@ -46,7 +46,7 @@ connection to. Append the following setting to the previous file: ::
 
     -o smtpd_sender_restrictions=
         reject_unknown_sender_domain
-        check_policy_service unix:/home/holonet/holonet/outgoing_policy
+        check_policy_service inet:127.0.0.1:10337
         reject
 
 Change the /etc/dovecot/conf.d/10-auth.conf: ::

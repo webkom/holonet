@@ -1,8 +1,10 @@
 # -*- coding: utf8 -*-
 
+from urllib.parse import urlparse
+
 from django.conf import settings
 
-from . import BasePostfixPolicyServiceHandler, UnixCommand
+from . import BasePostfixPolicyServiceHandler, SocketCommand
 
 
 class Handler(object):
@@ -24,10 +26,15 @@ class PostfixPolicyServiceHandler(BasePostfixPolicyServiceHandler):
     handler = Handler()
 
 
-class Command(UnixCommand):
+class Command(SocketCommand):
 
-    socket_location = settings.OUTGOING_SOCKET_LOCATION
+    parser = urlparse(settings.OUTGOING_SOCKET_LOCATION)
+    host = parser.hostname
+    port = parser.port
+
+    socket_location = (host, port)
     handler_class = PostfixPolicyServiceHandler
+    tcp_stream = True
 
 
 if __name__ == '__main__':

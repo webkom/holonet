@@ -6,7 +6,7 @@ received with normal smtp without user authentication. The outgoing policy servi
 username and the MAIL_FROM header. This prevents users from sending mail as a other user. The
 incoming policy service does a lookup in the mailing lists to find if the RCPT TO parameter is
 handeled by Holonet. The services is not required, the same validation runs when Postfix pipes
-the mail into Holonet later in the process. The policy services listens on a unix socket.
+the mail into Holonet later in the process. The policy services listens on a tcp socket.
 The policy services implements a simple query language defined by Postfix.
 
 
@@ -16,7 +16,7 @@ Incoming policy service, **/etc/postfix/main.cf** ::
             permit_mynetworks
             permit_sasl_authenticated
             defer_unauth_destination
-            check_policy_service unix:/home/holonet/holonet/incoming_policy
+            check_policy_service inet:127.0.0.1:10336
             reject
 
             # NB! Postfix Version >= 3.0

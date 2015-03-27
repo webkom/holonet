@@ -16,6 +16,10 @@ class ThreadedUNIXStreamServer(socketserver.ThreadingMixIn, socketserver.UnixStr
     pass
 
 
+class ThreadedTCPStreamServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
+    pass
+
+
 class BaseDovecotSASLHandler(socketserver.BaseRequestHandler):
     # Protocol: /src/lib-dict/dict-client.h
 
@@ -67,10 +71,11 @@ class BasePostfixPolicyServiceHandler(socketserver.BaseRequestHandler):
         )
 
 
-class UnixCommand(BaseCommand):
+class SocketCommand(BaseCommand):
 
     socket_location = 'socket'
     handler_class = None
+    tcp_stream = False
 
     option_list = BaseCommand.option_list + (
 
@@ -79,8 +84,11 @@ class UnixCommand(BaseCommand):
     args = 'None'
 
     def __init__(self):
-        super(UnixCommand, self).__init__()
-        self.server = ThreadedUNIXStreamServer(self.socket_location, self.handler_class)
+        super(SocketCommand, self).__init__()
+        if not self.tcp_stream:
+            self.server = ThreadedUNIXStreamServer(self.socket_location, self.handler_class)
+        else:
+            self.server = ThreadedTCPStreamServer(self.socket_location, self.handler_class)
 
     def _handle_sigterm(self, signum, frame):
         self.close()
@@ -91,8 +99,9 @@ class UnixCommand(BaseCommand):
 
     def close(self):
         self.server.server_close()
-        if os.path.exists(self.socket_location):
-            os.remove(self.socket_location)
+        if not self.tcp_stream:
+            if os.path.exists(self.socket_location):
+                os.remove(self.socket_location)
 
     def handle(self, *args, **options):
 
