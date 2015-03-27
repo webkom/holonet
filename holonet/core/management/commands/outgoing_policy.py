@@ -13,12 +13,27 @@ class Handler(object):
     """
     def consider(self, params):
 
-        f = open('/tmp/submission', 'a')
-        for key, value in params.items():
-            f.write('%s: %s' % (key, value))
-        f.close()
+        exit_options = {
+            'accept': {'action': '%s ' % settings.ACCEPT_ACTION},
+            'reject': {'action': '%s ' % settings.REJECT_ACTION},
+        }
 
-        return {'action': '%s  Forbidden Address' % (settings.REJECT_ACTION, )}
+        sender = params.get('sender', None)
+        sasl_username = params.get('sasl_username', None)
+
+        def send_result(result):
+            payload = exit_options.get(result, None)
+            if payload is None:
+                payload = exit_options.get('reject')
+
+            return payload
+
+        if sender and sasl_username:
+
+            # Do a lookup
+            return send_result('accept')
+
+        return send_result('accept')
 
 
 class PostfixPolicyServiceHandler(BasePostfixPolicyServiceHandler):

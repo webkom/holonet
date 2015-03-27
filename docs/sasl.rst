@@ -42,12 +42,15 @@ Enable submission in Postfix master.cf: ::
 
 If you want to validate submission mail you could use the outgoing policy service. The outgoing
 policy service validates the sasl username and does a lookup to find the lists this user has a
-connection to. Append the following setting to the previous file: ::
+connection to. Append the following setting to /etc/postfix/main.cf: ::
 
-    -o smtpd_sender_restrictions=
-        reject_unknown_sender_domain
-        check_policy_service inet:127.0.0.1:10337
-        reject
+    smtpd_sender_restrictions =
+        check_policy_service inet:127.0.0.1:10337 # Outgoing policy
+
+and disable the policy on incoming mail /etc/postfix/master.cf: ::
+
+    smtp      inet  n       -       -       -       -       smtpd
+      -o smtpd_sender_restrictions=
 
 Change the /etc/dovecot/conf.d/10-auth.conf: ::
 
@@ -65,7 +68,7 @@ Change the /etc/dovecot/conf.d/10-auth.conf: ::
 
 Configure the Holonet listener, /etc/dovecot/dovecot-dict-auth.conf: ::
 
-    uri = proxy:/home/holonet/holonet/sasl_socket:holonet
+    uri = proxy:/home/holonet/holonet/sasl_authentication:holonet
 
     password_key = passdb/%u/%w
     user_key = userdb/%u/%w

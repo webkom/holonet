@@ -6,7 +6,7 @@ from django.test import TestCase
 from holonet.core.management.commands.incoming_policy import Handler
 
 
-class PolicyServiceTestCase(TestCase):
+class IncomingPolicyServiceTestCase(TestCase):
     fixtures = ['mailing_lists.yaml', 'recipients.yaml']
 
     def setUp(self):
