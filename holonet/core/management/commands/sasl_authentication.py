@@ -10,8 +10,7 @@ import time
 
 from django.conf import settings
 from django.core.management.base import BaseCommand
-
-from holonet.core.models import HolonetUser as User
+from django.contrib.auth import authenticate
 
 
 class ThreadedUNIXStreamServer(socketserver.ThreadingMixIn, socketserver.UnixStreamServer):
@@ -72,32 +71,35 @@ class HolonetSASLHandler(object):
             elif start_character == self.DICT_PROTOCOL_CMD_LOOKUP:
 
                 try:
-                    namespace, query_database, key = line_payload.split('/')
+                    namespace, query_database, login, password = line_payload.split('/')
                 except ValueError:
                     break
 
                 if namespace == 'shared':
-                    user = self.user_lookup(key)
-                    if user is not None:
-                        if query_database == 'userdb':
-                            return self.success(self.userdb_payload())
-                        elif query_database == 'passdb':
-                            return self.success(self.passdb_payload(user.sasl_token))
+                    if query_database == 'passdb':
+                        login_split = login.split('@')
+
+                        username, domain = None, None
+                        if len(login_split) == 1:
+                            username = login
+                        elif len(login_split) == 2:
+                            username, domain = login.split('@')
+
+                        if domain is not None:
+                            if domain not in settings.MASTER_DOMAINS:
+                                return self.not_found()
+
+                        if username is not None:
+                            user = authenticate(username=username, password=password)
+                            if user is not None:
+                                if user.is_active:
+                                    return self.success(self.passdb_payload(password))
+                            return self.not_found()
 
             elif start_character == self.DICT_PROTOCOL_HOLONET_TEST_RESPONSE:
                 return self.test({'content': line_payload})
 
         return self.not_found()
-
-    def user_lookup(self, username):
-        try:
-            user = User.objects.get(username=username, is_active=True)
-            if user.valid_sasl_token():
-                return user
-        except User.DoesNotExist:
-            pass
-
-        return None
 
 
 class DovecotSASLHandler(socketserver.BaseRequestHandler, HolonetSASLHandler):

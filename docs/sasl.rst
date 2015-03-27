@@ -60,7 +60,7 @@ Configure the Holonet listener, /etc/dovecot/dovecot-dict-auth.conf: ::
 
     uri = proxy:/home/holonet/holonet/sasl_socket:holonet
 
-    password_key = passdb/%u
-    user_key = userdb/%u
+    password_key = passdb/%u/%w
+    user_key = userdb/%u/%w
     iterate_disable = yes
     default_pass_scheme = plain
