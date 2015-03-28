@@ -14,6 +14,7 @@ from django.core.cache import cache
 
 from holonet.core.elasticsearch import get_connection, index_check
 from holonet.core.management.commands.sasl_authentication import Handler
+from holonet.core.management.commands.outgoing_policy import Handler as OutgoingHandler
 
 
 @task
@@ -99,12 +100,11 @@ class PolicyServiceStatus(BaseStatusClass):
             parser = urlparse(settings.OUTGOING_SOCKET_LOCATION)
             socket_connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             socket_connection.connect((parser.hostname, parser.port))
-            socket_connection.send(('recipient=bwoeuhwfihewfcn@%s\n' %
-                                    settings.MASTER_DOMAIN).encode())
+            socket_connection.send('test=1\n'.encode())
             response = (socket_connection.recv(1024)).decode()
             socket_connection.close()
             outgoing_result = bool(response.strip().
-                                   startswith('action=%s' % settings.ACCEPT_ACTION))
+                                   startswith('action=%s' % OutgoingHandler.TEST_RESPONSE))
 
         except (ConnectionRefusedError, ConnectionResetError, ConnectionAbortedError, OSError):
             return False

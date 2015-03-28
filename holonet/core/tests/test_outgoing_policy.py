@@ -24,8 +24,9 @@ class OutgoingPolicyServiceTestCase(TestCase):
 
         payload = {
             'sasl_username': 'holonet',
-            'sender': 'holonet@holonet.no'
+            'sender': 'holonet@holonet.no',
+            'test': '1'
         }
 
         result = self.handler.consider(payload)
-        self.assertTrue(result['action'].startswith(settings.ACCEPT_ACTION))
+        self.assertTrue(result['action'].startswith(Handler.TEST_RESPONSE))

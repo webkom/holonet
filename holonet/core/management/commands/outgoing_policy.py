@@ -3,6 +3,9 @@
 from urllib.parse import urlparse
 
 from django.conf import settings
+from django.contrib.auth.models import User
+
+from holonet.mappings.helpers import clean_address, reverse_lookup, split_address
 
 from . import BasePostfixPolicyServiceHandler, SocketCommand
 
@@ -11,11 +14,15 @@ class Handler(object):
     """
     This service validates submission
     """
+
+    TEST_RESPONSE = 'TestOK'
+
     def consider(self, params):
 
         exit_options = {
             'accept': {'action': '%s ' % settings.ACCEPT_ACTION},
             'reject': {'action': '%s ' % settings.REJECT_ACTION},
+            'test': {'action': '%s ' % self.TEST_RESPONSE},
         }
 
         sender = params.get('sender', None)
@@ -28,10 +35,28 @@ class Handler(object):
 
             return payload
 
+        test = params.get('test', '0')
+        if test == '1':
+            return send_result('test')
+
         if sender and sasl_username:
 
-            # Do a lookup
-            return send_result('accept')
+            sender = clean_address(sender)
+            prefix, domain = split_address(sender)
+
+            try:
+
+                user = User.objects.get(username=sasl_username)
+                user_email = user.email
+                if user_email:
+                    valid_user_lists = reverse_lookup(sender)
+                    if prefix in valid_user_lists:
+                        return send_result('accept')
+
+            except User.DoesNotExist:
+                pass
+
+            return send_result('reject')
 
         return send_result('accept')
 

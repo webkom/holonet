@@ -41,14 +41,16 @@ def lookup(prefix, msg=None, mark_restricted_as_used=False):
 
 
 def reverse_lookup(address):
+    list = []
     address = clean_address(address)
     try:
-        recipient = Recipient.objects.get(address=address)
-        return recipient.lists
+        recipients = Recipient.objects.filter(address=address)
+        for recipient in recipients:
+            list += recipient.lists
     except Recipient.DoesNotExist:
         pass
 
-    return []
+    return list
 
 
 def clean_address(address):
