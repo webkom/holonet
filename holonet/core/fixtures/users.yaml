@@ -5,6 +5,7 @@
     is_active: True
     is_staff: True
     password: pbkdf2_sha256$15000$vY0skQI4Md48$DArUqtCHN9XTgP8A9q339vdPMBQVvcmrTOJcECvbouc=
+    email: testuser1@holonet.no
 - model: auth.User
   pk: 2
   fields:

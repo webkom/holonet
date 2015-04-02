@@ -5,7 +5,7 @@ from urllib.parse import urlparse
 from django.conf import settings
 from django.contrib.auth.models import User
 
-from holonet.mappings.helpers import clean_address, reverse_lookup, split_address
+from holonet.mappings.helpers import clean_address, lookup, split_address
 
 from . import BasePostfixPolicyServiceHandler, SocketCommand
 
@@ -48,9 +48,9 @@ class Handler(object):
 
                 user = User.objects.get(username=sasl_username)
                 user_email = user.email
-                if user_email:
-                    valid_user_lists = reverse_lookup(sender)
-                    if prefix in valid_user_lists:
+                if user_email and domain in settings.MASTER_DOMAINS:
+                    valid_user_lists = lookup(prefix)
+                    if user_email in valid_user_lists:
                         return send_result('accept')
 
             except User.DoesNotExist:
