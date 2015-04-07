@@ -35,5 +35,5 @@ class HolonetMessageTestCase(TestCase):
         self.assertEqual(self.message.send(), 0)
 
     def test_as_bytes(self):
-        result = self.message.as_bytes()
+        result = self.message.as_bytes(linesep='\r\n')
         self.assertIsInstance(result, bytes)
