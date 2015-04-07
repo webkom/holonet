@@ -1,6 +1,7 @@
 # -*- coding: utf8 -*-
 
 import email
+import io
 import sys
 
 from django.conf import settings
@@ -42,7 +43,8 @@ class Command(BaseCommand):
 
     def handle(self, sender, *recipients, **options):
         if not settings.TESTING:
-            msg = email.message_from_file(sys.stdin)
+            stream = io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8')
+            msg = email.message_from_file(stream)
         else:
             # Used for testing
             msg = options['file']
