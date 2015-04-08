@@ -65,7 +65,8 @@ class Handler(object):
 
                 try:
                     namespace, query_database, login, password = line_payload.split('/')
-                    sasl_logger.info('Lookup received and parsed: %s' % line_payload)
+                    sasl_logger.info('Lookup received and parsed: %s/%s/%s/*****' %
+                                     (namespace, query_database, login))
                 except ValueError:
                     sasl_logger.error('Lookup received but could not parse it: %s' % line_payload)
                     break
