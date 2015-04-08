@@ -1,10 +1,14 @@
 # -*- coding: utf8 -*-
 
 import json
+import logging
 
 from django.conf import settings
 from django.contrib.auth import authenticate
 from . import SocketCommand, BaseDovecotSASLHandler
+
+
+sasl_logger = logging.getLogger('holonet.sasl_authentication')
 
 
 class Handler(object):
@@ -61,7 +65,9 @@ class Handler(object):
 
                 try:
                     namespace, query_database, login, password = line_payload.split('/')
+                    sasl_logger.info('Lookup received and parsed: %s' % line_payload)
                 except ValueError:
+                    sasl_logger.error('Lookup received but could not parse it: %s' % line_payload)
                     break
 
                 if namespace == 'shared':
@@ -76,18 +82,22 @@ class Handler(object):
 
                         if domain is not None:
                             if domain not in settings.MASTER_DOMAINS:
+                                sasl_logger.warning('Domain not in MASTER_DOMAINS - Not Found')
                                 return self.not_found()
 
                         if username is not None:
                             user = authenticate(username=username, password=password)
                             if user is not None:
                                 if user.is_active:
+                                    sasl_logger.info('Authentication OK - User: %s' % username)
                                     return self.success(self.passdb_payload(password))
+                            sasl_logger.warning('Could not authenticate user - User: %s' % username)
                             return self.not_found()
 
             elif start_character == self.DICT_PROTOCOL_HOLONET_TEST_RESPONSE:
                 return self.test({'content': line_payload})
 
+        sasl_logger.warning('Could not parse payload - Payload: %s' % ', '.join(params))
         return self.not_found()
 
 
@@ -100,6 +110,8 @@ class Command(SocketCommand):
 
     socket_location = 'sasl_authentication'
     handler_class = DovecotSASLHandler
+
+    logger = sasl_logger
 
 
 if __name__ == '__main__':

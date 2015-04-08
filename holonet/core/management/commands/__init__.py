@@ -77,6 +77,8 @@ class SocketCommand(BaseCommand):
     handler_class = None
     tcp_stream = False
 
+    logger = None
+
     option_list = BaseCommand.option_list + (
 
     )
@@ -104,19 +106,23 @@ class SocketCommand(BaseCommand):
                 os.remove(self.socket_location)
 
     def handle(self, *args, **options):
+        try:
+            server_thread = threading.Thread(target=self.server.serve_forever)
+            server_thread.daemon = True
+            server_thread.start()
 
-        server_thread = threading.Thread(target=self.server.serve_forever)
-        server_thread.daemon = True
-        server_thread.start()
+            # Gracefully exit on sigterm.
+            signal.signal(signal.SIGTERM, self._handle_sigterm)
 
-        # Gracefully exit on sigterm.
-        signal.signal(signal.SIGTERM, self._handle_sigterm)
+            # A SIGUSR1 signals an exit with an autorestart
+            signal.signal(signal.SIGUSR1, self._handle_sigusr1)
 
-        # A SIGUSR1 signals an exit with an autorestart
-        signal.signal(signal.SIGUSR1, self._handle_sigusr1)
+            # Handle Keyboard Interrupt
+            signal.signal(signal.SIGINT, self._handle_sigterm)
 
-        # Handle Keyboard Interrupt
-        signal.signal(signal.SIGINT, self._handle_sigterm)
+            while True:
+                time.sleep(5.0)
 
-        while True:
-            time.sleep(5.0)
+        except Exception as e:
+            self.logger.exception(e)
+            sys.exit(1)

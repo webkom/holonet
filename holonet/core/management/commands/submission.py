@@ -2,6 +2,7 @@
 
 import email
 import io
+import logging
 import sys
 
 from django.conf import settings
@@ -9,6 +10,8 @@ from django.core.management.base import BaseCommand
 
 from holonet.core.message import HolonetEmailMessage
 from holonet.core.tasks import call_task, index_spam, index_statistics
+
+logger = logging.getLogger('holonet.submission')
 
 
 class Command(BaseCommand):
@@ -42,17 +45,26 @@ class Command(BaseCommand):
             backend.send_messages([message])
 
     def handle(self, sender, *recipients, **options):
-        if not settings.TESTING:
-            stream = io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8')
-            msg = email.message_from_file(stream)
-        else:
-            # Used for testing
-            msg = options['file']
+        try:
+            if not settings.TESTING:
+                stream = io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8')
+                msg = email.message_from_file(stream)
+            else:
+                # Used for testing
+                msg = options['file']
 
-        if len(recipients) > 0:
-            self.send_mail(msg, sender, recipients)
+            if len(recipients) > 0:
+                logger.info('Processing submission mail from %s, recipients: %s' %
+                            (sender, ', '.join(recipients)))
+                self.send_mail(msg, sender, recipients)
 
-        # Handle calls with no sender, only a recipient.
-        # The recipient list is then empty and the sender is the recipient.
-        if sender and len(recipients) == 0:
-            self.send_mail(msg, settings.SERVER_EMAIL, [sender])
+            # Handle calls with no sender, only a recipient.
+            # The recipient list is then empty and the sender is the recipient.
+            if sender and len(recipients) == 0:
+                logger.info('Processing submission mail from %s, recipients: %s' %
+                            (settings.SERVER_EMAIL, ', '.join([sender])))
+                self.send_mail(msg, settings.SERVER_EMAIL, [sender])
+
+        except Exception as e:
+            logger.exception(e)
+            sys.exit(1)
