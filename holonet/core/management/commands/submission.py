@@ -1,7 +1,6 @@
 # -*- coding: utf8 -*-
 
 import email
-import io
 import logging
 import sys
 
@@ -47,8 +46,7 @@ class Command(BaseCommand):
     def handle(self, sender, *recipients, **options):
         try:
             if not settings.TESTING:
-                stream = io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8')
-                msg = email.message_from_bytes(stream)
+                msg = email.message_from_binary_file(sys.stdin.buffer)
             else:
                 # Used for testing
                 msg = options['file']
