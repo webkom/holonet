@@ -31,17 +31,19 @@ class Handler(object):
         sender = params.get('sender', None)
         sasl_username = params.get('sasl_username', None)
 
-        def send_result(result, log='Unknown reason'):
+        def send_result(result, log=None):
             payload = exit_options.get(result, None)
             if payload is None:
                 payload = exit_options.get('reject')
 
-            outgoing_logger.info('%s / %s' % (log, payload.get('action')))
+            if log:
+                outgoing_logger.info('%s / %s' % (log, payload.get('action')))
+
             return payload
 
         test = params.get('test', '0')
         if test == '1':
-            return send_result('test', 'Test lookup')
+            return send_result('test', False)
 
         if sender and sasl_username:
 

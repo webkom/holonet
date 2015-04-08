@@ -83,22 +83,22 @@ class Handler(object):
 
                         if domain is not None:
                             if domain not in settings.MASTER_DOMAINS:
-                                sasl_logger.warning('Domain not in MASTER_DOMAINS - Not Found')
+                                sasl_logger.warning('Domain not in MASTER_DOMAINS / Not Found')
                                 return self.not_found()
 
                         if username is not None:
                             user = authenticate(username=username, password=password)
                             if user is not None:
                                 if user.is_active:
-                                    sasl_logger.info('Authentication OK - User: %s' % username)
+                                    sasl_logger.info('Authentication OK / %s' % username)
                                     return self.success(self.passdb_payload(password))
-                            sasl_logger.warning('Could not authenticate user - User: %s' % username)
+                            sasl_logger.warning('Could not authenticate user / %s' % username)
                             return self.not_found()
 
             elif start_character == self.DICT_PROTOCOL_HOLONET_TEST_RESPONSE:
                 return self.test({'content': line_payload})
 
-        sasl_logger.warning('Could not parse payload - Payload: %s' % ', '.join(params))
+        sasl_logger.warning('Could not parse payload / %s' % ' / '.join(params))
         return self.not_found()
 
 

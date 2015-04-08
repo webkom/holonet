@@ -48,20 +48,20 @@ class Command(BaseCommand):
         try:
             if not settings.TESTING:
                 stream = io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8')
-                msg = email.message_from_file(stream)
+                msg = email.message_from_bytes(stream)
             else:
                 # Used for testing
                 msg = options['file']
 
             if len(recipients) > 0:
-                logger.info('Processing submission mail from %s, recipients: %s' %
+                logger.info('%s / %s' %
                             (sender, ', '.join(recipients)))
                 self.send_mail(msg, sender, recipients)
 
             # Handle calls with no sender, only a recipient.
             # The recipient list is then empty and the sender is the recipient.
             if sender and len(recipients) == 0:
-                logger.info('Processing submission mail from %s, recipients: %s' %
+                logger.info('%s / %s' %
                             (settings.SERVER_EMAIL, ', '.join([sender])))
                 self.send_mail(msg, settings.SERVER_EMAIL, [sender])
 
