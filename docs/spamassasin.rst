@@ -8,10 +8,6 @@ Elasticsearch cluster. This service is not required.
 Install Spamassasin: ::
 
     apt-get install spamassassin spamc
-    groupadd spamd
-    useradd -g spamd -s /bin/false -d /var/log/spamassassin spamd
-    mkdir /var/log/spamassassin
-    chown spamd:spamd /var/log/spamassassin
 
 Set up Spamassasin
 
@@ -35,5 +31,5 @@ Postfix needs do be aware of spamassasin, change /etc/postfix/master.cf: ::
     smtp      inet  n       -       -       -       -       smtpd -o content_filter=spamassassin
 
     spamassassin unix -     n       n       -       -       pipe
-      user=spamd argv=/usr/bin/spamc -f -e
+      user=debian-spamd argv=/usr/bin/spamc -f -e
         /usr/sbin/sendmail -oi -f ${sender} ${recipient}
