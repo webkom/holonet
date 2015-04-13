@@ -28,3 +28,4 @@ class MailingListAdmin(admin.ModelAdmin):
     search_fields = ('prefix', 'tag')
     ordering = ('prefix', )
     inlines = [MailingListInline]
+    fields = ('prefix', 'tag')

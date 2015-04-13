@@ -1,5 +1,5 @@
 # -*- coding: utf8 -*-
-
+from django.db.utils import IntegrityError
 from django.test import TestCase
 
 from holonet.restricted.models import RestrictedMapping
@@ -42,16 +42,19 @@ class RestrictedModelTestCase(TestCase):
         mapping1 = RestrictedMapping.objects.get(pk=1)
         mapping2 = RestrictedMapping.objects.get(pk=2)
 
-        mapping1.tag = '1'
-        mapping2.tag = '1'
+        mapping1.tag = 'duplicate'
+        mapping2.tag = 'duplicate'
 
         mapping1.save()
-        mapping1.save()
 
-        self.assertRaises(ValueError, mapping2.save)
+        self.assertRaises(IntegrityError, mapping2.save)
 
-        mapping2.tag = ''
-        self.assertIsNone(mapping2.save())
+    def test_allow_none_tag(self):
+        mapping = RestrictedMapping.objects.get(pk=1)
+        mapping.tag = None
+        self.assertIsNone(mapping.save())
 
-        mapping1.tag = ''
-        self.assertIsNone(mapping1.save())
+    def test_deny_blank_tag(self):
+        mapping = RestrictedMapping.objects.get(pk=1)
+        mapping.tag = ''
+        self.assertRaises(IntegrityError, mapping.save)
