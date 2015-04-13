@@ -10,7 +10,7 @@ It is three (3) levels of permissions:
 * staff
 * superuser
 
-An active user can login on the webpage and get its sasl token. A active user has the right to
+An active user can login on the webpage and view SMTP login details. An active user has the right to
 logon the smtp server using Holonet SASL.
 
 Staff user has can access the dashboard and search in bounce, spam and blacklisted email. The staff
