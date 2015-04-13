@@ -16,13 +16,17 @@ class ViewsTestCase(TestCase):
         self.noauth_client = Client()
 
     def test_dashboard_view(self):
+        self.user.is_active = True
         self.user.is_staff = True
+        self.user.is_superuser = False
         self.user.save()
         result = self.auth_client.get('/')
         self.assertEqual(result.status_code, 200)
 
     def test_dashboard_not_staff(self):
+        self.user.is_active = True
         self.user.is_staff = False
+        self.user.is_superuser = False
         self.user.save()
         result = self.auth_client.get('/', follow=True)
         self.assertEqual(result.wsgi_request.path, '/profile/')
@@ -32,6 +36,10 @@ class ViewsTestCase(TestCase):
         self.assertEqual(result.status_code, 302)
 
     def test_profile_view(self):
+        self.user.is_active = True
+        self.user.is_staff = False
+        self.user.is_superuser = False
+        self.user.save()
         result = self.auth_client.get('/profile/')
         self.assertEqual(result.status_code, 200)
 
