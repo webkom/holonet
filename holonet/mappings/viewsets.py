@@ -8,9 +8,8 @@ from rest_framework.response import Response
 
 from .helpers import (LookupAddress, clean_address, is_managed_domain, lookup, reverse_lookup,
                       split_address)
-from .models import MailingList, Recipient
-from .serializers import (LookupSerializer, MappingRecipientSerializer, MappingSerializer,
-                          RecipientSerializer)
+from .models import Recipient
+from .serializers import LookupSerializer, RecipientSerializer
 
 
 class TagLookupViewSet():
@@ -47,7 +46,7 @@ class RecipientChangeViewSet():
             for recipient in recipients:
                 mapping.recipient_list.remove(recipient)
 
-        result_serializer = MappingRecipientSerializer(mapping.recipient_list, many=True)
+        result_serializer = RecipientSerializer(mapping.recipient_list, many=True)
 
         return Response(result_serializer.data)
 
@@ -104,15 +103,3 @@ class LookupViewSet(viewsets.ViewSet):
         serializer.is_valid()
 
         return Response(serializer.data)
-
-
-class MappingViewSet(viewsets.ModelViewSet, TagLookupViewSet, RecipientChangeViewSet):
-
-    queryset = MailingList.objects.all()
-    serializer_class = MappingSerializer
-
-
-class RecipientViewSet(viewsets.ModelViewSet, TagLookupViewSet):
-
-    queryset = Recipient.objects.all()
-    serializer_class = RecipientSerializer

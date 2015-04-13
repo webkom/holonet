@@ -5,39 +5,23 @@ from rest_framework import serializers
 from .models import DomainBlacklist, DomainWhitelist, SenderBlacklist, SenderWhitelist
 
 
-class SenderBlacklistSerializer(serializers.HyperlinkedModelSerializer):
+class SenderBlacklistSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SenderBlacklist
-        fields = (
-            'id',
-            'sender'
-        )
 
 
-class DomainBlacklistSerializer(serializers.HyperlinkedModelSerializer):
+class DomainBlacklistSerializer(serializers.ModelSerializer):
     class Meta:
         model = DomainBlacklist
-        fields = (
-            'id',
-            'domain',
-        )
 
 
-class SenderWhitelistSerializer(serializers.HyperlinkedModelSerializer):
+class SenderWhitelistSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SenderWhitelist
-        fields = (
-            'id',
-            'sender'
-        )
 
 
-class DomainWhitelistSerializer(serializers.HyperlinkedModelSerializer):
+class DomainWhitelistSerializer(serializers.ModelSerializer):
     class Meta:
         model = DomainWhitelist
-        fields = (
-            'id',
-            'domain',
-        )
