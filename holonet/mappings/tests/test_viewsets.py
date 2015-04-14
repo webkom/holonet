@@ -54,7 +54,6 @@ class ReverseLookupTestCase(APITestCase):
         }
 
         response = self.client.post(self.endpoint, data=data,  format='json')
-        print(response.data)
 
         self.assertListEqual(response.data, [])
 

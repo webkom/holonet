@@ -1,11 +1,14 @@
 # -*- coding: utf8 -*-
 
+import logging
 import subprocess
 from copy import copy
 
 from django.conf import settings
 from django.core.mail.backends.base import BaseEmailBackend
 from django.core.mail.message import sanitize_address
+
+logger = logging.getLogger(__name__)
 
 
 class EmailBackend(BaseEmailBackend):
@@ -45,7 +48,8 @@ class EmailBackend(BaseEmailBackend):
                 self._sendmail(current_arguments, message)
 
             return True
-        except OSError:
+        except (OSError, IOError) as exception:
+            logging.exception(exception)
             return False
 
     def _sendmail(self, args, msg):

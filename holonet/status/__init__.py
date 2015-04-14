@@ -5,6 +5,7 @@ import socket
 import json
 from urllib.parse import urlparse
 from builtins import ConnectionAbortedError, ConnectionRefusedError, ConnectionResetError
+import logging
 
 from elasticsearch import ConnectionError
 from celery import task
@@ -15,6 +16,9 @@ from django.core.cache import cache
 from holonet.core.elasticsearch import get_connection, index_check
 from holonet.core.management.commands.sasl_authentication import Handler
 from holonet.core.management.commands.outgoing_policy import Handler as OutgoingHandler
+
+
+logger = logging.getLogger(__name__)
 
 
 @task
@@ -52,10 +56,17 @@ class ElasticsearchStatus(BaseStatusClass):
             index_check()
 
             health = connection.cluster.health(index=settings.INDEX_NAME)
+            status = bool(health['status'] in ['green', 'yellow'])
 
-            return bool(health['status'] in ['green', 'yellow'])
+            if status:
+                logging.info('Elasticsearch is healthy')
+            else:
+                logging.error('Elasticsearch is not healthy')
+
+            return status
 
         except (ConnectionError, OSError):
+            logging.error('Elasticsearch is not healthy')
             return False
 
 
@@ -67,7 +78,14 @@ class CacheStatus(BaseStatusClass):
         cache.set('test_key', 'test', 30)
 
         value = cache.get('test_key')
-        return bool(value)
+        status = bool(value)
+
+        if status:
+            logging.info('Cache is healthy')
+        else:
+            logging.error('Cache is not healthy')
+
+        return status
 
 
 class CeleryStatus(BaseStatusClass):
@@ -77,8 +95,16 @@ class CeleryStatus(BaseStatusClass):
     def status(self):
         try:
             result = test_task.delay()
-            return not result.failed()
+            status = not result.failed()
+
+            if status:
+                logging.info('Celery is healthy')
+            else:
+                logging.error('Celery is not healthy')
+
+            return status
         except (OSError, RedisConnectionError):
+            logging.error('Celery is not healthy')
             return False
 
 
@@ -107,9 +133,17 @@ class PolicyServiceStatus(BaseStatusClass):
                                    startswith('action=%s' % OutgoingHandler.TEST_RESPONSE))
 
         except (ConnectionRefusedError, ConnectionResetError, ConnectionAbortedError, OSError):
+            logging.error('Policy services is not healthy')
             return False
 
-        return bool(incoming_result and outgoing_result)
+        status = bool(incoming_result and outgoing_result)
+
+        if status:
+            logging.info('Policy services is healthy')
+        else:
+            logging.error('Policy services is not healthy')
+
+        return status
 
 
 class SASLServiceStatus(BaseStatusClass):
@@ -125,12 +159,20 @@ class SASLServiceStatus(BaseStatusClass):
             socket_connection.close()
         except (ConnectionRefusedError, ConnectionResetError, ConnectionAbortedError,
                 OSError):
+            logging.error('SASL service is not healthy')
             return False
 
-        return bool(response.strip() == '%s%s' % (
+        status = bool(response.strip() == '%s%s' % (
             Handler.DICT_PROTOCOL_HOLONET_TEST_RESPONSE,
             json.dumps({'content': 'holonet/test'})
         ))
+
+        if status:
+            logging.info('SASL service is healthy')
+        else:
+            logging.error('SASL service is not healthy')
+
+        return status
 
 
 class PostfixStatus(BaseStatusClass):
@@ -145,6 +187,14 @@ class PostfixStatus(BaseStatusClass):
             header = (socket_connection.recv(1024)).decode("utf-8")
             socket_connection.close()
         except (ConnectionRefusedError, ConnectionResetError, ConnectionAbortedError):
+            logging.error('Postfix is not healthy')
             return False
 
-        return header.startswith('220')
+        status = header.startswith('220')
+
+        if status:
+            logging.info('Postfix is healthy')
+        else:
+            logging.error('Postfix is not healthy')
+
+        return status

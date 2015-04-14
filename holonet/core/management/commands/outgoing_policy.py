@@ -37,7 +37,7 @@ class Handler(object):
                 payload = exit_options.get('reject')
 
             if log:
-                outgoing_logger.info('%s / %s' % (log, payload.get('action')))
+                outgoing_logger.info('%s, result: %s' % (log, payload.get('action')))
 
             return payload
 

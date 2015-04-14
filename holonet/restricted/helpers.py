@@ -1,8 +1,12 @@
 # -*- coding: utf8 -*-
 
+import logging
+
 from django.conf import settings
 
 from .models import RestrictedMapping
+
+logger = logging.getLogger(__name__)
 
 
 def is_restricted(prefix):
@@ -24,6 +28,9 @@ def lookup(msg, mark_sent=False):
 
         return mapping.recipients
     except RestrictedMapping.DoesNotExist:
+        logging.warning('Received restricted email with invalid token.', extra={
+            'token': token
+        })
         pass
 
     return []
@@ -58,4 +65,8 @@ def get_payload_token(msg, remove_token):
                 extract_result = extract_token(msg, part_index, remove_token)
                 if extract_result:
                     return extract_result
+
+    logging.warning('Could not get token from a restricted email. The user may have '
+                    'forgotten to add a token.')
+
     return None

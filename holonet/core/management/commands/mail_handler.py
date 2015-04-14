@@ -30,14 +30,14 @@ class Command(BaseCommand):
                 msg = options['file']
 
             for recipient in recipients:
-                logger.info('%s / %s' %
+                logger.info('Received email from %s, forwarding it to %s' %
                             (sender, recipient))
                 handle_mail(msg, sender, recipient)
 
             # Handle calls with no sender, only a recipient.
             # The recipient list is then empty and the sender is the recipient.
             if sender and len(recipients) == 0:
-                logger.info('%s / %s' %
+                logger.info('Received email from %s, forwarding it to %s' %
                             (settings.SERVER_EMAIL, sender))
                 handle_mail(msg, settings.SERVER_EMAIL, sender)
         except Exception as e:

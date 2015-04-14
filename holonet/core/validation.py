@@ -1,5 +1,6 @@
 # -*- coding: utf8 -*-
 
+import logging
 import sys
 
 from django.conf import settings
@@ -7,6 +8,8 @@ from django.core.validators import ValidationError, validate_email
 
 from holonet.mappings.helpers import (clean_address, is_managed_domain, is_prefix_valid,
                                       split_address)
+
+logger = logging.getLogger(__name__)
 
 
 def validate_recipient(params=None, recipient='', sys_exit=False):
@@ -35,6 +38,9 @@ def validate_recipient(params=None, recipient='', sys_exit=False):
     }
 
     def return_result(result):
+
+        logging.info('Recipient validation result for %s: %s' % (recipient, result))
+
         if sys_exit is False:
             return exit_options[result]['action']
         else:

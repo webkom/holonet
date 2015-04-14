@@ -52,15 +52,27 @@ class Command(BaseCommand):
                 msg = options['file']
 
             if len(recipients) > 0:
-                logger.info('%s / %s' %
-                            (sender, ', '.join(recipients)))
+                logger.info(
+                    'Received email from %s, forwarding it to %s' %
+                    (sender, ', '.join(recipients)),
+                    extra={
+                        'sender': sender,
+                        'recipients': ', '.join(recipients)
+                        }
+                )
                 self.send_mail(msg, sender, recipients)
 
             # Handle calls with no sender, only a recipient.
             # The recipient list is then empty and the sender is the recipient.
             if sender and len(recipients) == 0:
-                logger.info('%s / %s' %
-                            (settings.SERVER_EMAIL, ', '.join([sender])))
+                logger.info(
+                    'Received email from %s, forwarding it to %s' %
+                    (settings.SERVER_EMAIL, ', '.join([sender])),
+                    extra={
+                        'sender': settings.SERVER_EMAIL,
+                        'recipients': sender
+                        }
+                )
                 self.send_mail(msg, settings.SERVER_EMAIL, [sender])
 
         except Exception as e:

@@ -23,7 +23,7 @@ class Handler(object):
 
         recipient_validation = validate_recipient(params=params)
 
-        incoming_logger.info('%s / %s' %
+        incoming_logger.info('Incomming email to %s, result: %s' %
                              (recipient, recipient_validation.get('action')))
 
         return recipient_validation

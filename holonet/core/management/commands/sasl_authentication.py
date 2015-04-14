@@ -65,10 +65,17 @@ class Handler(object):
 
                 try:
                     namespace, query_database, login, password = line_payload.split('/')
-                    sasl_logger.info('Lookup received and parsed: %s/%s/%s/*****' %
-                                     (namespace, query_database, login))
+                    sasl_logger.info(
+                        'Lookup received and parsed: %s/%s/%s/*****' %
+                        (namespace, query_database, login)
+                    )
                 except ValueError:
-                    sasl_logger.error('Lookup received but could not parse it: %s' % line_payload)
+                    sasl_logger.error(
+                        'Lookup received but could not parse it: %s' % line_payload,
+                        extra={
+                            'payload': line_payload
+                        }
+                    )
                     break
 
                 if namespace == 'shared':
@@ -83,22 +90,29 @@ class Handler(object):
 
                         if domain is not None:
                             if domain not in settings.MASTER_DOMAINS:
-                                sasl_logger.warning('Domain not in MASTER_DOMAINS / Not Found')
+                                sasl_logger.warning('Domain not in MASTER_DOMAINS', extra={
+                                    'domain': domain,
+                                    'result': 'Not Found'
+                                })
                                 return self.not_found()
 
                         if username is not None:
                             user = authenticate(username=username, password=password)
                             if user is not None:
                                 if user.is_active:
-                                    sasl_logger.info('Authentication OK / %s' % username)
+                                    sasl_logger.info('Authentication OK, username: %s' % username)
                                     return self.success(self.passdb_payload(password))
-                            sasl_logger.warning('Could not authenticate user / %s' % username)
+                            sasl_logger.warning('Could not authenticate user', extra={
+                                'username': username
+                            })
                             return self.not_found()
 
             elif start_character == self.DICT_PROTOCOL_HOLONET_TEST_RESPONSE:
                 return self.test({'content': line_payload})
 
-        sasl_logger.warning('Could not parse payload / %s' % ' / '.join(params))
+        sasl_logger.warning('Could not parse payload: %s' % ', '.join(params), extra={
+            'params': ', '.join(params)
+        })
         return self.not_found()
 
 

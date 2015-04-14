@@ -161,12 +161,12 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
     'root': {
-        'level': 'WARNING',
-        'handlers': ['sentry'],
+        'level': 'INFO',
+        'handlers': ['sentry', 'console'],
     },
     'formatters': {
         'verbose': {
-            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+            'format': '%(levelname)s %(asctime)s %(name)s %(message)s'
         },
     },
     'handlers': {
@@ -181,12 +181,6 @@ LOGGING = {
         }
     },
     'loggers': {
-        '': {
-            'level': 'WARNING',
-            'handlers': ['console'],
-            'propagate': True,
-        },
-
         'raven': {
             'level': 'WARNING',
             'handlers': ['console'],
@@ -196,32 +190,6 @@ LOGGING = {
             'level': 'WARNING',
             'handlers': ['console'],
             'propagate': False,
-        },
-
-        'holonet.mail_handler': {
-            'level': 'INFO',
-            'handlers': ['console'],
-            'propagate': True,
-        },
-        'holonet.submission': {
-            'level': 'INFO',
-            'handlers': ['console'],
-            'propagate': True,
-        },
-        'holonet.incoming_policy': {
-            'level': 'INFO',
-            'handlers': ['console'],
-            'propagate': True,
-        },
-        'holonet.outgoing_policy': {
-            'level': 'INFO',
-            'handlers': ['console'],
-            'propagate': True,
-        },
-        'holonet.sasl_authentication': {
-            'level': 'INFO',
-            'handlers': ['console'],
-            'propagate': True,
         },
     },
 }
