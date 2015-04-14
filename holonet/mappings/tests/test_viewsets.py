@@ -5,7 +5,8 @@ from django.contrib.auth.models import User
 from rest_framework.test import APITestCase
 
 from holonet.mappings.helpers import lookup
-from holonet.mappings.models import MailingList
+from holonet.mappings.models import MailingList, Recipient
+from holonet.mappings.serializers import MailingListSerializer, RecipientSerializer
 
 
 class ReverseLookupTestCase(APITestCase):
@@ -75,3 +76,52 @@ class ReverseLookupTestCase(APITestCase):
         response = self.client.post(self.endpoint, data=data, format='json')
 
         self.assertListEqual(response.data, [])
+
+
+class RecipientViewSetTestCase(APITestCase):
+
+    fixtures = ['users.yaml', 'recipients.yaml']
+
+    def setUp(self):
+        self.client.force_authenticate(user=User.objects.get(username='testuser1'))
+
+    def test_get_recipients(self):
+        response = self.client.get('/api/recipient/', format='json')
+
+        db_data = RecipientSerializer(data=Recipient.objects.all(), many=True)
+        db_data.is_valid()
+
+        self.assertListEqual(response.data, db_data.data)
+
+    def test_add_recipient(self):
+        data = {'address': 'holonettest@test.holonet.no', 'tag': 'holonettest'}
+        response = self.client.post('/api/recipient/', data=data, format='json')
+
+        self.assertEqual(data, response.data)
+
+    def test_delete_recipient(self):
+        self.assertTrue(Recipient.objects.filter(tag='testuser4').exists())
+        self.client.delete('/api/recipient/testuser4/', format='json')
+        self.assertRaises(Recipient.DoesNotExist, Recipient.objects.get, tag='testuser4')
+
+    def test_change_recipient(self):
+        response = self.client.patch('/api/recipient/testuser4/', format='json',
+                                     data={'address': 'test@holonet.no'})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(Recipient.objects.get(tag='testuser4').address, 'test@holonet.no')
+
+
+class MailinglistViewSetTestCase(APITestCase):
+
+    fixtures = ['users.yaml', 'recipients.yaml', 'mailing_lists.yaml']
+
+    def setUp(self):
+        self.client.force_authenticate(user=User.objects.get(username='testuser1'))
+
+    def test_get_mailinglists(self):
+        response = self.client.get('/api/mailinglist/', format='json')
+
+        db_data = MailingListSerializer(data=MailingList.objects.all(), many=True)
+        db_data.is_valid()
+
+        self.assertListEqual(response.data, db_data.data)

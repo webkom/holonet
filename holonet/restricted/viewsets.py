@@ -11,7 +11,6 @@ class RestrictedMappingViewSet(viewsets.ModelViewSet):
     queryset = RestrictedMapping.objects.all()
 
     def get_serializer_class(self):
-        print(self.action)
         if self.action == 'create' or self.action == 'update' or self.action == 'partial_update':
             return RestrictedMappingCreateAndUpdateSerializer
         return RestrictedMappingSerializer

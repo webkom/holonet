@@ -78,7 +78,6 @@ class MailingListViewSet(viewsets.ModelViewSet):
     queryset = MailingList.objects.all()
 
     def get_serializer_class(self):
-        print(self.action)
         if self.action == 'create' or self.action == 'update' or self.action == 'partial_update':
             return MailingListCreateAndUpdateSerializer
         return MailingListSerializer
