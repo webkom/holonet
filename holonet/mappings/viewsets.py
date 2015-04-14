@@ -1,41 +1,16 @@
 # -*- coding: utf8 -*-
 
 from django.conf import settings
-from django.core.exceptions import MultipleObjectsReturned
-from django.db.models import Q
-from django.http import Http404
 from rest_framework import viewsets
 from rest_framework.decorators import list_route
-from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
 from holonet.mappings.models import MailingList, Recipient
 
 from .helpers import (LookupAddress, clean_address, is_managed_domain, lookup, reverse_lookup,
                       split_address)
-from .serializers import LookupSerializer, MailingListSerializer, RecipientSerializer
-
-
-class PKAndTagViewSet(GenericAPIView):
-
-    lookup_field = 'tag'
-
-    def get_object(self):
-        queryset = self.filter_queryset(self.get_queryset())
-        try:
-            query_value = self.kwargs['tag']
-
-            try:
-
-                query_value = int(query_value)
-                obj = queryset.get(Q(pk=query_value) | Q(tag=query_value))
-
-            except ValueError:
-                obj = queryset.get(tag=query_value)
-
-        except (queryset.model.DoesNotExist, MultipleObjectsReturned):
-            raise Http404('No %s matches the given query.' % queryset.model._meta.object_name)
-        return obj
+from .serializers import (LookupSerializer, MailingListCreateAndUpdateSerializer,
+                          MailingListSerializer, RecipientSerializer)
 
 
 class LookupViewSet(viewsets.ViewSet):
@@ -92,11 +67,18 @@ class LookupViewSet(viewsets.ViewSet):
         return Response(serializer.data)
 
 
-class RecipientViewSet(viewsets.ModelViewSet, PKAndTagViewSet):
+class RecipientViewSet(viewsets.ModelViewSet):
+    lookup_field = 'tag'
     queryset = Recipient.objects.all()
     serializer_class = RecipientSerializer
 
 
-class MailingListViewSet(viewsets.ModelViewSet, PKAndTagViewSet):
+class MailingListViewSet(viewsets.ModelViewSet):
+    lookup_field = 'tag'
     queryset = MailingList.objects.all()
-    serializer_class = MailingListSerializer
+
+    def get_serializer_class(self):
+        print(self.action)
+        if self.action == 'create' or self.action == 'update' or self.action == 'partial_update':
+            return MailingListCreateAndUpdateSerializer
+        return MailingListSerializer

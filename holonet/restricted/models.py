@@ -24,12 +24,6 @@ class RestrictedMapping(TokenModel):
     def recipients(self):
         return [recipient.address for recipient in self.recipient_list.all()]
 
-    def save(self, *args, **kwargs):
-        if not self.token:
-            self.token = uuid.uuid4()
-
-        return super(RestrictedMapping, self).save(*args, **kwargs)
-
     def regenerate_token(self):
         self.token = uuid.uuid4()
 

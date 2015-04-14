@@ -1,11 +1,17 @@
 # -*- coding: utf8 -*-
 from rest_framework import viewsets
 
-from holonet.mappings.viewsets import PKAndTagViewSet
 from holonet.restricted.models import RestrictedMapping
-from holonet.restricted.serializers import RestrictedMappingSerializer
+from holonet.restricted.serializers import (RestrictedMappingCreateAndUpdateSerializer,
+                                            RestrictedMappingSerializer)
 
 
-class RestrictedMappingViewSet(viewsets.ModelViewSet, PKAndTagViewSet):
+class RestrictedMappingViewSet(viewsets.ModelViewSet):
+    lookup_field = 'tag'
     queryset = RestrictedMapping.objects.all()
-    serializer_class = RestrictedMappingSerializer
+
+    def get_serializer_class(self):
+        print(self.action)
+        if self.action == 'create' or self.action == 'update' or self.action == 'partial_update':
+            return RestrictedMappingCreateAndUpdateSerializer
+        return RestrictedMappingSerializer
