@@ -1,5 +1,7 @@
 # -*- coding: utf8 -*-
 
+import uuid
+
 from django.db import models
 from django.utils import timezone
 
@@ -41,10 +43,13 @@ class DomainWhitelist(DomainList):
 
 
 class TokenModel(models.Model):
-    token = models.CharField(max_length=64, unique=True)
+    token = models.CharField(max_length=64, unique=True, default='')
 
     valid_from = models.DateTimeField(blank=True, null=True)
     valid_to = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        abstract = True
 
     @classmethod
     def get_token(cls, token):
@@ -74,5 +79,7 @@ class TokenModel(models.Model):
 
         return False
 
-    class Meta:
-        abstract = True
+    def save(self, *args, **kwargs):
+        if not self.token:
+            self.token = uuid.uuid4()
+        super(TokenModel, self).save(*args, **kwargs)

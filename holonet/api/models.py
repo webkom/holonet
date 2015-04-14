@@ -1,7 +1,5 @@
 # -*- coding: utf8 -*-
 
-import uuid
-
 from django.db import models
 
 from holonet.core.models import TokenModel
@@ -43,8 +41,3 @@ class Token(TokenModel):
 
     def __str__(self):
         return '%s - %s' % (self.application, self.token)
-
-    def save(self, *args, **kwargs):
-        if not self.token:
-            self.token = uuid.uuid4()
-        super(Token, self).save(*args, **kwargs)

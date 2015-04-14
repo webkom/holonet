@@ -1,43 +1,27 @@
 # -*- coding: utf8 -*-
 
-from rest_framework import mixins, viewsets
+from rest_framework import viewsets
 
 from .models import DomainBlacklist, DomainWhitelist, SenderBlacklist, SenderWhitelist
 from .serializers import (DomainBlacklistSerializer, DomainWhitelistSerializer,
                           SenderBlacklistSerializer, SenderWhitelistSerializer)
 
 
-class SenderBlacklistViewSet(mixins.CreateModelMixin,
-                             mixins.RetrieveModelMixin,
-                             mixins.DestroyModelMixin,
-                             mixins.ListModelMixin,
-                             viewsets.GenericViewSet):
+class SenderBlacklistViewSet(viewsets.ModelViewSet):
     queryset = SenderBlacklist.objects.all()
     serializer_class = SenderBlacklistSerializer
 
 
-class DomainBlacklistViewSet(mixins.CreateModelMixin,
-                             mixins.RetrieveModelMixin,
-                             mixins.DestroyModelMixin,
-                             mixins.ListModelMixin,
-                             viewsets.GenericViewSet):
+class DomainBlacklistViewSet(viewsets.ModelViewSet):
     queryset = DomainBlacklist.objects.all()
     serializer_class = DomainBlacklistSerializer
 
 
-class SenderWhitelistViewSet(mixins.CreateModelMixin,
-                             mixins.RetrieveModelMixin,
-                             mixins.DestroyModelMixin,
-                             mixins.ListModelMixin,
-                             viewsets.GenericViewSet):
+class SenderWhitelistViewSet(viewsets.ModelViewSet):
     queryset = SenderWhitelist.objects.all()
     serializer_class = SenderWhitelistSerializer
 
 
-class DomainWhitelistViewSet(mixins.CreateModelMixin,
-                             mixins.RetrieveModelMixin,
-                             mixins.DestroyModelMixin,
-                             mixins.ListModelMixin,
-                             viewsets.GenericViewSet):
+class DomainWhitelistViewSet(viewsets.ModelViewSet):
     queryset = DomainWhitelist.objects.all()
     serializer_class = DomainWhitelistSerializer

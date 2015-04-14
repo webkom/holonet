@@ -4,9 +4,11 @@
     token: '6375717d-9296-4db8-a0ec-40855cb94d79'
     from_address: 'test@holonet.no'
     recipient_list: [1,2,3]
+    tag: 'test'
 - model: restricted.RestrictedMapping
   pk: 2
   fields:
     token: '6375717d-9296-4db8-a0ec-40855cb94d78'
     from_address: 'test1@holonet.no'
     recipient_list: [1,2]
+    tag: 'test1'

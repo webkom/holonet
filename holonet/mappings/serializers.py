@@ -1,44 +1,51 @@
 # -*- coding: utf8 -*-
 
 from rest_framework import serializers
+from rest_framework.relations import SlugRelatedField
 
-from .models import MailingList, Recipient
+from holonet.mappings.models import MailingList, Recipient
 
 
 class LookupSerializer(serializers.Serializer):
     email = serializers.EmailField()
 
 
-class MappingRecipientSerializer(serializers.ModelSerializer):
+class RecipientSerializer(serializers.ModelSerializer):
+    """
+    This class is used by the /recipient/ endpoint
+    """
 
     class Meta:
         model = Recipient
         fields = (
-            'id',
             'address',
             'tag'
         )
 
 
-class RecipientSerializer(serializers.ModelSerializer):
+class MailingListSerializer(serializers.ModelSerializer):
+    """
+    This class is used by the /mailinglist/ endpoint when we lists and retrieve mappings
+    """
 
-    class Meta:
-        model = Recipient
-        fields = (
-            'id',
-            'address',
-            'tag',
-            'lists'
-        )
-
-
-class MappingSerializer(serializers.ModelSerializer):
+    recipient_list = RecipientSerializer(many=True)
 
     class Meta:
         model = MailingList
         fields = (
-            'id',
             'prefix',
-            'recipients',
+            'recipient_list',
             'tag'
         )
+
+
+class MailingListCreateAndUpdateSerializer(MailingListSerializer):
+    """
+    This class is used by the /mailinglist/ endpoint when we create and update mappings
+    """
+
+    recipient_list = SlugRelatedField(
+        many=True,
+        slug_field='tag',
+        queryset=Recipient.objects.all()
+    )
