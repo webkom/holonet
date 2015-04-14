@@ -52,9 +52,4 @@ class RestrictedModelTestCase(TestCase):
     def test_allow_none_tag(self):
         mapping = RestrictedMapping.objects.get(pk=1)
         mapping.tag = None
-        self.assertIsNone(mapping.save())
-
-    def test_deny_blank_tag(self):
-        mapping = RestrictedMapping.objects.get(pk=1)
-        mapping.tag = ''
         self.assertRaises(IntegrityError, mapping.save)

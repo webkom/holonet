@@ -2,7 +2,7 @@
 
 import uuid
 
-from django.db import IntegrityError, models
+from django.db import models
 
 from holonet.core.models import TokenModel
 
@@ -16,7 +16,7 @@ class RestrictedMapping(TokenModel):
 
     recipient_list = models.ManyToManyField('mappings.Recipient', blank=True,
                                             related_name='restricted_lists')
-    tag = models.CharField(max_length=100, unique=True, null=True)
+    tag = models.CharField(max_length=100, unique=True)
 
     objects = RestrictedMappingManager()
 
@@ -27,9 +27,6 @@ class RestrictedMapping(TokenModel):
     def save(self, *args, **kwargs):
         if not self.token:
             self.token = uuid.uuid4()
-
-        if self.tag == '':
-            raise IntegrityError('The tag field cannot be a empty string.')
 
         return super(RestrictedMapping, self).save(*args, **kwargs)
 

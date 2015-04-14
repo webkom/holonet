@@ -31,14 +31,9 @@ class MappingModelTestCase(TestCase):
 
         self.assertRaises(IntegrityError, mapping2.save)
 
-    def test_allow_none_tag(self):
+    def test_deny_none_tag(self):
         mapping = MailingList.objects.get(pk=1)
         mapping.tag = None
-        self.assertIsNone(mapping.save())
-
-    def test_deny_blank_tag(self):
-        mapping = MailingList.objects.get(pk=1)
-        mapping.tag = ''
         self.assertRaises(IntegrityError, mapping.save)
 
 
@@ -60,11 +55,6 @@ class RecipientModelTestCase(TestCase):
     def test_allow_none_tag(self):
         recipient = Recipient.objects.get(pk=1)
         recipient.tag = None
-        self.assertIsNone(recipient.save())
-
-    def test_deny_blank_tag(self):
-        recipient = Recipient.objects.get(pk=1)
-        recipient.tag = ''
         self.assertRaises(IntegrityError, recipient.save)
 
     def test_recipient_member_lists(self):
