@@ -1,18 +1,18 @@
-django>=1.7,<1.8
-ipython
-raven
+Django==1.8.1
+ipython==3.1.0
+raven==5.3.1
 
-psycopg2
-pyyaml
-redis
-python3-memcached
+psycopg2==2.6
+PyYAML==3.11
+redis==2.10.3
+python3-memcached==1.51
 
-django-flat-theme
-djangorestframework
-django-extensions
-django-cors-headers
-django-crispy-forms
-django-celery
-django-cachalot
+django-flat-theme==0.9.3
+djangorestframework==3.1.2
+django-extensions==1.5.5
+django-cors-headers==1.0.0
+django-crispy-forms==1.4.0
+django-celery==3.1.16
+django-cachalot==1.0.1
 
-elasticsearch>=1.0.0,<2.0.0
+elasticsearch==1.4.0
