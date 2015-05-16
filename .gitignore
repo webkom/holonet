@@ -65,6 +65,9 @@ node_modules/
 
 htmlcov/
 
-holonet/dashboard/static/js/index.js
-holonet/dashboard/static/css/style.css
-email.txt
+holonet/assets/js/holonet.js
+
+bower_components/
+holonet/files/
+
+npm-debug.log.*

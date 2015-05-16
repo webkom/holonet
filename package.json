@@ -1,10 +1,13 @@
 {
   "name": "holonet",
-  "version": "1.0.0",
-  "description": "Holonet Mail Delivery System",
+  "version": "0.0.0",
+  "description": "Mail Delivery System",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch-js": "watchify holonet/assets/src/holonet.js -d -o holonet/assets/js/holonet.js -v",
+    "build": "browserify -o holonet/assets/js/holonet.js holonet/assets/src/holonet.js",
+    "watch": "npm run build & npm run watch-js",
+    "lint": "jsxhint holonet/assets/src/ && jscs holonet/assets/src/"
   },
   "repository": {
     "type": "git",
@@ -20,16 +23,51 @@
   },
   "homepage": "https://github.com/webkom/holonet",
   "dependencies": {
-    "browserify": "^6.3.2",
-    "cookie": "^0.1.2",
-    "moment": "^2.8.3",
-    "nib": "^1.0.4",
-    "react": "^0.12.0",
-    "react-bootstrap": "^0.13.0",
-    "reactify": "^0.16.0",
+    "flummox": "^4.0.0-alpha2",
+    "react": "^0.13.3"
+  },
+  "devDependencies": {
+    "babelify": "^6.1.1",
+    "browserify": "^6.3.4",
+    "esprima-fb": "^15001.1.0-dev-harmony-fb",
+    "jscs": "^1.13.1",
+    "jsxhint": "^0.15.0",
+    "nib": "^1.1.0",
     "stylus": "^0.49.3",
-    "superagent": "^0.21.0",
-    "uglify-js": "^2.4.15",
-    "watchify": "^2.1.1"
+    "uglify-js": "^2.4.21",
+    "watchify": "^3.2.1",
+    "yuglify": "^0.1.4"
+  },
+  "browserify": {
+    "transform": [
+      [
+        "babelify",
+        {}
+      ]
+    ]
+  },
+  "jscsConfig": {
+    "esnext": true,
+    "preset": "airbnb",
+    "excludeFiles": [
+      "node_modules/**",
+      "bower_components/**"
+    ],
+    "esprima": "esprima-fb",
+    "validateIndentation": 2,
+    "disallowMultipleVarDecl": true,
+    "requireMultipleVarDecl": null,
+    "disallowQuotedKeysInObjects": null,
+    "safeContextKeyword": [
+      "self"
+    ],
+    "requireCamelCaseOrUpperCaseIdentifiers": "ignoreProperties"
+  },
+  "jshintConfig": {
+    "globalstrict": false,
+    "browserify": true,
+    "esnext": true,
+    "devel": true,
+    "expr": true
   }
 }

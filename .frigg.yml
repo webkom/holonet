@@ -5,7 +5,13 @@ tasks:
   - isort -c -rc holonet
   - coverage report --fail-under=75
   - coverage xml
+  - npm run lint
+
 comment: false
+
+services:
+  - postgresql
+  - redis-server
 
 coverage:
   path: coverage.xml

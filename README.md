@@ -1,5 +1,5 @@
 # HOLONET [![Build status] (https://ci.frigg.io/badges/webkom/holonet/)](https://ci.frigg.io/webkom/holonet/last/) [![Coverage status](http://ci.frigg.io/badges/coverage/webkom/holonet/)](https://ci.frigg.io/webkom/holonet/last/) [![Documentation Status](https://readthedocs.org/projects/holonet/badge/?version=latest)](http://holonet.readthedocs.org) [![Requirements Status](https://requires.io/github/webkom/holonet/requirements.svg?branch=master)](https://requires.io/github/webkom/holonet/requirements/?branch=master)
-> Abakus Mail Delivery System
+> Mail Delivery System
 
 [Documentation](http://holonet.readthedocs.org/)
 
@@ -9,18 +9,16 @@
 ```
 git clone git@github.com:webkom/holonet.git
 cd holonet
-npm install && bower install
-make frontend
 make venv
 source venv/bin/activate
-pip install -r requirements/prod.txt
+make dev
 ```
 
 Now you need to fix the settings file. Override the settings you want in settings/holonet.py.
 Make sure you configure the database, elasticsearch config, celery broker, cache and so on.
 
 ```
-python manage.py collectstatic
+make static
 ```
 
 The django project is now probably ready to run. You can now run it with gunicorn or uwsgi. 

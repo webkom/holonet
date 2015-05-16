@@ -1,14 +1,3 @@
-"""
-Django settings for holonet project.
-
-For more information on this file, see
-https://docs.djangoproject.com/en/1.7/topics/settings/
-
-For the full list of settings and their values, see
-https://docs.djangoproject.com/en/1.7/ref/settings/
-"""
-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import logging
 import os
 
@@ -18,21 +7,14 @@ from django.conf.global_settings import AUTHENTICATION_BACKENDS
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'e6c95!2(*@31_)hel5h7-ag**ozwn=s@veoh+n$-y8a-!bn=@$'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
-# Application definition
 
 INSTALLED_APPS = (
     'flat',
@@ -50,6 +32,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'corsheaders',
     'raven.contrib.django.raven_compat',
+    'pipeline',
 
     'holonet.core',
     'holonet.mappings',
@@ -70,6 +53,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'pipeline.middleware.MinifyHTMLMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -99,8 +83,6 @@ WSGI_APPLICATION = 'holonet.wsgi.application'
 
 CORS_ORIGIN_ALLOW_ALL = True
 
-# Database
-# https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
 DATABASES = {
     'default': {
@@ -109,8 +91,6 @@ DATABASES = {
     }
 }
 
-# Internationalization
-# https://docs.djangoproject.com/en/1.7/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -130,6 +110,67 @@ MEDIA_URL = '/media/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'files', 'static')
 STATIC_URL = '/static/'
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'pipeline.finders.CachedFileFinder',
+    'pipeline.finders.PipelineFinder',
+)
+STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
+
+STATICFILES_DIRS = (
+    ('assets', os.path.join(BASE_DIR, 'assets')),
+    ('bower', os.path.join(os.path.dirname(BASE_DIR), 'bower_components')),
+)
+
+PIPELINE_COMPILERS = (
+    'pipeline.compilers.stylus.StylusCompiler',
+)
+PIPELINE_STYLUS_BINARY = os.path.join(os.path.dirname(BASE_DIR), 'node_modules/stylus/bin/stylus')
+PIPELINE_STYLUS_NIB = os.path.join(os.path.dirname(BASE_DIR), 'node_modules/nib/lib')
+PIPELINE_STYLUS_CWD = os.path.join(BASE_DIR, 'assets/styl/')
+PIPELINE_STYLUS_ARGUMENTS = '--include %s --include %s --compress' % (PIPELINE_STYLUS_NIB,
+                                                                      PIPELINE_STYLUS_CWD)
+
+PIPELINE_YUGLIFY_BINARY = os.path.join(os.path.dirname(BASE_DIR),
+                                       'node_modules/yuglify/bin/yuglify')
+
+PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.uglifyjs.UglifyJSCompressor'
+PIPELINE_UGLIFYJS_BINARY = os.path.join(os.path.dirname(BASE_DIR),
+                                        'node_modules/uglify-js/bin/uglifyjs')
+
+PIPELINE_JS = {
+    'components': {
+        'source_filenames': (
+            'bower/jquery/dist/jquery.js',
+            'bower/bootstrap/dist/js/bootstrap.js',
+        ),
+        'output_filename': 'js/components.js',
+    },
+    'holonet': {
+        'source_filenames': (
+            'assets/js/holonet.js',
+        ),
+        'output_filename': 'js/holonet.js',
+    },
+}
+
+PIPELINE_CSS = {
+    'components': {
+        'source_filenames': (
+            'bower/bootstrap/dist/css/bootstrap.css',
+            'bower/font-awsome/css/font-awesome.css',
+        ),
+        'output_filename': 'css/components.css'
+    },
+    'holonet': {
+        'source_filenames': (
+            'assets/styl/style.styl',
+        ),
+        'output_filename': 'css/holonet.css'
+    }
+}
 
 djcelery.setup_loader()
 

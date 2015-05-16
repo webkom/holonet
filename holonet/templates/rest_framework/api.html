@@ -1,14 +1,14 @@
 {% extends "rest_framework/base.html" %}
-{% load static %}
+{% load pipeline %}
 
 {% block bootstrap_theme %}
-    <link href="{% static "lib/bootswatch/flatly/bootstrap.min.css" %}" rel="stylesheet">
+    {% stylesheet "components" %}
 {% endblock %}
 
-{% block title %}Holonet API{% endblock %}
+{% block title %}Holonet{% endblock %}
 
 {% block branding %}
     <a class='navbar-brand' rel="nofollow" href='/api'>
-        Holonet API
+        Holonet
     </a>
 {% endblock %}

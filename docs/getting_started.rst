@@ -5,12 +5,11 @@ Getting Started
 
     git clone git@github.com:webkom/holonet.git
     cd holonet
-    pip install -Ur requirements/prod.txt
-    npm install && bower install
-    make frontend
     make venv
+    source venv/bin/activate
+    make prod
+    make static
     python manage.py migrate
-    python manage.py collectstatic
 
 Now you need to fix the settings file. Override the settings you want in settings/holonet.py. Make
 sure you configure the database, elasticsearch config, celery broker, cache and so on.

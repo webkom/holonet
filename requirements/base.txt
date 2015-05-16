@@ -14,5 +14,6 @@ django-cors-headers==1.0.0
 django-crispy-forms==1.4.0
 django-celery==3.1.16
 django-cachalot==1.0.1
+django-pipeline==1.5.0
 
 elasticsearch==1.4.0
