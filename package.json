@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "browserify -o holonet/assets/js/holonet.js holonet/assets/src/holonet.js",
-    "watch": "watchify -d -o holonet/assets/js/holonet.js -v holonet/assets/src/holonet.js",
+    "watch": "watchify holonet/assets/src/holonet.js -d -o holonet/assets/js/holonet.js -v",
     "lint": "eslint holonet/assets/src && jscs holonet/assets/src",
     "bower": "bower install --allow-root"
   },
