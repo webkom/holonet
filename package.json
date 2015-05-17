@@ -4,10 +4,9 @@
   "description": "Mail Delivery System",
   "main": "index.js",
   "scripts": {
-    "watch-js": "watchify holonet/assets/src/holonet.js -d -o holonet/assets/js/holonet.js -v",
     "build": "browserify -o holonet/assets/js/holonet.js holonet/assets/src/holonet.js",
-    "watch": "npm run build & npm run watch-js",
-    "lint": "jsxhint holonet/assets/src/ && jscs holonet/assets/src/",
+    "watch": "watchify -d -o holonet/assets/js/holonet.js -v holonet/assets/src/holonet.js",
+    "lint": "eslint holonet/assets/src && jscs holonet/assets/src",
     "bower": "bower install --allow-root"
   },
   "repository": {
@@ -31,9 +30,9 @@
     "babelify": "^6.1.1",
     "bower": "^1.4.1",
     "browserify": "^6.3.4",
+    "eslint": "^0.21.1",
     "esprima-fb": "^15001.1.0-dev-harmony-fb",
     "jscs": "^1.13.1",
-    "jsxhint": "^0.15.0",
     "nib": "^1.1.0",
     "stylus": "^0.49.3",
     "uglify-js": "^2.4.21",
@@ -51,25 +50,34 @@
   "jscsConfig": {
     "esnext": true,
     "preset": "airbnb",
-    "excludeFiles": [
-      "node_modules/**",
-      "bower_components/**"
-    ],
     "esprima": "esprima-fb",
     "validateIndentation": 2,
-    "disallowMultipleVarDecl": true,
-    "requireMultipleVarDecl": null,
-    "disallowQuotedKeysInObjects": null,
     "safeContextKeyword": [
       "self"
     ],
     "requireCamelCaseOrUpperCaseIdentifiers": "ignoreProperties"
   },
-  "jshintConfig": {
-    "globalstrict": false,
-    "browserify": true,
-    "esnext": true,
-    "devel": true,
-    "expr": true
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "node": true,
+      "es6": true
+    },
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true
+    },
+    "rules": {
+      "quotes": [
+        2,
+        "single"
+      ],
+      "no-unused-vars": [
+        0
+      ],
+      "no-shadow": [
+        0
+      ]
+    }
   }
 }
