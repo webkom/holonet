@@ -8,7 +8,7 @@
     "build": "browserify -o holonet/assets/js/holonet.js holonet/assets/src/holonet.js",
     "watch": "npm run build & npm run watch-js",
     "lint": "jsxhint holonet/assets/src/ && jscs holonet/assets/src/",
-    "bower": "bower install"
+    "bower": "bower install --allow-root"
   },
   "repository": {
     "type": "git",
