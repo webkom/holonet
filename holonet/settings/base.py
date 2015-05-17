@@ -150,7 +150,7 @@ PIPELINE_JS = {
     },
     'holonet': {
         'source_filenames': (
-            'assets/js/holonet.js',
+            'asstest/js/holonet.js',
         ),
         'output_filename': 'js/holonet.js',
     },
