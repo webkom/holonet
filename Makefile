@@ -10,7 +10,7 @@ help:
 
 init:
 	npm install
-	bower install
+	npm run bower
 
 dev: init
 	pip install -r requirements/dev.txt --upgrade

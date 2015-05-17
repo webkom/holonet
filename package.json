@@ -7,7 +7,8 @@
     "watch-js": "watchify holonet/assets/src/holonet.js -d -o holonet/assets/js/holonet.js -v",
     "build": "browserify -o holonet/assets/js/holonet.js holonet/assets/src/holonet.js",
     "watch": "npm run build & npm run watch-js",
-    "lint": "jsxhint holonet/assets/src/ && jscs holonet/assets/src/"
+    "lint": "jsxhint holonet/assets/src/ && jscs holonet/assets/src/",
+    "bower": "bower install"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
   },
   "devDependencies": {
     "babelify": "^6.1.1",
+    "bower": "^1.4.1",
     "browserify": "^6.3.4",
     "esprima-fb": "^15001.1.0-dev-harmony-fb",
     "jscs": "^1.13.1",
