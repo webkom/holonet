@@ -10,6 +10,9 @@ tasks:
   - coverage xml
   - npm run lint
 
+verbose_tasks:
+  - coverage report --fail-under=75
+
 comment: false
 
 services:

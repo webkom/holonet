@@ -6,17 +6,21 @@ help:
 	@echo 'lint            - lint project'
 	@echo 'static          - compile staticfiles'
 	@echo 'docs            - build documentation'
-	@echo 'watch-frontend  - watch for changes in frontend code'
+	@echo 'watch           - watch for changes in frontend code'
 
-init:
+node_modules:
 	npm install
+
+bower_components: node_modules
 	npm run bower
 
-dev: init
-	pip install -r requirements/dev.txt --upgrade
+init: node_modules bower_components
 
-prod: init
-	pip install -r requirements/prod.txt --upgrade
+dev: venv
+	venv/bin/pip install -r requirements/dev.txt --upgrade
+
+prod: venv
+	venv/bin/pip install -r requirements/prod.txt --upgrade
 
 venv:
 	virtualenv -p `which python3` venv
@@ -24,18 +28,18 @@ venv:
 holonet/settings/local.py:
 	touch holonet/settings/local.py
 
-lint:
+lint: node_modules
 	flake8
 	npm run lint
 
-static: init
+static: node_modules bower_components venv
 	npm run build
-	python manage.py collectstatic --noinput
+	venv/bin/python manage.py collectstatic --noinput
 
-watch-frontend: init
+watch: node_modules
 	npm run watch
 
 docs:
 	cd docs; make html && open _build/html/index.html; cd ..;
 
-.PHONY: help init dev prod venv lint static watch-frontend docs
+.PHONY: help init dev prod lint static watch docs
