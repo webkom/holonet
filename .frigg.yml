@@ -5,7 +5,15 @@ tasks:
   - isort -c -rc holonet
   - coverage report --fail-under=75
   - coverage xml
+
+verbose_tasks:
+  - coverage report --fail-under=75
+
 comment: false
+
+services:
+  - redis-server
+  - postgresql
 
 coverage:
   path: coverage.xml
