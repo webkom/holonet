@@ -9,23 +9,11 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import logging
 import os
 
-import djcelery
 from django.conf.global_settings import AUTHENTICATION_BACKENDS
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-
-
-SECRET_KEY = 'e6c95!2(*@31_)hel5h7-ag**ozwn=s@veoh+n$-y8a-!bn=@$'
-
-DEBUG = True
-
-TEMPLATE_DEBUG = True
-
-ALLOWED_HOSTS = []
-
 
 INSTALLED_APPS = (
     'flat',
@@ -65,20 +53,27 @@ MIDDLEWARE_CLASSES = (
     'corsheaders.middleware.CorsMiddleware',
 )
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.debug',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.media',
-    'django.core.context_processors.static',
-    'django.core.context_processors.tz',
-    'django.contrib.messages.context_processors.messages',
-    'django.core.context_processors.request',
-)
-
-TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, 'templates').replace('\\', '/'),
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates')
+        ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.core.context_processors.i18n',
+                'django.contrib.auth.context_processors.auth',
+                'django.core.context_processors.media',
+                'django.core.context_processors.static',
+                'django.core.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
 
 AUTHENTICATION_BACKENDS = AUTHENTICATION_BACKENDS + (
     'django.contrib.auth.backends.ModelBackend',
@@ -91,14 +86,6 @@ ROOT_URLCONF = 'holonet.urls'
 WSGI_APPLICATION = 'holonet.wsgi.application'
 
 CORS_ORIGIN_ALLOW_ALL = True
-
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'database.db'),
-    }
-}
 
 LANGUAGE_CODE = 'en-us'
 
@@ -119,14 +106,6 @@ MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'files', 'static')
 STATIC_URL = '/static/'
 
-djcelery.setup_loader()
-
-SENTRY_CELERY_LOGLEVEL = logging.WARNING
-CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
-CELERY_RESULT_BACKEND = 'djcelery.backends.database.DatabaseBackend'
-CELERY_TRACK_STARTED = True
-CELERY_SEND_EVENTS = True
-
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'holonet.api.backend.TokenAuthenticationBackend',
@@ -143,41 +122,4 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'holonet.api.backend.StaffRequired',
     )
-}
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': True,
-    'root': {
-        'level': 'INFO',
-        'handlers': ['sentry', 'console'],
-    },
-    'formatters': {
-        'verbose': {
-            'format': '%(levelname)s %(asctime)s %(name)s %(message)s'
-        },
-    },
-    'handlers': {
-        'sentry': {
-            'level': 'WARNING',
-            'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
-        },
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose'
-        }
-    },
-    'loggers': {
-        'raven': {
-            'level': 'WARNING',
-            'handlers': ['console'],
-            'propagate': False,
-        },
-        'sentry.errors': {
-            'level': 'WARNING',
-            'handlers': ['console'],
-            'propagate': False,
-        },
-    },
 }

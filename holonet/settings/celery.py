@@ -33,4 +33,6 @@ app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 app.conf.update(
     CELERYBEAT_SCHEDULER='djcelery.schedulers.DatabaseScheduler',
     CELERY_RESULT_BACKEND='djcelery.backends.database.DatabaseBackend',
+    CELERY_TRACK_STARTED=True,
+    CELERY_SEND_EVENTS=True
 )
