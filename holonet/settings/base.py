@@ -18,21 +18,14 @@ from django.conf.global_settings import AUTHENTICATION_BACKENDS
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'e6c95!2(*@31_)hel5h7-ag**ozwn=s@veoh+n$-y8a-!bn=@$'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
-# Application definition
 
 INSTALLED_APPS = (
     'flat',
@@ -99,8 +92,6 @@ WSGI_APPLICATION = 'holonet.wsgi.application'
 
 CORS_ORIGIN_ALLOW_ALL = True
 
-# Database
-# https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
 DATABASES = {
     'default': {
@@ -108,9 +99,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'database.db'),
     }
 }
-
-# Internationalization
-# https://docs.djangoproject.com/en/1.7/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
