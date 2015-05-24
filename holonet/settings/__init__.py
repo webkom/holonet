@@ -3,16 +3,16 @@ import sys
 
 TESTING = 'test' in sys.argv
 
-from .base import *
-from .logging import *
-from .holonet import *
+from .base import *  # noqa
+from .logging import *  # noqa
+from .holonet import *  # noqa
 
 try:
-    from .local import *
-except ImportError as e:
+    from .local import *  # noqa
+except ImportError:
     print('Unable to load local settings.')
 
 if TESTING:
-    from .test import *
+    from .test import *  # noqa
 
-from .celery import app as celery_app
+from .celery import app as celery_app  # noqa
