@@ -1,4 +1,4 @@
-Django==1.8.1
+Django==1.8.2
 ipython==3.1.0
 raven==5.3.1
 
@@ -10,10 +10,10 @@ python3-memcached==1.51
 django-flat-theme==0.9.3
 djangorestframework==3.1.2
 django-extensions==1.5.5
-django-cors-headers==1.0.0
+django-cors-headers==1.1.0
 django-crispy-forms==1.4.0
 django-celery==3.1.16
 django-cachalot==1.0.1
 django-pipeline==1.5.0
 
-elasticsearch==1.4.0
+elasticsearch==1.5.0
