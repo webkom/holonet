@@ -1,5 +1,3 @@
-# -*- coding: utf8 -*-
-
 from django.conf import settings
 
 from holonet.lists.helpers import clean_address, split_address

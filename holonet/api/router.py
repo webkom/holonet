@@ -1,5 +1,3 @@
-# -*- coding: utf8 -*-
-
 from rest_framework import routers
 
 from holonet.core.viewsets import (DomainBlacklistViewSet, DomainWhitelistViewSet,

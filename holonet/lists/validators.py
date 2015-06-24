@@ -1,5 +1,3 @@
-# -*- coding: utf8 -*-
-
 from django.core.validators import ValidationError, validate_email
 
 

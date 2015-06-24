@@ -1,5 +1,3 @@
-# -*- coding: utf8 -*-
-
 from .base import INSTALLED_APPS
 
 DEBUG = True

@@ -1,5 +1,3 @@
-# -*- coding: utf8 -*-
-
 from django.test import TestCase
 
 from holonet.domains.models import Domain

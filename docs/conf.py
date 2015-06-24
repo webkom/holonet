@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # Holonet documentation build configuration file, created by
 # sphinx-quickstart on Fri Feb 20 22:25:54 2015.

@@ -1,5 +1,3 @@
-# -*- coding: utf8 -*-
-
 from django.test import TestCase
 
 from holonet.core.list_access import is_blacklisted

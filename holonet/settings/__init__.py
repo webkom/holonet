@@ -1,4 +1,3 @@
-# -*- coding: utf8 -*-
 import sys
 
 TESTING = 'test' in sys.argv

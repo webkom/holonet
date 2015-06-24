@@ -1,5 +1,3 @@
-# -*- coding: utf8 -*-
-
 from django.conf import settings
 from rest_framework import viewsets
 from rest_framework.decorators import list_route

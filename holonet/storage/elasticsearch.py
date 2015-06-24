@@ -1,5 +1,3 @@
-# -*- coding: utf8 -*-
-
 from django.conf import settings
 from django.utils.timezone import now
 from elasticsearch_dsl import F, Q, Date, DocType, String

@@ -1,5 +1,3 @@
-# -*- coding: utf8 -*-
-
 from django.test import Client, TestCase
 
 from holonet.api.models import Token

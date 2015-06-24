@@ -1,5 +1,3 @@
-# -*- coding: utf8 -*-
-
 import logging
 
 from django.contrib.postgres.fields import ArrayField

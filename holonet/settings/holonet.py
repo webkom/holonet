@@ -1,5 +1,3 @@
-# -*- coding: utf8 -*-
-
 # Postfix exit codes.
 EXITCODE_UNKNOWN_RECIPIENT = 67
 EXITCODE_UNKNOWN_DOMAIN = 68

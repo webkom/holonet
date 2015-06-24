@@ -1,5 +1,3 @@
-# -*- coding: utf8 -*-
-
 from redis.exceptions import ConnectionError as RedisConnectionError
 import socket
 import json

@@ -1,5 +1,3 @@
-# -*- coding: utf8 -*-
-
 from django.conf import settings
 from django.db.utils import IntegrityError
 from django.test import TestCase

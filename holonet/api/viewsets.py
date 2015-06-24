@@ -1,4 +1,3 @@
-# -*- coding: utf8 -*-
 from celery import result as celery_result
 from celery import states
 from celery.registry import tasks

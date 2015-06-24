@@ -1,5 +1,3 @@
-# -*- coding: utf8 -*-
-
 from rest_framework.authentication import BaseAuthentication, get_authorization_header
 from rest_framework.permissions import BasePermission
 
