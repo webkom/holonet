@@ -2,7 +2,7 @@
 
 from django.conf import settings
 
-from holonet.mappings.helpers import clean_address, split_address
+from holonet.lists.helpers import clean_address, split_address
 
 from .models import DomainBlacklist, DomainWhitelist, SenderBlacklist, SenderWhitelist
 

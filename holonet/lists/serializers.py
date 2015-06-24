@@ -3,7 +3,7 @@
 from rest_framework import serializers
 from rest_framework.relations import SlugRelatedField
 
-from holonet.mappings.models import MailingList, Recipient
+from holonet.lists.models import MailingList, Recipient
 
 
 class LookupSerializer(serializers.Serializer):

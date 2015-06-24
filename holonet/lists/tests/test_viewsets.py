@@ -4,14 +4,14 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from rest_framework.test import APITestCase
 
-from holonet.mappings.helpers import lookup
-from holonet.mappings.models import MailingList, Recipient
-from holonet.mappings.serializers import MailingListSerializer, RecipientSerializer
+from holonet.lists.helpers import lookup
+from holonet.lists.models import MailingList, Recipient
+from holonet.lists.serializers import MailingListSerializer, RecipientSerializer
 
 
 class ReverseLookupTestCase(APITestCase):
 
-    fixtures = ['users.yaml', 'mailing_lists.yaml', 'recipients.yaml']
+    fixtures = ['users.yaml', 'domains.yaml', 'mailing_lists.yaml', 'recipients.yaml']
 
     def setUp(self):
         self.client.force_authenticate(user=User.objects.get(username='testuser1'))
@@ -112,7 +112,7 @@ class RecipientViewSetTestCase(APITestCase):
 
 class MailinglistViewSetTestCase(APITestCase):
 
-    fixtures = ['users.yaml', 'recipients.yaml', 'mailing_lists.yaml']
+    fixtures = ['users.yaml', 'domains.yaml', 'recipients.yaml', 'mailing_lists.yaml']
 
     def setUp(self):
         self.client.force_authenticate(user=User.objects.get(username='testuser1'))

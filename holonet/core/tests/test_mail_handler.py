@@ -10,11 +10,11 @@ from django.test import TestCase
 
 from holonet.core.handler import handle_mail
 from holonet.core.validation import validate_recipient
-from holonet.mappings.models import MailingList
+from holonet.lists.models import MailingList
 
 
 class MailHandlerTestCase(TestCase):
-    fixtures = ['mailing_lists.yaml', 'recipients.yaml']
+    fixtures = ['domains.yaml', 'mailing_lists.yaml', 'recipients.yaml']
 
     def setUp(self):
         file_path = '%s/email.txt' % os.path.dirname(__file__)

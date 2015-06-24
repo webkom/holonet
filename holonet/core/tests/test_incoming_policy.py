@@ -7,7 +7,7 @@ from holonet.core.management.commands.incoming_policy import Handler
 
 
 class IncomingPolicyServiceTestCase(TestCase):
-    fixtures = ['mailing_lists.yaml', 'recipients.yaml']
+    fixtures = ['domains.yaml', 'mailing_lists.yaml', 'recipients.yaml']
 
     def setUp(self):
         self.policy_service = Handler()

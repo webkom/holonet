@@ -23,11 +23,13 @@ INSTALLED_APPS = (
     'pipeline',
 
     'holonet.core',
-    'holonet.mappings',
+    'holonet.lists',
     'holonet.restricted',
     'holonet.dashboard',
     'holonet.api',
     'holonet.status',
+    'holonet.storage',
+    'holonet.domains',
 )
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
@@ -165,7 +167,6 @@ REST_FRAMEWORK = {
     ),
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
     'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework.renderers.BrowsableAPIRenderer',
         'rest_framework.renderers.JSONRenderer',
     ),
     'DEFAULT_PARSER_CLASSES': (
@@ -175,3 +176,5 @@ REST_FRAMEWORK = {
         'holonet.api.backend.StaffRequired',
     )
 }
+
+SHELL_PLUS = 'ipython'

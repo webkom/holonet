@@ -5,10 +5,9 @@ from rest_framework import viewsets
 from rest_framework.decorators import list_route
 from rest_framework.response import Response
 
-from holonet.mappings.models import MailingList, Recipient
-
 from .helpers import (LookupAddress, clean_address, is_managed_domain, lookup, reverse_lookup,
                       split_address)
+from .models import MailingList, Recipient
 from .serializers import (LookupSerializer, MailingListCreateAndUpdateSerializer,
                           MailingListSerializer, RecipientSerializer)
 

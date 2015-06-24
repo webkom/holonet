@@ -3,7 +3,7 @@
 from django.core.validators import ValidationError
 from django.test import TestCase
 
-from holonet.mappings.validators import validate_local_part
+from holonet.lists.validators import validate_local_part
 
 
 class ValidatorsTestCase(TestCase):

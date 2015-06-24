@@ -2,8 +2,8 @@
 from rest_framework import serializers
 from rest_framework.relations import SlugRelatedField
 
-from holonet.mappings.models import Recipient
-from holonet.mappings.serializers import RecipientSerializer
+from holonet.lists.models import Recipient
+from holonet.lists.serializers import RecipientSerializer
 from holonet.restricted.models import RestrictedMapping
 
 

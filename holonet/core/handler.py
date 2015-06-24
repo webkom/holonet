@@ -7,8 +7,7 @@ from django.conf import settings
 
 from holonet.core.tasks import (call_task, index_blacklisted_mail, index_bounce_mail, index_spam,
                                 index_statistics)
-from holonet.mappings.helpers import (clean_address, is_bounce, is_server_alias, lookup,
-                                      split_address)
+from holonet.lists.helpers import clean_address, is_bounce, is_server_alias, lookup, split_address
 from holonet.restricted.helpers import is_restricted
 
 from .list_access import is_blacklisted, is_not_whitelisted

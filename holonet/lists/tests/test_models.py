@@ -4,11 +4,11 @@ from django.conf import settings
 from django.db.utils import IntegrityError
 from django.test import TestCase
 
-from holonet.mappings.models import MailingList, Recipient
+from holonet.lists.models import MailingList, Recipient
 
 
 class MappingModelTestCase(TestCase):
-    fixtures = ['mailing_lists.yaml', 'recipients.yaml']
+    fixtures = ['domains.yaml', 'mailing_lists.yaml', 'recipients.yaml']
 
     def test_recipients(self):
         mailing_list = MailingList.objects.get(pk=1)
@@ -39,7 +39,7 @@ class MappingModelTestCase(TestCase):
 
 class RecipientModelTestCase(TestCase):
 
-    fixtures = ['mailing_lists.yaml', 'recipients.yaml']
+    fixtures = ['domains.yaml', 'mailing_lists.yaml', 'recipients.yaml']
 
     def test_duplicate_tags(self):
         recipient1 = Recipient.objects.get(pk=1)
