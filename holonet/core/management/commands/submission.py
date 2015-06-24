@@ -8,7 +8,6 @@ from django.conf import settings
 from django.core.management.base import BaseCommand
 
 from holonet.core.message import HolonetEmailMessage
-from holonet.core.tasks import call_task, index_spam, index_statistics
 
 logger = logging.getLogger('holonet.submission')
 
@@ -29,10 +28,8 @@ class Command(BaseCommand):
         # Check if spamassasin has marked the message as spam.
         spam_flag = message.get('X-Spam-Flag', False)
         if spam_flag == 'YES':
-            call_task(index_spam, message)
+            # TODO: Index spam message
             sys.exit(0)
-
-        call_task(index_statistics, sender=sender, list='submission', recipients=recipients)
 
         # Send the message!
         if not settings.TESTING:
