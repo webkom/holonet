@@ -3,7 +3,6 @@ help:
 	@echo 'dev             - install dev requirements'
 	@echo 'prod            - install prod requirements'
 	@echo 'lint            - lint project'
-	@echo 'docs            - build documentation'
 
 dev: venv
 	venv/bin/pip install -r requirements/dev.txt --upgrade
@@ -20,7 +19,4 @@ holonet/settings/local.py:
 lint:
 	flake8
 
-docs:
-	cd docs; make html && open _build/html/index.html; cd ..;
-
-.PHONY: help init dev prod lint static watch docs
+.PHONY: help dev prod lint
