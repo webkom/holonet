@@ -61,13 +61,10 @@ venv/
 holonet/settings/local.py
 database.db
 
-node_modules/
-
 htmlcov/
 
 holonet/assets/js/holonet.js
 
-bower_components/
 holonet/files/
 
 npm-debug.log.*

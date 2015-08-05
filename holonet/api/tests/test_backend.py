@@ -14,13 +14,13 @@ class BackendTestCase(TestCase):
 
     def test_valid_token(self):
         token = Token.objects.first()
-        request = self.factory.get('/api', HTTP_AUTHORIZATION=token.token)
+        request = self.factory.get('/', HTTP_AUTHORIZATION=token.token)
         self.assertEquals(self.backend.authenticate(request), (token.application, request))
 
     def test_unknown_token(self):
-        request = self.factory.get('/api', HTTP_AUTHORIZATION='unknown')
+        request = self.factory.get('/', HTTP_AUTHORIZATION='unknown')
         self.assertEquals(self.backend.authenticate(request), None)
 
     def test_none_token(self):
-        request = self.factory.get('/api')
+        request = self.factory.get('/')
         self.assertEquals(self.backend.authenticate(request), None)

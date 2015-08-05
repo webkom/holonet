@@ -12,12 +12,12 @@ class TestViewSets(APITestCase):
         self.client.force_authenticate(user=User.objects.get(username='testuser1'))
 
     def test_types(self):
-        url = '/api/status/types/'
+        url = '/status/types/'
         response = self.client.get(url)
         self.assertEquals(response.status_code, 200)
 
     def test_list(self):
-        url = '/api/status/'
+        url = '/status/'
         response = self.client.get(url)
         self.assertEquals(response.status_code, 200)
 
@@ -25,11 +25,11 @@ class TestViewSets(APITestCase):
         status_classes = settings.STATUS_CLASSES
         for status_class in status_classes:
             class_instance = import_string(status_class)()
-            url = '/api/status/%s/' % class_instance.name
+            url = '/status/%s/' % class_instance.name
             response = self.client.get(url)
             self.assertEquals(response.status_code, 200)
 
     def test_unknown_status(self):
-        url = '/api/status/unknown_service/'
+        url = '/status/unknown_service/'
         response = self.client.get(url)
         self.assertEquals(response.status_code, 404)

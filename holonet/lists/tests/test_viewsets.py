@@ -13,7 +13,7 @@ class ReverseLookupTestCase(APITestCase):
 
     def setUp(self):
         self.client.force_authenticate(user=User.objects.get(username='testuser1'))
-        self.endpoint = '/api/lookup/lookup/'
+        self.endpoint = '/lookup/lookup/'
 
     def test_reverse_lookup(self):
         stored_recipients = MailingList.objects.get(prefix='testlist1').recipients
@@ -83,7 +83,7 @@ class RecipientViewSetTestCase(APITestCase):
         self.client.force_authenticate(user=User.objects.get(username='testuser1'))
 
     def test_get_recipients(self):
-        response = self.client.get('/api/recipient/', format='json')
+        response = self.client.get('/recipient/', format='json')
 
         db_data = RecipientSerializer(data=Recipient.objects.all(), many=True)
         db_data.is_valid()
@@ -92,17 +92,17 @@ class RecipientViewSetTestCase(APITestCase):
 
     def test_add_recipient(self):
         data = {'address': 'holonettest@test.holonet.no', 'tag': 'holonettest'}
-        response = self.client.post('/api/recipient/', data=data, format='json')
+        response = self.client.post('/recipient/', data=data, format='json')
 
         self.assertEqual(data, response.data)
 
     def test_delete_recipient(self):
         self.assertTrue(Recipient.objects.filter(tag='testuser4').exists())
-        self.client.delete('/api/recipient/testuser4/', format='json')
+        self.client.delete('/recipient/testuser4/', format='json')
         self.assertRaises(Recipient.DoesNotExist, Recipient.objects.get, tag='testuser4')
 
     def test_change_recipient(self):
-        response = self.client.patch('/api/recipient/testuser4/', format='json',
+        response = self.client.patch('/recipient/testuser4/', format='json',
                                      data={'address': 'test@holonet.no'})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(Recipient.objects.get(tag='testuser4').address, 'test@holonet.no')
@@ -116,7 +116,7 @@ class MailinglistViewSetTestCase(APITestCase):
         self.client.force_authenticate(user=User.objects.get(username='testuser1'))
 
     def test_get_mailinglists(self):
-        response = self.client.get('/api/mailinglist/', format='json')
+        response = self.client.get('/mailinglist/', format='json')
 
         db_data = MailingListSerializer(data=MailingList.objects.all(), many=True)
         db_data.is_valid()
