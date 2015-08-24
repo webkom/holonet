@@ -1,14 +1,9 @@
-setup_tasks:
-  - make init
-
 tasks:
-  - tox -e py34
-  - tox -e docs
-  - flake8
-  - isort -c -rc holonet
+  - tox -e tests
+  - tox -e isort
+  - tox -e flake8
   - coverage report --fail-under=75
   - coverage xml
-  - npm run lint
 
 verbose_tasks:
   - coverage report --fail-under=75

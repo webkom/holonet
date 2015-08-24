@@ -16,7 +16,7 @@ class ViewSetTestCase(APITestCase):
 
     def test_information(self):
 
-        url = '/api/information/'
+        url = '/information/'
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -34,7 +34,7 @@ class ViewSetTestCase(APITestCase):
 
     def test_tasks(self):
 
-        url = '/api/tasks/'
+        url = '/tasks/'
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)

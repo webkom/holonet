@@ -3,7 +3,8 @@
 
 [Documentation](http://holonet.readthedocs.org/)
 
-![web](http://i.imgur.com/tz76uZv.png)
+This repository contains the Holonet core. This project talks to the MTA and provides a REST API 
+for interacting with the system.
 
 ## Getting started
 ```
@@ -15,14 +16,8 @@ make dev
 ```
 
 Now you need to fix the settings file. Override the settings you want in settings/holonet.py.
-Make sure you configure the database, elasticsearch config, celery broker, cache and so on.
-
-```
-make static
-```
-
-The django project is now probably ready to run. You can now run it with gunicorn or uwsgi. 
-Now you need to setup postfix to pipe mail into holonet, start the policy service and start the celery worker. It is recomended to run the scripts with supervisor.
+Make sure you configure the database, elasticsearch config, celery broker, cache and so on. For 
+more information about the configuration, please read the documentation.
 
 Read more about how to use Holonet in the [documentation](http://holonet.readthedocs.org/).
 

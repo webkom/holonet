@@ -15,24 +15,19 @@ INSTALLED_APPS = (
 
     'cachalot',
     'django_extensions',
-    'crispy_forms',
     'djcelery',
     'rest_framework',
     'corsheaders',
     'raven.contrib.django.raven_compat',
-    'pipeline',
 
     'holonet.core',
     'holonet.lists',
     'holonet.restricted',
-    'holonet.dashboard',
     'holonet.api',
     'holonet.status',
     'holonet.storage',
     'holonet.domains',
 )
-
-CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -43,7 +38,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    'pipeline.middleware.MinifyHTMLMiddleware',
 )
 
 TEMPLATES = [
@@ -102,63 +96,7 @@ STATIC_URL = '/static/'
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'pipeline.finders.CachedFileFinder',
-    'pipeline.finders.PipelineFinder',
 )
-STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
-
-STATICFILES_DIRS = (
-    ('assets', os.path.join(BASE_DIR, 'assets')),
-    ('bower', os.path.join(os.path.dirname(BASE_DIR), 'bower_components')),
-)
-
-PIPELINE_COMPILERS = (
-    'pipeline.compilers.stylus.StylusCompiler',
-)
-PIPELINE_STYLUS_BINARY = os.path.join(os.path.dirname(BASE_DIR), 'node_modules/stylus/bin/stylus')
-PIPELINE_STYLUS_NIB = os.path.join(os.path.dirname(BASE_DIR), 'node_modules/nib/lib')
-PIPELINE_STYLUS_CWD = os.path.join(BASE_DIR, 'assets/styl/')
-PIPELINE_STYLUS_ARGUMENTS = '--include %s --include %s --compress' % (PIPELINE_STYLUS_NIB,
-                                                                      PIPELINE_STYLUS_CWD)
-
-PIPELINE_YUGLIFY_BINARY = os.path.join(os.path.dirname(BASE_DIR),
-                                       'node_modules/yuglify/bin/yuglify')
-
-PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.uglifyjs.UglifyJSCompressor'
-PIPELINE_UGLIFYJS_BINARY = os.path.join(os.path.dirname(BASE_DIR),
-                                        'node_modules/uglify-js/bin/uglifyjs')
-
-PIPELINE_JS = {
-    'components': {
-        'source_filenames': (
-            'bower/jquery/dist/jquery.js',
-            'bower/bootstrap/dist/js/bootstrap.js',
-        ),
-        'output_filename': 'js/components.js',
-    },
-    'holonet': {
-        'source_filenames': (
-            'assets/js/holonet.js',
-        ),
-        'output_filename': 'js/holonet.js',
-    },
-}
-
-PIPELINE_CSS = {
-    'components': {
-        'source_filenames': (
-            'bower/bootstrap/dist/css/bootstrap.css',
-            'bower/font-awsome/css/font-awesome.css',
-        ),
-        'output_filename': 'css/components.css'
-    },
-    'holonet': {
-        'source_filenames': (
-            'assets/styl/style.styl',
-        ),
-        'output_filename': 'css/holonet.css'
-    }
-}
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
