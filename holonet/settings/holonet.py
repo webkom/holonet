@@ -86,10 +86,10 @@ SASL_LUSER_GID = '1001'
 
 
 # Backend to use when storing messages
-STORAGE_BACKEND = 'holonet.storage.database'
+STORAGE_BACKEND = 'elasticsearch'  # database or elasticsearch
 
 # Elasticsearch options
-ELASTICSEARCH_INDEX_PATTERN = '%W-%Y'
+ELASTICSEARCH_INDEX_PATTERN = '%Y.%W'
 ELASTICSEARCH = {
     'default': {
         'hosts': [
