@@ -86,7 +86,7 @@ SASL_LUSER_GID = '1001'
 
 
 # Backend to use when storing messages
-STORAGE_BACKEND = 'elasticsearch'  # database or elasticsearch
+STORAGE_BACKEND = 'database'  # database or elasticsearch
 
 # Elasticsearch options
 ELASTICSEARCH_INDEX_PATTERN = '%Y.%W'
