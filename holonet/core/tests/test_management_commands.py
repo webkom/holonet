@@ -1,5 +1,3 @@
-# -*- coding: utf8 -*-
-
 import email
 import json
 import os
@@ -13,7 +11,7 @@ from holonet.core.management.commands.sasl_authentication import Handler
 
 
 class MailHandlerCommandTestCase(TestCase):
-    fixtures = ['mailing_lists.yaml', 'recipients.yaml']
+    fixtures = ['domains.yaml', 'mailing_lists.yaml', 'recipients.yaml']
 
     def setUp(self):
         file_path = '%s/email.txt' % os.path.dirname(__file__)

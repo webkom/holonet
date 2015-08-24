@@ -1,5 +1,3 @@
-# -*- coding: utf8 -*-
-
 from rest_framework import viewsets
 
 from .models import DomainBlacklist, DomainWhitelist, SenderBlacklist, SenderWhitelist

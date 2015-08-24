@@ -1,5 +1,3 @@
-# -*- coding: utf8 -*-
-
 from .base import INSTALLED_APPS
 
 DEBUG = True
@@ -31,9 +29,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 INSTALLED_APPS += (
     'debug_toolbar',
 )
-
-ELASTICSEARCH = [
-    {'host': '127.0.0.1', 'port': 9200, 'use_ssl': False},
-]
 
 BROKER_URL = 'redis://127.0.0.1'

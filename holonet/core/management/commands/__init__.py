@@ -1,7 +1,3 @@
-# -*- coding: utf8 -*-
-
-# -*- coding: utf8 -*-
-
 import os
 import signal
 import socketserver

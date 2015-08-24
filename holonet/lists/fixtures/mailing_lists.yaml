@@ -1,0 +1,27 @@
+- model: lists.MailingList
+  pk: 1
+  fields:
+    prefix: 'testlist1'
+    recipient_list: [1,2,3]
+    tag: 'testlist1'
+    domain: 1
+- model: lists.MailingList
+  pk: 2
+  fields:
+    prefix: 'testlist2'
+    recipient_list: [4]
+    tag: 'testlist2'
+    domain: 1
+- model: lists.MailingList
+  pk: 3
+  fields:
+    prefix: 'testlist3'
+    tag: 'testlist3'
+    domain: 1
+- model: lists.MailingList
+  pk: 4
+  fields:
+    prefix: 'testlist4'
+    recipient_list: [1]
+    tag: 'testlist4'
+    domain: 1

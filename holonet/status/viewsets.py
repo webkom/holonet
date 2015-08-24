@@ -1,5 +1,3 @@
-# -*- coding: utf8 -*-
-
 from django.conf import settings
 from django.shortcuts import Http404
 from django.utils.module_loading import import_string

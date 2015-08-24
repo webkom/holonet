@@ -1,5 +1,3 @@
-# -*- coding: utf8 -*-
-
 from django.test import Client, TestCase
 
 from holonet.api.models import Token
@@ -16,22 +14,22 @@ class BlacklistAPITestCase(TestCase):
         self.noauth_client = Client()
 
     def test_list_domain_blacklist_no_auth(self):
-        result = self.noauth_client.get('/api/domain-blacklist/')
+        result = self.noauth_client.get('/domain-blacklist/')
         self.assertEquals(result.status_code, 403)
 
     def test_list_domain_blacklist_auth(self):
-        result = self.auth_client.get('/api/domain-blacklist/')
+        result = self.auth_client.get('/domain-blacklist/')
         self.assertEquals(result.status_code, 200)
 
         serialized = DomainBlacklistSerializer(DomainBlacklist.objects.all(), many=True)
         self.assertEquals(result.data, serialized.data)
 
     def test_list_sender_blacklist_no_auth(self):
-        result = self.noauth_client.get('/api/sender-blacklist/')
+        result = self.noauth_client.get('/sender-blacklist/')
         self.assertEquals(result.status_code, 403)
 
     def test_list_sender_blacklist_auth(self):
-        result = self.auth_client.get('/api/sender-blacklist/')
+        result = self.auth_client.get('/sender-blacklist/')
         self.assertEquals(result.status_code, 200)
 
         serialized = SenderBlacklistSerializer(SenderBlacklist.objects.all(), many=True)

@@ -1,5 +1,3 @@
-# -*- coding: utf8 -*-
-
 import logging
 import subprocess
 from copy import copy

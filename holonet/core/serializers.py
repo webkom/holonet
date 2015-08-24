@@ -1,5 +1,3 @@
-# -*- coding: utf8 -*-
-
 from rest_framework import serializers
 
 from .models import DomainBlacklist, DomainWhitelist, SenderBlacklist, SenderWhitelist

@@ -1,5 +1,3 @@
-# -*- coding: utf8 -*-
-
 from redis.exceptions import ConnectionError as RedisConnectionError
 import socket
 import json
@@ -7,13 +5,11 @@ from urllib.parse import urlparse
 from builtins import ConnectionAbortedError, ConnectionRefusedError, ConnectionResetError
 import logging
 
-from elasticsearch import ConnectionError
 from celery import task
 
 from django.conf import settings
 from django.core.cache import cache
 
-from holonet.core.elasticsearch import get_connection, index_check
 from holonet.core.management.commands.sasl_authentication import Handler
 from holonet.core.management.commands.outgoing_policy import Handler as OutgoingHandler
 
@@ -51,23 +47,8 @@ class ElasticsearchStatus(BaseStatusClass):
     name = 'elasticsearch'
 
     def status(self):
-        try:
-            connection = get_connection()
-            index_check()
-
-            health = connection.cluster.health(index=settings.INDEX_NAME)
-            status = bool(health['status'] in ['green', 'yellow'])
-
-            if status:
-                logging.info('Elasticsearch is healthy')
-            else:
-                logging.error('Elasticsearch is not healthy')
-
-            return status
-
-        except (ConnectionError, OSError):
-            logging.error('Elasticsearch is not healthy')
-            return False
+        # TODO: Add elasticsearch status check
+        return False
 
 
 class CacheStatus(BaseStatusClass):

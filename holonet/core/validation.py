@@ -1,13 +1,10 @@
-# -*- coding: utf8 -*-
-
 import logging
 import sys
 
 from django.conf import settings
 from django.core.validators import ValidationError, validate_email
 
-from holonet.mappings.helpers import (clean_address, is_managed_domain, is_prefix_valid,
-                                      split_address)
+from holonet.lists.helpers import clean_address, is_managed_domain, is_prefix_valid, split_address
 
 logger = logging.getLogger(__name__)
 

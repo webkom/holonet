@@ -1,5 +1,3 @@
-# -*- coding: utf8 -*-
-
 from django.db.models import Manager
 
 

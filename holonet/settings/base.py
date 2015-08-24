@@ -1,14 +1,3 @@
-"""
-Django settings for holonet project.
-
-For more information on this file, see
-https://docs.djangoproject.com/en/1.7/topics/settings/
-
-For the full list of settings and their values, see
-https://docs.djangoproject.com/en/1.7/ref/settings/
-"""
-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
 from django.conf.global_settings import AUTHENTICATION_BACKENDS
@@ -26,21 +15,19 @@ INSTALLED_APPS = (
 
     'cachalot',
     'django_extensions',
-    'crispy_forms',
     'djcelery',
     'rest_framework',
     'corsheaders',
     'raven.contrib.django.raven_compat',
 
     'holonet.core',
-    'holonet.mappings',
+    'holonet.lists',
     'holonet.restricted',
-    'holonet.dashboard',
     'holonet.api',
     'holonet.status',
+    'holonet.storage',
+    'holonet.domains',
 )
-
-CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -106,6 +93,11 @@ MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'files', 'static')
 STATIC_URL = '/static/'
 
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'holonet.api.backend.TokenAuthenticationBackend',
@@ -113,7 +105,6 @@ REST_FRAMEWORK = {
     ),
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
     'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework.renderers.BrowsableAPIRenderer',
         'rest_framework.renderers.JSONRenderer',
     ),
     'DEFAULT_PARSER_CLASSES': (
@@ -121,5 +112,8 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'holonet.api.backend.StaffRequired',
-    )
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
 }
+
+SHELL_PLUS = 'ipython'

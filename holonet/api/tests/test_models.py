@@ -1,5 +1,3 @@
-# -*- coding: utf8 -*-
-
 import datetime
 
 from django.test import TestCase

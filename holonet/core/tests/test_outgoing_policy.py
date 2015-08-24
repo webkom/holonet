@@ -1,5 +1,3 @@
-# -*- coding: utf8 -*-
-
 from django.conf import settings
 from django.test import TestCase
 
@@ -8,7 +6,7 @@ from holonet.core.management.commands.outgoing_policy import Handler
 
 class OutgoingPolicyServiceTestCase(TestCase):
 
-    fixtures = ['users.yaml', 'recipients.yaml', 'mailing_lists.yaml']
+    fixtures = ['users.yaml', 'domains.yaml', 'recipients.yaml', 'mailing_lists.yaml']
 
     def setUp(self):
         self.handler = Handler()

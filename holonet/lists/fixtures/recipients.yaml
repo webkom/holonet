@@ -1,0 +1,20 @@
+- model: lists.Recipient
+  pk: 1
+  fields:
+    address: testuser1@holonet.no
+    tag: 1
+- model: lists.Recipient
+  pk: 2
+  fields:
+    address: testuser2@holonet.no
+    tag: 2
+- model: lists.Recipient
+  pk: 3
+  fields:
+    address: testuser3@holonet.no
+    tag: 3
+- model: lists.Recipient
+  pk: 4
+  fields:
+    address: testuser4@holonet.no
+    tag: testuser4

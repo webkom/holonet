@@ -1,5 +1,3 @@
-# -*- coding: utf8 -*-
-
 import uuid
 
 from django.db import models
@@ -14,7 +12,7 @@ class RestrictedMapping(TokenModel):
     from_address = models.EmailField()
     is_used = models.BooleanField(default=False)
 
-    recipient_list = models.ManyToManyField('mappings.Recipient', blank=True,
+    recipient_list = models.ManyToManyField('lists.Recipient', blank=True,
                                             related_name='restricted_lists')
     tag = models.CharField(max_length=100, unique=True)
 

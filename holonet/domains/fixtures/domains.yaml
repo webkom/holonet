@@ -1,0 +1,4 @@
+- model: domains.Domain
+  pk: 1
+  fields:
+    domain: 'test.com'

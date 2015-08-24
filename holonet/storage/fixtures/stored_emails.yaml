@@ -1,0 +1,12 @@
+- model: storage.EmailStorage
+  pk: 1
+  fields:
+    to: ['test@holonet.no']
+    from_email: 'test@test.com'
+    copy: ['copy@holonet.no']
+    blind_copy: ['blind-copy@holonet.no']
+    recipients: ['recipient@holonet.no']
+    message_type: 'spam'
+    subject: 'test message'
+    raw: 'raw message content'
+    timestamp: '2015-06-23T01:41:28+00:00'

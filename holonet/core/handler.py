@@ -1,14 +1,9 @@
-# -*- coding: utf8 -*-
-
 import logging
 import sys
 
 from django.conf import settings
 
-from holonet.core.tasks import (call_task, index_blacklisted_mail, index_bounce_mail, index_spam,
-                                index_statistics)
-from holonet.mappings.helpers import (clean_address, is_bounce, is_server_alias, lookup,
-                                      split_address)
+from holonet.lists.helpers import clean_address, is_bounce, lookup, split_address
 from holonet.restricted.helpers import is_restricted
 
 from .list_access import is_blacklisted, is_not_whitelisted
@@ -42,20 +37,20 @@ def handle_mail(msg, sender, recipient):
 
     # Check if the sender is blacklisted or not whitelisted.
     if is_blacklisted(sender) or is_not_whitelisted(sender):
-        call_task(index_blacklisted_mail, message)
+        # TODO: Index blacklisted message
         logging.info('Indexed blacklisted mail form %s' % sender)
         sys.exit(0)
 
     # Check if spamassasin has marked the message as spam.
     spam_flag = message.get('X-Spam-Flag', False)
     if spam_flag == 'YES':
-        call_task(index_spam, message)
+        # TODO: Index spam message
         logging.info('Indexed spam mail from %s' % sender)
         sys.exit(0)
 
     # Handle bounce
     if is_bounce(prefix):
-        call_task(index_bounce_mail, message)
+        # TODO: Index bounce message
         logging.info('Indexed bounce from %s' % sender)
         sys.exit(0)
 
@@ -63,10 +58,6 @@ def handle_mail(msg, sender, recipient):
     if is_restricted(prefix) and len(recipient) == 0:
         logging.warning('Got a restricted email, but no recipients was found.')
         sys.exit(settings.EXITCODE_UNKNOWN_RECIPIENT)
-
-    # Store statistics
-    if not is_restricted(prefix) and not is_server_alias(prefix):
-        call_task(index_statistics, sender=sender, list=prefix, recipients=recipients)
 
     # Send the message!
     if not settings.TESTING:

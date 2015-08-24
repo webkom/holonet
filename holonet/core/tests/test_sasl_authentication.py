@@ -1,5 +1,3 @@
-# -*- coding: utf8 -*-
-
 import json
 
 from django.conf import settings

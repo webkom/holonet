@@ -1,5 +1,3 @@
-# -*- coding: utf8 -*-
-
 from django.test import TestCase
 
 from holonet.status import BaseStatusClass, ElasticsearchStatus
@@ -25,16 +23,6 @@ class ElasticsearchStatusTestCase(TestCase):
         elasticsearch = ElasticsearchStatus()
         self.assertEqual(elasticsearch.name, 'elasticsearch')
 
-    def test_status_no_server(self):
-
-        server_config = [
-            {'host': '127.0.0.1', 'port': 10000, 'use_ssl': False},
-        ]
-
-        with self.settings(ELASTICSEARCH=server_config):
-            elasticsearch = ElasticsearchStatus()
-            self.assertFalse(elasticsearch.status())
-
     def test_status(self):
         elasticsearch = ElasticsearchStatus()
-        self.assertTrue(isinstance(elasticsearch.status(), bool))
+        self.assertFalse(elasticsearch.status())

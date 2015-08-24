@@ -1,12 +1,10 @@
-# -*- coding: utf8 -*-
-
 import logging
 from urllib.parse import urlparse
 
 from django.conf import settings
 from django.contrib.auth.models import User
 
-from holonet.mappings.helpers import clean_address, lookup, split_address
+from holonet.lists.helpers import clean_address, lookup, split_address
 
 from . import BasePostfixPolicyServiceHandler, SocketCommand
 

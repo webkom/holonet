@@ -1,10 +1,7 @@
-# -*- coding: utf8 -*-
-
-from django.conf.urls import include, patterns, url
+from django.conf.urls import include, url
 
 from .router import router
 
-urlpatterns = patterns(
-    'holonet.api',
-    url(r'^api/', include(router.urls)),
-)
+urlpatterns = [
+    url(r'^', include(router.urls)),
+]
