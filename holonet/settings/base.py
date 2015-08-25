@@ -27,6 +27,7 @@ INSTALLED_APPS = (
     'holonet.status',
     'holonet.storage',
     'holonet.domains',
+    'holonet.services',
 )
 
 MIDDLEWARE_CLASSES = (

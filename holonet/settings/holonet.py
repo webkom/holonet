@@ -87,3 +87,7 @@ ELASTICSEARCH = {
         ]
     }
 }
+
+# LMTP
+LMTP_HOST = 'localhost'
+LMTP_PORT = 8024
