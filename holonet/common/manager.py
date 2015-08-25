@@ -11,3 +11,6 @@ class ServiceManager:
     @property
     def choices(self):
         return [(v, v) for v in sorted(self._backends.keys())]
+
+    def keys(self):
+        return self._backends.keys()

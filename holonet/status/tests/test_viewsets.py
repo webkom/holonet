@@ -1,7 +1,7 @@
-from django.conf import settings
 from django.contrib.auth.models import User
-from django.utils.module_loading import import_string
 from rest_framework.test import APITestCase
+
+from holonet.status import manager
 
 
 class TestViewSets(APITestCase):
@@ -22,9 +22,9 @@ class TestViewSets(APITestCase):
         self.assertEquals(response.status_code, 200)
 
     def test_retrive(self):
-        status_classes = settings.STATUS_CLASSES
+        status_classes = manager.keys()
         for status_class in status_classes:
-            class_instance = import_string(status_class)()
+            class_instance = manager.get(status_class)()
             url = '/status/%s/' % class_instance.name
             response = self.client.get(url)
             self.assertEquals(response.status_code, 200)

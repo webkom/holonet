@@ -1,8 +1,8 @@
 from rest_framework import serializers
 
-from holonet.status import BaseStatusClass
+from holonet.status.base import StatusCheck
 
 
 class StatusSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=100)
-    status = serializers.IntegerField(max_value=len(BaseStatusClass.STATUSES))
+    status = serializers.IntegerField(max_value=len(StatusCheck.STATUSES))

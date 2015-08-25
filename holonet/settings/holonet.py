@@ -51,16 +51,6 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-# Classes that checks system status
-STATUS_CLASSES = (
-    'holonet.status.ElasticsearchStatus',
-    'holonet.status.CacheStatus',
-    'holonet.status.CeleryStatus',
-    'holonet.status.PolicyServiceStatus',
-    'holonet.status.SASLServiceStatus',
-    'holonet.status.PostfixStatus',
-)
-
 # Postfix url used by status checks
 POSTFIX_URL = 'tcp://127.0.0.1:25'
 
