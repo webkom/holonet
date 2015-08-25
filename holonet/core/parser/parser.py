@@ -1,8 +1,8 @@
 import email
-from email.message import Message
 import logging
+from email.message import Message
 
-from .exceptions import ParseEmailException, MessageIDNotExistException, DefectMessageException
+from .exceptions import DefectMessageException, ParseEmailException
 
 
 class EmailParser:
@@ -28,11 +28,10 @@ class EmailParser:
 
         # Do basic post-processing of the message, checking it for defects or
         # other missing information.
-        message_id = msg.get('message-id')
-        if message_id is None:
-            raise MessageIDNotExistException
         if msg.defects:
             return DefectMessageException
 
         msg.original_size = len(self.raw_message)
         msg['X-MailFrom'] = self.mail_from
+
+        return msg

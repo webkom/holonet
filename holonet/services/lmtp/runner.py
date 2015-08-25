@@ -1,13 +1,13 @@
-import smtpd
 import asyncore
+import smtpd
 
 from django.conf import settings
 
-from holonet.services.runner import Runner
+from holonet.core.parser.exceptions import (DefectMessageException, MessageIDNotExistException,
+                                            ParseEmailException)
 from holonet.services.lmtp import channel
-from holonet.core.parser import EmailParser
-from holonet.core.parser.exceptions import ParseEmailException, MessageIDNotExistException, \
-    DefectMessageException
+from holonet.services.lmtp.paser import LMTPEmailParser
+from holonet.services.runner import Runner
 
 smtpd.__version__ = 'Holonet LMTP'
 
@@ -36,7 +36,7 @@ class LMTPRunner(Runner, smtpd.SMTPServer):
         self.log.debug('LMTP accept from %s', addr)
 
     def process_message(self, peer, mailfrom, rcpttos, data):
-        parser = EmailParser(data, mailfrom, 'string')
+        parser = LMTPEmailParser(data, mailfrom, 'string')
 
         try:
             message = parser.parse()

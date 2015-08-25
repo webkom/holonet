@@ -1,6 +1,6 @@
-import sys
-import signal
 import logging
+import signal
+import sys
 from abc import abstractmethod
 
 from django.core.management import BaseCommand
