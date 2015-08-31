@@ -13,11 +13,21 @@ smtpd.__version__ = 'Holonet LMTP'
 
 
 class LMTPRunner(Runner, smtpd.SMTPServer):
+    """
+    This runner provides a interface for transporting mail into Holonet using LMTP.
+    Command: manage.py lmtp_transport
+
+    Settings:
+        LMTP_HOST = 'localhost'
+        LMTP_PORT = 8024
+    """
 
     is_queue_runner = False
-    name = 'lmtp'
 
-    def run(self):
+    name = 'lmtp'
+    help = "Start a lmtp server for incoming messages"
+
+    def run(self, *args, **kwargs):
         asyncore.loop()
 
     def close(self):
@@ -26,7 +36,7 @@ class LMTPRunner(Runner, smtpd.SMTPServer):
 
     def __init__(self):
         localaddr = settings.LMTP_HOST, int(settings.LMTP_PORT)
-        self.log.debug('LMTP server listening on {}:{}'.format(localaddr[0], localaddr[1]))
+        self.log.info('LMTP server listening on {}:{}'.format(localaddr[0], localaddr[1]))
         smtpd.SMTPServer.__init__(self, localaddr, remoteaddr=None)
         super(LMTPRunner, self).__init__()
 
@@ -35,21 +45,23 @@ class LMTPRunner(Runner, smtpd.SMTPServer):
         channel.Channel(self, conn, addr)
         self.log.debug('LMTP accept from %s', addr)
 
-    def process_message(self, peer, mailfrom, rcpttos, data):
+    def process_message(self, peer, mailfrom, recipients, data):
         parser = LMTPEmailParser(data, mailfrom, 'string')
 
         try:
             message = parser.parse()
         except ParseEmailException:
             self.log.exception('LMTP could not parse the incoming email.')
-            return channel.CRLF.join(channel.ERR_451 for to in rcpttos)
+            return channel.CRLF.join(channel.ERR_451 for to in recipients)
         except MessageIDNotExistException:
             return channel.ERR_550_MID
         except DefectMessageException:
             return channel.ERR_501
 
         status = []
-        for to in rcpttos:
+        for to in recipients:
             status.append('250 Ok')
+
+        print(message, recipients)
 
         return channel.CRLF.join(status)

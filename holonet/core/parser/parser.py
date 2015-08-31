@@ -29,7 +29,7 @@ class EmailParser:
         # Do basic post-processing of the message, checking it for defects or
         # other missing information.
         if msg.defects:
-            return DefectMessageException
+            raise DefectMessageException
 
         msg.original_size = len(self.raw_message)
         msg['X-MailFrom'] = self.mail_from

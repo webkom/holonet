@@ -13,8 +13,9 @@ class Runner(BaseCommand):
 
     )
 
+    requires_model_validation = True
+
     help = "Start Holonet service"
-    args = 'None'
     name = None
 
     def __init__(self):
@@ -32,10 +33,10 @@ class Runner(BaseCommand):
         pass
 
     @abstractmethod
-    def run(self):
+    def run(self, *args, **kwargs):
         pass
 
-    def handle(self, *args, **options):
+    def handle(self, *args, **kwargs):
         self.log = logging.getLogger('holonet.{}'.format(self.name))
 
         try:
@@ -48,7 +49,8 @@ class Runner(BaseCommand):
             # Handle Keyboard Interrupt
             signal.signal(signal.SIGINT, self._handle_sigterm)
 
-            self.run()
+            self.log.info('Starting service {}'.format(self.name))
+            self.run(*args, **kwargs)
 
         except Exception as e:
             self.log.exception(e)
