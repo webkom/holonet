@@ -1,11 +1,4 @@
-MASTER_DOMAINS = [
-    'test.holonet.no'
-]
-
 TEST_RUNNER = "djcelery.contrib.test_runner.CeleryTestSuiteRunner"
-
-SENDER_WHITELIST_ENABLED = False
-DOMAIN_WHITELIST_ENABLED = False
 
 SECRET_KEY = 'test'
 

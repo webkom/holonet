@@ -1,7 +1,6 @@
 from .base import INSTALLED_APPS
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 ALLOWED_HOSTS = ['127.0.0.1']
 
 SECRET_KEY = '0&e=or16z)nrsl6u(h=8((763+1pckt@o@7xrgje4ht((_61j='
