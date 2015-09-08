@@ -42,8 +42,7 @@ class Backend(StorageBackend):
     def index_name(self, timestamp=None):
         if timestamp is None:
             timestamp = now()
-        time = timestamp.strftime(settings.ELASTICSEARCH_INDEX_PATTERN)
-        index_name = 'holonet-%s' % time
+        index_name = timestamp.strftime(settings.ELASTICSEARCH_INDEX_PATTERN)
         return index_name
 
     def model_to_stored_email(self, model_instance):

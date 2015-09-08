@@ -13,20 +13,21 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'holonet.api',
+
     'cachalot',
     'django_extensions',
     'djcelery',
     'rest_framework',
+    'oauth2_provider',
     'corsheaders',
     'raven.contrib.django.raven_compat',
 
     'holonet.core',
     'holonet.lists',
-    'holonet.restricted',
-    'holonet.api',
     'holonet.status',
     'holonet.storage',
-    'holonet.domains',
+    'holonet.services',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -66,8 +67,6 @@ AUTHENTICATION_BACKENDS = AUTHENTICATION_BACKENDS + (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-OAUTH2_PROVIDER_APPLICATION_MODEL = 'api.APIApplication'
-
 ROOT_URLCONF = 'holonet.urls'
 
 WSGI_APPLICATION = 'holonet.wsgi.application'
@@ -100,8 +99,8 @@ STATICFILES_FINDERS = (
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'holonet.api.backend.TokenAuthenticationBackend',
         'rest_framework.authentication.SessionAuthentication',
+        'holonet.api.authentication.HolonetAuthentication',
     ),
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
     'DEFAULT_RENDERER_CLASSES': (
@@ -111,7 +110,7 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.JSONParser',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'holonet.api.backend.StaffRequired',
+        'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
 }

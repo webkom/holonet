@@ -9,6 +9,7 @@ class StorageBackend:
         ('spam', 'spam'),
         ('blacklisted', 'blacklisted'),
         ('bounce', 'bounce'),
+        ('archive', 'archive'),
     )
     MESSAGE_TYPES_LIST = list(element[0] for element in MESSAGE_TYPES)
 

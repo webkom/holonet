@@ -1,0 +1,96 @@
+Received: by luke.abakus.no (Postfix, from userid 1010)
+ id BDA1C200193; Tue, 19 May 2015 13:10:19 +0200 (CEST)
+X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on luke.abakus.no
+X-Spam-Flag: YES
+X-Spam-Level: *********
+X-Spam-Status: Yes, score=9.8 required=3.0 tests=BAYES_99,HTML_MESSAGE,
+ RCVD_IN_BL_SPAMCOP_NET,RCVD_IN_BRBL_LASTEXT,RCVD_IN_PSBL,RDNS_NONE,
+ URIBL_BLOCKED autolearn=no version=3.3.2
+X-Spam-Report: *  3.5 BAYES_99 BODY: Bayes spam probability is 99 to 100%
+ *      [score: 0.9910]
+ *  0.0 HTML_MESSAGE BODY: HTML included in message
+ *  1.3 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?109.98.172.54>]
+ *  0.0 URIBL_BLOCKED ADMINISTRATOR NOTICE: The query to URIBL was blocked.
+ *       See http://wiki.apache.org/spamassassin/DnsBlocklists#dnsbl-block
+ *      for more information. *      [URIs: yandex.ru]
+ *  1.4 RCVD_IN_BRBL_LASTEXT RBL: RCVD_IN_BRBL_LASTEXT
+ *      [109.98.172.54 listed in bb.barracudacentral.org]
+ *  2.7 RCVD_IN_PSBL RBL: Received via a relay in PSBL
+ *      [109.98.172.54 listed in psbl.surriel.com]
+ *  0.8 RDNS_NONE Delivered to internal network by a host with no rDNS
+Received: from [109.98.172.54] (unknown [109.98.172.54])
+ by luke.abakus.no (Postfix) with ESMTP id 4ECE3200193
+ for <holonet@abakus.no>; Tue, 19 May 2015 13:10:19 +0200 (CEST)
+MIME-Version: 1.0
+Date: Tue, 19 May 2015 14:10:13 +0300
+Message-ID: <ZrDihvWzIIscOerqjbDqKFutoNapxmdb@mail.abakus.no>
+Subject: ***** SPAM 9.8 :: Scanned by Abakus Mail Service ***** good morning
+From: Tanya <erik49110@zviran.co.il>
+To: holonet@abakus.no
+Content-Type: multipart/alternative; boundary=bc8575faef2a082c04b97fb9be7e
+X-Spam-Prev-Subject: good morning
+
+--bc8575faef2a082c04b97fb9be7e
+Content-Type: text/plain; charset=UTF-8
+
+Hi there!
+
+My name is Tanya, what are you up to?
+I noticed you being online here quite often. Today I was just going to talk toyou in chat when I saw you quit already. I think we should chat anytime soon,are you game?
+I believe you have hotmail id, yahoo or any other address to be able to write mea couple of lines. So don�t hesitate to contact me anytime you want � I�ll bethere�
+
+Looking forward to you letter,
+My email d.maidansckij@yandex.ru mailto:d.maidansckij@yandex.ru
+
+Yours truly,
+Tanya
+
+--bc8575faef2a082c04b97fb9be7e
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" =
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns=3D"http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content=3D"text/html; charset=3Dutf-8" http-equiv=3D"Content-Type" =
+/>
+<title>Hi there!</title>
+</head>
+
+<body>
+
+<p>
+<span style=3D"font-size: large; font-family: 'Segoe UI', Tahoma, =
+Geneva, Verdana, sans-serif">
+Hi there!<br />
+<br />
+My name is Tanya, what are you up to?<br />
+I noticed you being online here quite often. Today I was just going to =
+talk to
+you in chat when I saw you quit already. I think we should chat anytime =
+soon,
+are you game? <br />
+I believe you have hotmail id, yahoo or any other address to be able to =
+write me
+a couple of lines. So don=92t hesitate to contact me anytime you want =
+=96 I=92ll be
+there=85<br />
+<br />
+Looking forward to you letter,<br />
+My email <a =
+href=3D"mailto:d.maidansckij@yandex.ru">d.maidansckij@yandex.ru</a></span=
+></p>
+<p>
+<span style=3D"font-size: large; font-family: 'Segoe UI', Tahoma, =
+Geneva, Verdana, sans-serif">
+Yours truly,<br />
+Tanya</span></p>
+
+</body>
+
+</html>
+
+--bc8575faef2a082c04b97fb9be7e--

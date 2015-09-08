@@ -1,4 +1,0 @@
-- model: api.Application
-  pk: 1
-  fields:
-    name: Holonet Plugin
