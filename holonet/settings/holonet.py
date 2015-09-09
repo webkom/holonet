@@ -42,3 +42,6 @@ DEFAULT_FROM_EMAIL = SERVER_EMAIL
 
 # Celery broker
 BROKER_URL = 'amqp://guest:guest@localhost:5672/'
+
+# Mail Queue
+MAIL_QUEUE = 'holonet.queue.queues.syncqueue.SyncQueue'

@@ -43,6 +43,7 @@ class List(TimeStampModel):
     display_name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     active = models.BooleanField(default=True, help_text='Allow postings to this list.')
+    public = models.BooleanField(default=False)
     archive = models.BooleanField(default=False, help_text='Archive all messages to this list in '
                                                            'the message storage.')
 
