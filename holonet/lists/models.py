@@ -1,10 +1,10 @@
 from basis.models import TimeStampModel
 from django.db import models
 
-from holonet.common.defaults import (DEFAULT_AUTORESPONSE_POSTINGS_TEXT,
-                                     DEFAULT_AUTORESPONSE_REQUEST_TEXT,
-                                     DEFAULT_NONMEMBER_REJECTION_NOTICE)
-from holonet.common.fields import DomainField, LocalPartField
+from holonet.core.defaults import (DEFAULT_AUTORESPONSE_POSTINGS_TEXT,
+                                   DEFAULT_AUTORESPONSE_REQUEST_TEXT,
+                                   DEFAULT_NONMEMBER_REJECTION_NOTICE)
+from holonet.core.fields import DomainField, LocalPartField
 
 
 class Domain(TimeStampModel):

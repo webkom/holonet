@@ -2,7 +2,7 @@ import email
 
 from django.test import TestCase
 
-from holonet.common.message import HolonetEmailMessage
+from holonet.core.message import HolonetEmailMessage
 
 from .utils import read_message_fixture
 

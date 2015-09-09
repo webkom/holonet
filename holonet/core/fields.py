@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from holonet.common import validators
+from holonet.core import validators
 
 
 class EmailField(models.EmailField):

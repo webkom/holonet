@@ -1,4 +1,4 @@
-from holonet.common.manager import ServiceManager
+from holonet.core.manager import ServiceManager
 from .backends import elasticsearch, database
 
 default_app_config = 'holonet.storage.apps.DataConfig'

@@ -1,4 +1,4 @@
-from holonet.common.manager import ServiceManager
+from holonet.core.manager import ServiceManager
 
 from holonet.status.backends import elasticsearch, cache
 

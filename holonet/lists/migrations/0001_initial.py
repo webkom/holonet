@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 import basis.models
 from django.db import migrations, models
 
-import holonet.common.fields
+import holonet.core.fields
 
 
 class Migration(migrations.Migration):
@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(serialize=False, auto_created=True, verbose_name='ID', primary_key=True)),
                 ('created_at', models.DateTimeField(default=basis.models._now, editable=False)),
                 ('updated_at', models.DateTimeField(default=basis.models._now, editable=False)),
-                ('domain', holonet.common.fields.DomainField(max_length=254)),
+                ('domain', holonet.core.fields.DomainField(max_length=254)),
                 ('base_url', models.URLField()),
                 ('description', models.TextField()),
             ],
@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(serialize=False, auto_created=True, verbose_name='ID', primary_key=True)),
                 ('created_at', models.DateTimeField(default=basis.models._now, editable=False)),
                 ('updated_at', models.DateTimeField(default=basis.models._now, editable=False)),
-                ('list_name', holonet.common.fields.LocalPartField(max_length=254)),
+                ('list_name', holonet.core.fields.LocalPartField(max_length=254)),
                 ('display_name', models.CharField(max_length=100)),
                 ('description', models.TextField(blank=True)),
                 ('active', models.BooleanField(help_text='Allow postings to this list.', default=True)),
