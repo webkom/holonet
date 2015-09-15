@@ -1,8 +1,8 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from holonet.interfaces.storage_backend import StorageBackend
 from holonet.storage.backend import retrieve_history
-from holonet.storage.base import StorageBackend
 
 
 class EmailStorageView(APIView):

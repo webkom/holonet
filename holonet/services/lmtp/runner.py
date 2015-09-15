@@ -5,9 +5,9 @@ from django.conf import settings
 
 from holonet.core.parser.exceptions import (DefectMessageException, MessageIDNotExistException,
                                             ParseEmailException)
+from holonet.interfaces.runner import Runner
 from holonet.services.lmtp import channel
 from holonet.services.lmtp.paser import LMTPEmailParser
-from holonet.services.runner import Runner
 
 smtpd.__version__ = 'Holonet LMTP'
 

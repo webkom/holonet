@@ -1,4 +1,4 @@
-from holonet.status.base import StatusCheck
+from holonet.interfaces.status_check import StatusCheck
 
 
 class ElasticsearchStatus(StatusCheck):

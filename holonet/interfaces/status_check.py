@@ -1,18 +1,27 @@
+from abc import abstractmethod
+
+
 class StatusCheck:
 
+    NOT_RESPONDING = 0
+    READY = 1
+    UNKNOWN = 2
+
+    STATUSES = (
+        (NOT_RESPONDING, 'Not Responding'),
+        (READY, 'Ready'),
+        (UNKNOWN, 'Unknown'),
+    )
+
     @property
+    @abstractmethod
     def name(self):
         """
         Needs to be valid in a url!
         """
         raise NotImplementedError('Please add the name property.')
 
-    STATUSES = (
-        (0, 'Not Responding'),
-        (1, 'Ready'),
-        (2, 'Unknown'),
-    )
-
     @property
+    @abstractmethod
     def status(self):
         raise NotImplementedError('Please implement the status function.')

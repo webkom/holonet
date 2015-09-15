@@ -1,7 +1,7 @@
-from holonet.queue.queue import HolonetQueue
+from holonet.interfaces.queue import Queue
 
 
-class AsyncQueue(HolonetQueue):
+class AsyncQueue(Queue):
     """
     The async queue processes messages using Celery workers.
     """

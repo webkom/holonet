@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from holonet.storage.base import StorageBackend
+from holonet.interfaces.storage_backend import StorageBackend
 
 
 class StoredEmailSerializer(serializers.Serializer):

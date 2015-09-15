@@ -1,6 +1,6 @@
 from holonet.core.manager import ServiceManager
 
-from holonet.status.backends import elasticsearch, cache
+from holonet.status.checks import elasticsearch, cache
 
 manager = ServiceManager()
 

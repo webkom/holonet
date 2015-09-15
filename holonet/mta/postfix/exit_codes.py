@@ -1,6 +1,6 @@
 import sys
 
-from holonet.mta.common.exit_codes import ExitCodes
+from holonet.interfaces.exit_codes import ExitCodes
 
 DATA_ERROR = 65
 NO_USER = 67

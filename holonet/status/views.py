@@ -1,8 +1,8 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from holonet.interfaces.status_check import StatusCheck
 from holonet.status import manager
-from holonet.status.base import StatusCheck
 from holonet.status.serializers import StatusSerializer
 
 

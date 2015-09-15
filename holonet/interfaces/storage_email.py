@@ -1,36 +1,10 @@
-from abc import abstractmethod
-
 from django.utils import timezone
 
 
-class StorageBackend:
-
-    MESSAGE_TYPES = (
-        ('spam', 'spam'),
-        ('blacklisted', 'blacklisted'),
-        ('bounce', 'bounce'),
-        ('archive', 'archive'),
-    )
-    MESSAGE_TYPES_LIST = list(element[0] for element in MESSAGE_TYPES)
-
-    @abstractmethod
-    def configure(self):
-        pass
-
-    @abstractmethod
-    def index_message(self, message):
-        pass
-
-    @abstractmethod
-    def retrieve_history(self, from_time, to_time, filter=None, search_query=None):
-        pass
-
-
-class StoredEmail:
+class StorageEmail:
 
     def __init__(self, from_email, to, copy, blind_copy, recipients, subject,
-                 raw, message_type, timestamp=None,
-                 *args, **kwargs):
+                 raw, message_type, timestamp=None, *args, **kwargs):
         self.from_email = from_email
         self.to = to
         self.copy = copy

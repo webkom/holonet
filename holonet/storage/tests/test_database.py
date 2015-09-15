@@ -3,8 +3,8 @@ from datetime import datetime
 from django.test import TestCase
 from pytz import UTC
 
+from holonet.interfaces.storage_email import StorageEmail
 from holonet.storage.backends.database import Backend
-from holonet.storage.base import StoredEmail
 from holonet.storage.models import EmailStorage
 
 
@@ -47,7 +47,7 @@ class DatabaseStorageBackendTestCase(TestCase):
 
     def test_equal_instances(self):
         email = EmailStorage.objects.get(pk=1)
-        message = StoredEmail(
+        message = StorageEmail(
             blind_copy=['blind-copy@holonet.no'],
             copy=['copy@holonet.no'],
             from_email='test@test.com',
@@ -61,7 +61,7 @@ class DatabaseStorageBackendTestCase(TestCase):
         self.assertDictEqual(email.as_dict(), message.as_dict())
 
     def test_store_email(self):
-        message = StoredEmail(
+        message = StorageEmail(
             blind_copy=['blind-copy@holonet.no'],
             copy=['copy@holonet.no'],
             from_email='test@test.com',

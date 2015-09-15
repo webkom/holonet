@@ -4,8 +4,8 @@ from unittest import skip
 from django.test import TestCase
 from pytz import UTC
 
+from holonet.interfaces.storage_email import StorageEmail
 from holonet.storage.backends.elasticsearch import Backend
-from holonet.storage.base import StoredEmail
 
 
 class ElasticsearchStorageBackendTestCase(TestCase):
@@ -16,7 +16,7 @@ class ElasticsearchStorageBackendTestCase(TestCase):
 
     @skip('No ES CI server.')
     def test_index_message(self):
-        message = StoredEmail(
+        message = StorageEmail(
             blind_copy=['blind-copy@holonet.no', 'blind1-copy@holonet.no'],
             copy=['copy@holonet.no', 'copy1@holonet.no'],
             from_email='test@test.com',

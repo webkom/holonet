@@ -2,8 +2,8 @@ import sys
 
 from holonet.core.parser import EmailParser
 from holonet.core.parser.exceptions import DefectMessageException, ParseEmailException
+from holonet.interfaces.runner import Runner
 from holonet.mta.postfix.exit_codes import PostfixPipeExit
-from holonet.services.runner import Runner
 
 
 class PipeRunner(Runner):

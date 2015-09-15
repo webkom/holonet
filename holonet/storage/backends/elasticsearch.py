@@ -3,7 +3,8 @@ from django.utils.timezone import now
 from elasticsearch_dsl import F, Q, Date, DocType, String
 from elasticsearch_dsl.connections import connections
 
-from holonet.storage.base import StorageBackend, StoredEmail
+from holonet.interfaces.storage_backend import StorageBackend
+from holonet.interfaces.storage_email import StorageEmail
 
 
 class Backend(StorageBackend):
@@ -46,7 +47,7 @@ class Backend(StorageBackend):
         return index_name
 
     def model_to_stored_email(self, model_instance):
-        return StoredEmail(**model_instance.as_dict())
+        return StorageEmail(**model_instance.as_dict())
 
 
 class ElasticsearchEmailMapping(DocType):
