@@ -46,6 +46,7 @@ class List(TimeStampModel):
     public = models.BooleanField(default=False)
     archive = models.BooleanField(default=False, help_text='Archive all messages to this list in '
                                                            'the message storage.')
+    processed_messages = models.BigIntegerField(default=0)
 
     last_post_at = models.DateTimeField(null=True, default=None, blank=True)
 

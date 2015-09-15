@@ -1,6 +1,2 @@
 -r base.txt
 coverage
-pytest
-sphinx
-sphinxcontrib-httpdomain
-mock
