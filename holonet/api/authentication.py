@@ -1,8 +1,8 @@
-from django.contrib.auth.models import AbstractBaseUser, _user_has_module_perms
-from oauth2_provider.ext.rest_framework import OAuth2Authentication
+from django.contrib.auth import models
+from oauth2_provider.ext import rest_framework
 
 
-class HolonetAuthentication(OAuth2Authentication):
+class HolonetAuthentication(rest_framework.OAuth2Authentication):
     """
     OAuth 2 authentication backend using `django-oauth-toolkit`
     Overrides the OAuth2Authentication class and adds a mock user if the token is valid but no
@@ -25,7 +25,7 @@ class HolonetAuthentication(OAuth2Authentication):
         return None
 
 
-class HolonetAPIUser(AbstractBaseUser):
+class HolonetAPIUser(models.AbstractBaseUser):
 
     def get_full_name(self):
         return 'HolonetAPI'
@@ -52,4 +52,4 @@ class HolonetAPIUser(AbstractBaseUser):
         Returns True if the user has any permissions in the given app label.
         Uses pretty much the same logic as has_perm, above.
         """
-        return _user_has_module_perms(self, app_label)
+        return models._user_has_module_perms(self, app_label)

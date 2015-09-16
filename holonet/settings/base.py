@@ -33,6 +33,7 @@ INSTALLED_APPS = (
     'holonet.backends',
     'holonet.roules',
     'holonet.handlers',
+    'holonet.commands',
 )
 
 MIDDLEWARE_CLASSES = (

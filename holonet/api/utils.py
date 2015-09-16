@@ -1,4 +1,4 @@
-from django.core.urlresolvers import reverse as django_reverse
+from django.core import urlresolvers
 
 
 def base_url(request):
@@ -14,4 +14,4 @@ def base_url(request):
 
 
 def reverse(name, base_url, *args, **kwargs):
-    return '{}{}'.format(base_url, django_reverse(name, *args, **kwargs))
+    return '{}{}'.format(base_url, urlresolvers.reverse(name, *args, **kwargs))

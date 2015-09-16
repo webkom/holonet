@@ -1,0 +1,7 @@
+- model: auth.User
+  pk: 1
+  fields:
+    username: holonet_admin
+    email: holonet@holonet.com
+    is_superuser: True
+    is_staff: True
