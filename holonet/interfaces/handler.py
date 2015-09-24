@@ -13,4 +13,4 @@ class Handler:
         :param meta: Metadata attached to this message
         :return:
         """
-        pass
+        raise NotImplementedError

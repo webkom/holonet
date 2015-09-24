@@ -9,4 +9,4 @@ class Queue:
 
     @abstractmethod
     def enqueue(self, message):
-        pass
+        raise NotImplementedError

@@ -34,7 +34,7 @@ class Runner(BaseCommand):
 
     @abstractmethod
     def run(self, *args, **kwargs):
-        pass
+        raise NotImplementedError
 
     def handle(self, *args, **kwargs):
         self.log = logging.getLogger('holonet.{}'.format(self.name))

@@ -22,8 +22,8 @@ class StorageBackend:
 
     @abstractmethod
     def index_message(self, message):
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def retrieve_history(self, from_time, to_time, filter=None, search_query=None):
-        pass
+        raise NotImplementedError

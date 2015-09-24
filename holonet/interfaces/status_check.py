@@ -19,9 +19,9 @@ class StatusCheck:
         """
         Needs to be valid in a url!
         """
-        raise NotImplementedError('Please add the name property.')
+        raise NotImplementedError
 
     @property
     @abstractmethod
     def status(self):
-        raise NotImplementedError('Please implement the status function.')
+        raise NotImplementedError

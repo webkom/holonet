@@ -5,20 +5,20 @@ class ExitCodes:
 
     @abstractmethod
     def data_error(self):
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def no_recipient(self):
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def no_domain(self):
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def service_unavailable(self):
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def system_error(self):
-        pass
+        raise NotImplementedError
