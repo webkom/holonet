@@ -13,4 +13,4 @@ class ServiceManager:
         return [(v, v) for v in sorted(self._backends.keys())]
 
     def keys(self):
-        return self._backends.keys()
+        return list(self._backends.keys())
