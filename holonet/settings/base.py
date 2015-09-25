@@ -29,9 +29,8 @@ INSTALLED_APPS = (
     'holonet.storage',
     'holonet.services',
     'holonet.mta',
-    'holonet.queue',
     'holonet.backends',
-    'holonet.roules',
+    'holonet.rules',
     'holonet.handlers',
     'holonet.commands',
 )

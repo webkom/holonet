@@ -13,6 +13,11 @@ class Rule:
     def description(self):
         raise NotImplementedError
 
+    @property
+    @abstractmethod
+    def record(self):
+        raise NotImplementedError
+
     @abstractmethod
     def check(self, message_list, message, meta):
         """
