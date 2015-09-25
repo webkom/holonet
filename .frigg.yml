@@ -2,11 +2,11 @@ tasks:
   - tox -e tests
   - tox -e isort
   - tox -e flake8
-  - coverage report --fail-under=75
+  - coverage report --fail-under=60
   - coverage xml
 
 verbose_tasks:
-  - coverage report --fail-under=75
+  - coverage report --fail-under=60
 
 comment: false
 
