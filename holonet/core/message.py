@@ -9,6 +9,7 @@ log = logging.getLogger(__name__)
 class HolonetEmailMessage(EmailMessage):
 
     original_message = None
+    manage_headers = ['to', 'cc', 'bcc', 'from', 'reply-to', 'subject']
 
     @classmethod
     def parse_message(cls, msg):
@@ -29,11 +30,10 @@ class HolonetEmailMessage(EmailMessage):
         from_email = msg.get('from', '')
         subject = msg.get('subject', '')
 
-        standard_headers = ['to', 'cc', 'bcc', 'from', 'reply-to', 'subject']
         extra_headers = {}
         for key in msg.keys():
-            if key.lower() not in standard_headers:
-                extra_headers[key] = msg[key]
+            if key.lower() not in cls.manage_headers:
+                extra_headers[key.lower()] = msg[key]
 
         message = cls(to=to, cc=cc, bcc=bcc, from_email=from_email, subject=subject,
                       reply_to=reply_to, headers=extra_headers, body=None)
@@ -47,34 +47,46 @@ class HolonetEmailMessage(EmailMessage):
         Returns a email.message.Message object. The object is based on original_message if
         original_message is not None.
         """
+
         if self.original_message is None:
-            return super().message()
+            result_message = super().message()
+        else:
 
-        msg = self._create_message(self.original_message)
-        msg['Subject'] = self.subject
-        msg['From'] = self.extra_headers.get('From', self.from_email)
-        msg['To'] = self.extra_headers.get('To', ', '.join(self.to))
-        if self.cc:
-            msg['Cc'] = ', '.join(self.cc)
-        if self.reply_to:
-            msg['Reply-To'] = self.extra_headers.get('Reply-To', ', '.join(self.reply_to))
-        header_names = [key.lower() for key in self.extra_headers]
-        if 'date' not in header_names:
-            msg['Date'] = formatdate()
-        if 'message-id' not in header_names:
-            msg['Message-ID'] = make_msgid(domain=DNS_NAME)
-        for name, value in self.extra_headers.items():
-            if name.lower() in ('from', 'to'):
-                continue
-            if name.lower() in msg:
-                del msg[name]
-            msg[name] = value
+            msg = self._create_message(self.original_message)
 
-        if self.body is not None:
-            log.warning('The message method constructed a email.message.Message based on '
-                        'original_message. The content of body is lost!')
+            # Remove managed header from message
+            for key in self.manage_headers:
+                if key in msg:
+                    del msg[key]
 
-        return msg
+            msg['To'] = ', '.join(self.to) or self.extra_headers.get('to', '')
+            msg['Cc'] = ', '.join(self.cc) or self.extra_headers.get('cc', '')
+            msg['Bcc'] = ', '.join(self.bcc) or self.extra_headers.get('bcc', '')
+            msg['From'] = self.from_email or self.extra_headers.get('from', '')
+            msg['Reply-To'] = ', '.join(self.reply_to) or self.extra_headers.get('reply-to', '')
+            msg['Subject'] = self.subject or self.extra_headers.get('subject', '*** No Subject ***')
+
+            # Check for missing headers
+            header_names = [key.lower() for key in self.extra_headers]
+            if 'date' not in header_names:
+                msg['Date'] = formatdate()
+            if 'message-id' not in header_names:
+                msg['Message-ID'] = make_msgid(domain=DNS_NAME)
+            # Set extra headers
+            for name, value in self.extra_headers.items():
+                if name.lower() in self.manage_headers:
+                    continue
+                if name.lower() in msg:
+                    del msg[name]
+                msg[name] = value
+
+            if self.body is not None:
+                log.warning('The message method constructed a email.message.Message based on '
+                            'original_message. The content of body is lost!')
+
+            result_message = msg
+
+        return result_message
 
     def set_header(self, key, value):
         """
