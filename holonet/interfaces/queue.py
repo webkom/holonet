@@ -4,9 +4,5 @@ from abc import abstractmethod
 class Queue:
 
     @abstractmethod
-    def setup(self):
-        pass
-
-    @abstractmethod
-    def enqueue(self, message):
+    def dispose(self, message_list, message, meta):
         raise NotImplementedError
