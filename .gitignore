@@ -70,3 +70,4 @@ holonet/files/
 npm-debug.log.*
 
 celeryev.pid
+dump.rdb
