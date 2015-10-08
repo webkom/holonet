@@ -31,6 +31,7 @@ class EmailParser:
         if msg.defects:
             raise DefectMessageException
 
+        # Add headers used in Holonet
         msg.original_size = len(self.raw_message)
         msg['X-MailFrom'] = self.mail_from
 
