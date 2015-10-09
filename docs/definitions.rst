@@ -18,7 +18,7 @@ approves messages and sends them to the pipeline.
 Pipeline
 ========
 When the message is approved for posting, it gets sent to the pipeline. The pipeline processes
-messages thought a set of handlers.
+messages through a set of handlers.
 
 Handlers
 ========
