@@ -3,6 +3,7 @@ tasks:
   - tox -e isort
   - tox -e flake8
   - tox -e coverage
+  - tox -e docs
 
 verbose_tasks:
   - tox -e coverage
