@@ -3,8 +3,10 @@
 
 [Documentation](http://holonet.readthedocs.org/)
 
-This repository contains the Holonet core. This project talks to the MTA and provides a REST API 
-for interacting with the system.
+*NB: The project is under heavy development and are not ready to be used.*
+
+This repository contains the Holonet Mail Delivery System. This project talks to the MTA and 
+provides a REST API for interacting with the system.
 
 ## Getting started
 ```

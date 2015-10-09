@@ -42,3 +42,6 @@ DEFAULT_FROM_EMAIL = SERVER_EMAIL
 
 # Celery broker
 BROKER_URL = 'amqp://guest:guest@localhost:5672/'
+
+# Queue handler
+QUEUE_RUNNER = 'holonet.core.queue_runner.celery.CeleryQueueRunner'

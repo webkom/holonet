@@ -5,3 +5,15 @@
     email: holonet@holonet.com
     is_superuser: True
     is_staff: True
+
+- model: auth.User
+  pk: 2
+  fields:
+    username: equal_mail_user1
+    email: equal@holonet.com
+
+- model: auth.User
+  pk: 3
+  fields:
+    username: equal_mail_user2
+    email: equal@holonet.com
