@@ -1,7 +1,5 @@
 from django.apps import AppConfig
 
-from .queue import fetch_queue_runner
-
 
 class DataConfig(AppConfig):
 
@@ -10,4 +8,3 @@ class DataConfig(AppConfig):
 
     def ready(self):
         super().ready()
-        fetch_queue_runner().setup()
