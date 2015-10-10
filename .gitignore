@@ -71,3 +71,8 @@ npm-debug.log.*
 
 celeryev.pid
 dump.rdb
+
+webpack-stats*
+holonet/assets/dist/*
+holonet/assets/bundles/*
+node_modules/

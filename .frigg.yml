@@ -1,9 +1,13 @@
+setup_tasks:
+  - npm install
+
 tasks:
   - tox -e tests
   - tox -e isort
   - tox -e flake8
   - tox -e coverage
   - tox -e docs
+  - npm run test
 
 verbose_tasks:
   - tox -e coverage

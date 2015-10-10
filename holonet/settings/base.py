@@ -22,6 +22,7 @@ INSTALLED_APPS = (
     'oauth2_provider',
     'corsheaders',
     'raven.contrib.django.raven_compat',
+    'webpack_loader',
 
     'holonet.core',
     'holonet.lists',
@@ -102,6 +103,17 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'assets'),
+)
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'assets/bundles/',
+        'STATS_FILE': os.path.join(BASE_DIR, '../webpack-stats.json')
+    }
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
