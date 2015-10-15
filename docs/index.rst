@@ -1,5 +1,5 @@
-Holonet  |frigg| |coverage| |deps|
-==================================
+Holonet  |frigg| |coverage|
+===========================
 
 Mail Delivery System
 
@@ -24,7 +24,3 @@ Indices and tables
 
 .. |coverage| image:: https://ci.frigg.io/badges/coverage/webkom/holonet/
     :target: https://ci.frigg.io/webkom/holonet/last/
-
-.. |deps| image:: https://requires.io/github/webkom/holonet/requirements.svg?branch=master
-     :target: https://requires.io/github/webkom/holonet/requirements/?branch=master
-     :alt: Requirements Status
