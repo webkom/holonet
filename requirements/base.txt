@@ -7,7 +7,7 @@ PyYAML==3.11
 redis==2.10.3
 python3-memcached==1.51
 
-django-flat-theme==0.9.5
+django-flat-theme==1.1.1
 djangorestframework==3.2.3
 django-extensions==1.5.5
 django-cors-headers==1.1.0
