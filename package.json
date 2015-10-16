@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "camelize": "1.0.0",
-    "history": "1.11.1",
+    "history": "1.12.5",
     "json-loader": "^0.5.3",
     "moment": "^2.10.6",
     "moment-timezone": "^0.4.0",
