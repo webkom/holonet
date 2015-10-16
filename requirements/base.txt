@@ -9,7 +9,7 @@ python3-memcached==1.51
 
 django-flat-theme==1.1.1
 djangorestframework==3.2.4
-django-extensions==1.5.5
+django-extensions==1.5.7
 django-cors-headers==1.1.0
 django-celery==3.1.16
 django-cachalot==1.0.3
