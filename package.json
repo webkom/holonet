@@ -42,7 +42,7 @@
     "stylus-loader": "1.4.0",
     "webpack": "1.12.2",
     "webpack-bundle-tracker": "0.0.8",
-    "webpack-dev-server": "1.12.0"
+    "webpack-dev-server": "1.12.1"
   },
   "dependencies": {
     "camelize": "1.0.0",
