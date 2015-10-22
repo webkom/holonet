@@ -1,6 +1,6 @@
 Django==1.8.5
 ipython==4.0.0
-raven==5.7.2
+raven==5.8.1
 
 psycopg2==2.6.1
 PyYAML==3.11
