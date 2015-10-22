@@ -1,21 +1,21 @@
-Django==1.8.4
+Django==1.8.5
 ipython==4.0.0
-raven==5.5.0
+raven==5.7.2
 
 psycopg2==2.6.1
 PyYAML==3.11
 redis==2.10.3
 python3-memcached==1.51
 
-django-flat-theme==0.9.5
-djangorestframework==3.2.3
-django-extensions==1.5.5
+django-flat-theme==1.1.1
+djangorestframework==3.2.4
+django-extensions==1.5.7
 django-cors-headers==1.1.0
-django-celery==3.1.16
+django-celery==3.1.17
 django-cachalot==1.0.3
 django-oauth-toolkit==0.9.0
 django-basis==0.4.0
 django-webpack-loader==0.2.2
 
-elasticsearch==1.6.0
-elasticsearch-dsl==0.0.4
+elasticsearch==1.8.0
+elasticsearch-dsl==0.0.8
