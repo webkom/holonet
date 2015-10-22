@@ -1,19 +1,19 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.models import User
+from django.utils.translation import ugettext_lazy as _
 
 from .models import Member
 
 
-class MemberInline(admin.StackedInline):
+class MemberModelAdmin(admin.ModelAdmin):
     model = Member
-    can_delete = False
-    verbose_name_plural = 'member'
+    list_display = ('username', 'email', 'first_name', 'last_name')
+    list_filter = ('is_active', )
+    search_fields = ('username', 'first_name', 'last_name', 'email')
+    ordering = ('username',)
+    fieldsets = (
+        (None, {'fields': ('username', 'is_active')}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
+        (_('Holonet'), {'fields': ('acknowledge_posts', )})
+    )
 
-
-class UserMemberAdmin(UserAdmin):
-    inlines = (MemberInline, )
-
-
-admin.site.unregister(User)
-admin.site.register(User, UserMemberAdmin)
+admin.site.register(Member, MemberModelAdmin)

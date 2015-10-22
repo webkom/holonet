@@ -1,5 +1,6 @@
 from basis.models import TimeStampModel
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 
 from holonet.core.defaults import (DEFAULT_AUTORESPONSE_POSTINGS_TEXT,
                                    DEFAULT_AUTORESPONSE_REQUEST_TEXT,
@@ -11,7 +12,7 @@ class Domain(TimeStampModel):
 
     domain = DomainField()
     base_url = models.URLField()
-    description = models.TextField()
+    description = models.TextField(blank=True)
 
     def save(self, *args, **kwargs):
         if not self.base_url:
@@ -43,7 +44,8 @@ class List(TimeStampModel):
     display_name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     active = models.BooleanField(default=True, help_text='Allow postings to this list.')
-    public = models.BooleanField(default=False)
+    public = models.BooleanField(default=False, help_text=_('Allow non owners to post in this '
+                                                            'list.'))
     archive = models.BooleanField(default=False, help_text='Archive all messages to this list in '
                                                            'the message storage.')
     processed_messages = models.BigIntegerField(default=0)
@@ -85,3 +87,6 @@ class List(TimeStampModel):
     autoresponse_postings_text = models.TextField(default=DEFAULT_AUTORESPONSE_POSTINGS_TEXT)
     autorespond_requests = models.PositiveIntegerField(choices=AUTORESPOND_ACTION, default=0)
     autoresponse_request_text = models.TextField(default=DEFAULT_AUTORESPONSE_REQUEST_TEXT)
+
+    def __str__(self):
+        return self.list_name

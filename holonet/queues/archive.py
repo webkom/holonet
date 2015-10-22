@@ -7,4 +7,5 @@ class ArchiveQueue(Queue):
     """
 
     def dispose(self, message_list, message, meta):
-        pass
+        print('Hei')
+        return 'hei du'

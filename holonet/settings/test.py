@@ -1,4 +1,4 @@
-TEST_RUNNER = "djcelery.contrib.test_runner.CeleryTestSuiteRunner"
+# TEST_RUNNER = "djcelery.contrib.test_runner.CeleryTestSuiteRunner"
 
 SECRET_KEY = 'test'
 
@@ -9,3 +9,5 @@ DATABASES = {
         'NAME': 'holonet'
     }
 }
+
+BROKER_URL = 'redis://127.0.0.1'

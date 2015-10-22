@@ -15,7 +15,7 @@ INSTALLED_APPS = (
 
     'holonet.api',
 
-    'cachalot',
+    #  'cachalot',
     'django_extensions',
     'djcelery',
     'rest_framework',
@@ -27,7 +27,6 @@ INSTALLED_APPS = (
     'holonet.core',
     'holonet.lists',
     'holonet.status',
-    'holonet.storage',
     'holonet.services',
     'holonet.mta',
     'holonet.backends',
@@ -35,6 +34,7 @@ INSTALLED_APPS = (
     'holonet.handlers',
     'holonet.commands',
     'holonet.members',
+    'holonet.queues',
 )
 
 MIDDLEWARE_CLASSES = (
