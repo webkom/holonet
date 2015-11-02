@@ -11,18 +11,8 @@ SYSTEM_NAME = 'Holonet Mail Delivery System'
 SYSTEM_OWNER = 'Holonet'
 SYSTEM_SUPPORT = 'contact@holonet.no'
 
-# Backend to use when storing messages
-STORAGE_BACKEND = 'database'  # database or elasticsearch
-
 # Elasticsearch options
 ELASTICSEARCH_INDEX_PATTERN = 'holonet-%Y.%W'
-ELASTICSEARCH = {
-    'default': {
-        'hosts': [
-            '127.0.0.1:9200'
-        ]
-    }
-}
 
 # LMTP
 LMTP_HOST = 'localhost'
@@ -40,5 +30,5 @@ EMAIL_SUBJECT_PREFIX = u'[%s] ' % 'Holonet'
 SERVER_EMAIL = 'bounce@holonet.no'
 DEFAULT_FROM_EMAIL = SERVER_EMAIL
 
-# Celery broker
-BROKER_URL = 'amqp://guest:guest@localhost:5672/'
+# Message Buffer
+MESSAGE_BUFFER = 'holonet.storage.buffer.backends.redis.RedisBuffer'

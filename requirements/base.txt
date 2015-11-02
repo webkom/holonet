@@ -6,6 +6,7 @@ psycopg2==2.6.1
 PyYAML==3.11
 redis==2.10.3
 python3-memcached==1.51
+certifi==2015.9.6.2
 
 django-flat-theme==1.1.1
 djangorestframework==3.2.4

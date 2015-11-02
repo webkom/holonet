@@ -1,4 +1,4 @@
-# TEST_RUNNER = "djcelery.contrib.test_runner.CeleryTestSuiteRunner"
+TEST_RUNNER = "djcelery.contrib.test_runner.CeleryTestSuiteRunner"
 
 SECRET_KEY = 'test'
 
@@ -11,3 +11,15 @@ DATABASES = {
 }
 
 BROKER_URL = 'redis://127.0.0.1'
+
+REDIS = {
+    'host': '127.0.0.1',
+}
+
+ELASTICSEARCH = {
+    'default': {
+        'hosts': [
+            '127.0.0.1:9200'
+        ]
+    }
+}

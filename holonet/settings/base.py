@@ -35,6 +35,7 @@ INSTALLED_APPS = (
     'holonet.commands',
     'holonet.members',
     'holonet.queues',
+    'holonet.storage',
 )
 
 MIDDLEWARE_CLASSES = (
