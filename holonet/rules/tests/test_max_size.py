@@ -1,5 +1,6 @@
+from unittest.mock import Mock
+
 from django.test import TestCase
-from mock import Mock
 
 from holonet.rules.max_size import MaxSizeRule
 

@@ -5,7 +5,6 @@ from django.conf.global_settings import AUTHENTICATION_BACKENDS
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 INSTALLED_APPS = (
-    'flat',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -16,7 +15,7 @@ INSTALLED_APPS = (
     'holonet.api',
 
     #  'cachalot',
-    'django_extensions',
+    #  'django_extensions',
     'djcelery',
     'rest_framework',
     'oauth2_provider',
@@ -71,9 +70,7 @@ TEMPLATES = [
     },
 ]
 
-AUTHENTICATION_BACKENDS = AUTHENTICATION_BACKENDS + (
-    'django.contrib.auth.backends.ModelBackend',
-)
+AUTHENTICATION_BACKENDS = AUTHENTICATION_BACKENDS + []
 
 ROOT_URLCONF = 'holonet.urls'
 
@@ -84,6 +81,8 @@ CORS_ORIGIN_ALLOW_ALL = True
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'Europe/Oslo'
+
+AUTH_USER_MODEL = 'members.Member'
 
 USE_I18N = True
 
@@ -108,13 +107,6 @@ STATICFILES_FINDERS = (
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'assets'),
 )
-
-WEBPACK_LOADER = {
-    'DEFAULT': {
-        'BUNDLE_DIR_NAME': 'assets/bundles/',
-        'STATS_FILE': os.path.join(BASE_DIR, '../webpack-stats.json')
-    }
-}
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (

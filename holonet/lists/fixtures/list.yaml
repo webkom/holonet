@@ -1,7 +1,14 @@
+- model: lists.Domain
+  pk: 1
+  fields:
+    domain: holonet.com
+    base_url: http://holonet.com
+
 - model: lists.List
   pk: 1
   fields:
     list_name: Holonet
+    domain: 1
     display_name: Holonet Mailinglist
     description: This list is a basic test fixture.
     active: True

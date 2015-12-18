@@ -43,12 +43,19 @@ class List(TimeStampModel):
     list_name = LocalPartField()
     display_name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
+    domain = models.ForeignKey(Domain)
     active = models.BooleanField(default=True, help_text='Allow postings to this list.')
     public = models.BooleanField(default=False, help_text=_('Allow non owners to post in this '
                                                             'list.'))
     archive = models.BooleanField(default=False, help_text='Archive all messages to this list in '
                                                            'the message storage.')
     processed_messages = models.BigIntegerField(default=0)
+    emergency = models.BooleanField(default=False, help_text='Emergency held all messages for '
+                                                             'moderation by the list admin.')
+    require_explicit_destination = models.BooleanField(default=True,
+                                                       help_text='Catch messages with wrong '
+                                                                 'destination. This is typically '
+                                                                 'bcc messages.')
 
     last_post_at = models.DateTimeField(null=True, default=None, blank=True)
 
@@ -90,3 +97,11 @@ class List(TimeStampModel):
 
     def __str__(self):
         return self.list_name
+
+    @property
+    def posting_address(self):
+        """
+        Construct the main address for this list. This is the primary address for this list.
+        Aliases can be used to have multiple addresses mapped to this list.
+        """
+        return '{}@{}'.format(self.list_name, self.domain.domain)

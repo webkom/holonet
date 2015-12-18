@@ -29,6 +29,3 @@ SENDMAIL_BATCH_LENGTH = 40
 EMAIL_SUBJECT_PREFIX = u'[%s] ' % 'Holonet'
 SERVER_EMAIL = 'bounce@holonet.no'
 DEFAULT_FROM_EMAIL = SERVER_EMAIL
-
-# Message Buffer
-MESSAGE_BUFFER = 'holonet.storage.buffer.backends.redis.RedisBuffer'

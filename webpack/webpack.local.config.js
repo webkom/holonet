@@ -6,10 +6,10 @@ var BundleTracker = require('webpack-bundle-tracker');
 var config = require('./webpack.base.config.js');
 
 // Use webpack dev server
-config.entry = [
+config.entry.app = [
   'webpack-dev-server/client?http://localhost:3000',
   'webpack/hot/only-dev-server',
-  './holonet/frontend/index'
+  '../holonet/frontend/index'
 ];
 
 // override django's STATIC_URL for webpack bundles

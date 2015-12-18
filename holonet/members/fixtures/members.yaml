@@ -1,4 +1,4 @@
-- model: auth.User
+- model: members.Member
   pk: 1
   fields:
     username: holonet_admin
@@ -6,13 +6,13 @@
     is_superuser: True
     is_staff: True
 
-- model: auth.User
+- model: members.Member
   pk: 2
   fields:
     username: equal_mail_user1
     email: equal@holonet.com
 
-- model: auth.User
+- model: members.Member
   pk: 3
   fields:
     username: equal_mail_user2

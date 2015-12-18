@@ -1,2 +1,1 @@
 -r base.txt
-mock==1.3.0

@@ -17,7 +17,7 @@ class Acknowledge(Handler):
     def process(cls, message_list, message, meta):
         sender = meta.get('original_sender', message.sender)
         user = utils.retrieve_member_by_email(sender)
-        if user is None or user.member.acknowledge_posts is False:
+        if not user or user.acknowledge_posts is False:
             return
 
         # We found the member that wants to receive an acknowledgement

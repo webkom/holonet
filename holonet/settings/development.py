@@ -1,9 +1,11 @@
-from .base import INSTALLED_APPS
+import os
+
+from .base import BASE_DIR, INSTALLED_APPS
 
 DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1']
 
-SECRET_KEY = '0&e=or16z)nrsl6u(h=8((763+1pckt@o@7xrgje4ht((_61j='
+SECRET_KEY = 'secret'
 
 DATABASES = {
     'default': {
@@ -40,5 +42,12 @@ ELASTICSEARCH = {
         'hosts': [
             '127.0.0.1:9200'
         ]
+    }
+}
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'bundles/',
+        'STATS_FILE': os.path.join(BASE_DIR, '../webpack-stats.json')
     }
 }

@@ -1,4 +1,5 @@
-import mock
+from unittest import mock
+
 from django.test import TestCase
 
 from holonet.api.authentication import HolonetAPIUser, HolonetAuthentication

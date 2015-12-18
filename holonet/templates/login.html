@@ -1,4 +1,11 @@
 {% extends "base.html" %}
+{% load render_bundle from webpack_loader %}
+
+{% block head %}
+    {% autoescape off %}
+        {% render_bundle 'vendor' 'css' %}
+    {% endautoescape %}
+{% endblock %}
 
 {% block body %}
 
@@ -7,5 +14,9 @@
         {{ form }}
         <button type="submit">Login</button>
     </form>
+
+    {% autoescape off %}
+        {% render_bundle 'vendor' 'js' %}
+    {% endautoescape %}
 
 {% endblock %}

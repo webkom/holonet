@@ -5,6 +5,8 @@ import { Provider } from 'react-redux';
 import { ReduxRouter } from 'redux-react-router';
 import configureStore from './configureStore';
 
+import './style/index.styl';
+
 global.log = function log(self = this) {
   console.log(self);
   return this;

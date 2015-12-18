@@ -15,17 +15,18 @@ admin.site.register(Domain, DomainAdmin)
 
 class ListAdmin(admin.ModelAdmin):
     model = List
-    list_display = ['list_name', 'display_name', 'active', 'last_post_at']
+    list_display = ['posting_address', 'display_name', 'active', 'last_post_at']
 
     list_filter = ('active', 'public', 'archive', 'member_posts', 'anonymous_list', 'use_verp',
                    'digestable')
-    search_fields = ('list_name', 'display_name', 'description')
+    search_fields = ('list_name', 'display_name', 'description', 'domain__domain')
     ordering = ('list_name',)
     fieldsets = (
-        (None, {'fields': ('list_name', 'display_name', 'description')}),
+        (None, {'fields': ('list_name', 'display_name', 'description', 'domain')}),
         (_('General'), {'fields': ('active', 'public', 'archive', 'include_rfc2369_headers',
                                    'anonymous_list', 'subject_prefix', 'max_message_size',
-                                   'max_num_recipients', 'needs_manager_approval')}),
+                                   'max_num_recipients', 'needs_manager_approval', 'emergency',
+                                   'require_explicit_destination')}),
         (_('Meta'), {'fields': ('processed_messages', 'last_post_at')}),
         (_('Rejections'), {'fields': ('member_posts', 'nonmember_rejection_notice')}),
         (_('Bounce'), {'fields': ('process_bounces', 'use_verp', 'verp_interval')}),
