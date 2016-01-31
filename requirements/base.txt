@@ -19,4 +19,4 @@ django-webpack-loader==0.2.4
 django-environ-0.4.0
 
 elasticsearch==2.2.0
-elasticsearch-dsl==0.0.9
+elasticsearch-dsl==0.0.11
