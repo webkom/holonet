@@ -2,7 +2,7 @@ import superagent from 'superagent';
 import camelize from 'camelize';
 
 function urlFor(resource) {
-  return '/api' + resource;
+  return `/api${resource}`;
 }
 
 export default function request({ method = 'get', url, body, headers = {} }) {
