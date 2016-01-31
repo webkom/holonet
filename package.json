@@ -58,7 +58,7 @@
     "normalize.css": "^3.0.3",
     "react": "0.14.7",
     "react-dom": "0.14.7",
-    "react-redux": "4.0.0",
+    "react-redux": "4.1.2",
     "react-router": "2.0.0-rc5",
     "redux": "3.1.6",
     "redux-logger": "2.0.4",
