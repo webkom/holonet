@@ -64,6 +64,6 @@
     "redux-logger": "2.0.4",
     "redux-react-router": "1.0.0-beta3",
     "redux-thunk": "1.0.0",
-    "superagent": "1.4.0"
+    "superagent": "1.7.2"
   }
 }
