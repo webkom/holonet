@@ -43,7 +43,7 @@
     "stylus": "0.53.0",
     "stylus-loader": "1.5.1",
     "webpack": "1.12.12",
-    "webpack-bundle-tracker": "0.0.8",
+    "webpack-bundle-tracker": "0.0.93",
     "webpack-dev-server": "1.14.1"
   },
   "dependencies": {
