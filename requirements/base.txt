@@ -8,7 +8,7 @@ redis==2.10.5
 python3-memcached==1.51
 certifi==2015.11.20.1
 
-djangorestframework==3.3.1
+djangorestframework==3.3.2
 django-extensions==1.6.1
 django-cors-headers==1.1.0
 django-celery==3.1.17
