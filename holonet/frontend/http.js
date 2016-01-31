@@ -9,7 +9,9 @@ export default function request({ method = 'get', url, body, headers = {} }) {
   const req = superagent[method].call(request, urlFor(url));
 
   for (const header in headers) {
-    req.set(header, headers[header]);
+    if (headers[header]) {
+      req.set(header, headers[header]);
+    }
   }
 
   if (body) {

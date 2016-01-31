@@ -1,7 +1,7 @@
 import { compose, createStore, applyMiddleware, combineReducers } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
-import createHashHistory from 'history/lib/createHashHistory';
+import { createHistory } from 'history';
 import { reduxReactRouter, routerStateReducer } from 'redux-react-router';
 import routes from './routes';
 import * as reducers from './reducers';
@@ -24,7 +24,10 @@ function promiseMiddleware() {
       result => next({
         type: `${type}_SUCCESS`,
         payload: result,
-        meta: { ...meta, receivedAt: Date.now() }
+        meta: {
+          ...meta,
+          receivedAt: Date.now()
+        }
       }),
       error => next({
         type: `${type}_FAILURE`,
@@ -59,7 +62,7 @@ const finalCreateStore = compose(
   middlewares,
   reduxReactRouter({
     routes,
-    createHistory: createHashHistory
+    createHistory
   })
 )(createStore);
 

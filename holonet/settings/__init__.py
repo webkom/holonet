@@ -1,6 +1,6 @@
 import sys
 
-TESTING = 'test' in sys.argv
+TESTING = 'test' in sys.argv[:2]
 
 from .base import *  # noqa
 from .logging import *  # noqa

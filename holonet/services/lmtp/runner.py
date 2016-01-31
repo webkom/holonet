@@ -59,9 +59,10 @@ class LMTPRunner(Runner, smtpd.SMTPServer):
             return channel.ERR_501
 
         status = []
-        for to in recipients:
-            status.append('250 Ok')
+        for _ in recipients:
+            # Send 250 OK for every recipients
+            status.append('250 OK')
 
-        print(message, recipients)
+        print(message, peer, mailfrom, recipients)
 
         return channel.CRLF.join(status)

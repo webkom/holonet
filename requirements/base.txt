@@ -7,6 +7,7 @@ PyYAML==3.11
 redis==2.10.5
 python3-memcached==1.51
 certifi==2015.11.20.1
+click==6.2
 
 djangorestframework==3.3.2
 django-extensions==1.6.1
@@ -16,7 +17,7 @@ django-cachalot==1.2.0
 django-oauth-toolkit==0.10.0
 django-basis==0.4.0
 django-webpack-loader==0.2.4
-django-environ-0.4.0
+django-environ==0.4.0
 
 elasticsearch==2.2.0
 elasticsearch-dsl==0.0.11

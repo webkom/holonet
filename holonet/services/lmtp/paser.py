@@ -15,6 +15,7 @@ class LMTPEmailParser(EmailParser):
 
         message_id = msg.get('message-id')
         if message_id is None:
+            # Messages received with LMTP should contain a MESSAGE-ID header.
             raise MessageIDNotExistException
 
         return msg

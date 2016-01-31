@@ -9,11 +9,7 @@ module.exports = {
   entry: {
     'app': '../holonet/frontend/index',
     'vendor': [
-      'jquery',
-      'normalize.css',
-      'bootstrap/dist/js/bootstrap.js',
-      'bootstrap/dist/css/bootstrap.css',
-      'font-awesome/css/font-awesome.css'
+      'normalize.css'
     ]
   },
 
@@ -25,10 +21,6 @@ module.exports = {
   plugins: [
     new webpack.optimize.DedupePlugin(),
     new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
-      'window.jQuery': 'jquery',
-      'root.jQuery': 'jquery'
     }),
     new ExtractTextPlugin('[name]-[hash].css')
   ],
@@ -45,7 +37,7 @@ module.exports = {
 
   resolve: {
     modulesDirectories: ['node_modules'],
-    extensions: ['', '.js', '.jsx', '.css', '.png', '.styl', '.json', '.jpg', '.jpeg',]
+    extensions: ['', '.js', '.jsx', '.css', '.png', '.styl', '.json', '.jpg', '.jpeg']
   },
 
   stylus: {

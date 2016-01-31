@@ -9,6 +9,11 @@ ERR_550_MID = '550 No Message-ID header provided'
 
 
 class Channel(smtpd.SMTPChannel):
+    """
+    Custom channel for LMTP server. LMTP uses LHLO instead of HELO, this channel replaces this
+    behavior.
+    """
+
     def __init__(self, server, conn, addr):
         smtpd.SMTPChannel.__init__(self, server, conn, addr)
         self._server = server

@@ -3,7 +3,7 @@ var path = require("path");
 var webpack = require('webpack');
 var BundleTracker = require('webpack-bundle-tracker');
 
-var config = require('./webpack.base.config.js');
+var config = require('./base.config.js');
 
 // Use webpack dev server
 config.entry.app = [
@@ -26,5 +26,7 @@ config.plugins = config.plugins.concat([
 config.module.loaders.push(
   { test: /\.jsx?$/, exclude: /node_modules/, loaders: ['react-hot', 'babel'] }
 );
+
+config.devtool = 'source-map';
 
 module.exports = config;

@@ -14,8 +14,8 @@ INSTALLED_APPS = (
 
     'holonet.api',
 
-    #  'cachalot',
-    #  'django_extensions',
+    'cachalot',
+    'django_extensions',
     'djcelery',
     'rest_framework',
     'oauth2_provider',
