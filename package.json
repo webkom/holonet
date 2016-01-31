@@ -51,7 +51,7 @@
     "camelize": "1.0.0",
     "font-awesome": "^4.5.0",
     "history": "1.12.5",
-    "jquery": "^2.1.4",
+    "jquery": "^2.2.0",
     "json-loader": "^0.5.3",
     "moment": "^2.10.6",
     "moment-timezone": "^0.5.0",
