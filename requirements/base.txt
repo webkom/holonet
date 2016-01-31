@@ -1,4 +1,4 @@
-Django==1.9.0
+Django==1.9.1
 ipython==4.0.1
 raven==5.9.2
 
