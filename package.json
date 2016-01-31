@@ -54,7 +54,7 @@
     "jquery": "^2.1.4",
     "json-loader": "^0.5.3",
     "moment": "^2.10.6",
-    "moment-timezone": "^0.4.0",
+    "moment-timezone": "^0.5.0",
     "normalize.css": "^3.0.3",
     "react": "0.14.7",
     "react-dom": "0.14.0",
