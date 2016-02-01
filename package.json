@@ -50,7 +50,7 @@
     "webpack": "1.12.12",
     "webpack-bundle-tracker": "0.0.93",
     "webpack-dev-server": "1.14.1",
-    "json-loader": "0.5.3"
+    "json-loader": "0.5.4"
   },
   "dependencies": {
     "camelize": "1.0.0",
