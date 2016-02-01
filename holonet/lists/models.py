@@ -1,4 +1,5 @@
 from basis.models import TimeStampModel
+from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -8,7 +9,7 @@ from holonet.core.fields import DomainField, LocalPartField
 
 class Domain(TimeStampModel):
 
-    domain = DomainField()
+    domain = DomainField(unique=True)
     base_url = models.URLField()
     description = models.TextField(blank=True)
 
@@ -74,6 +75,9 @@ class List(TimeStampModel):
 
     process_bounces = models.BooleanField(default=True)
 
+    class Meta:
+        unique_together = ('list_name', 'domain')
+
     def __str__(self):
         return self.list_name
 
@@ -81,6 +85,15 @@ class List(TimeStampModel):
     def posting_address(self):
         """
         Construct the main address for this list. This is the primary address for this list.
-        Aliases can be used to have multiple addresses mapped to this list.
         """
-        return '{}@{}'.format(self.list_name, self.domain.domain)
+        return '{}@{}'.format(self.list_name, str(self.domain))
+
+    @classmethod
+    def lookup_list(cls, local, domain):
+        try:
+            # Holonet does not care about case sensitivity.
+            local, domain = local.lower(), domain.lower()
+            domain = Domain.objects.get(domain=domain)
+            return cls.objects.get(list_name=local, domain=domain)
+        except (ObjectDoesNotExist, MultipleObjectsReturned):
+            pass

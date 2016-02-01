@@ -2,10 +2,14 @@ import asyncore
 import smtpd
 
 from django.conf import settings
+from django.utils import timezone
 
+from holonet import queues
 from holonet.core.parser.exceptions import (DefectMessageException, MessageIDNotExistException,
                                             ParseEmailException)
+from holonet.core.utils import split_address
 from holonet.interfaces.runner import Runner
+from holonet.lists.models import List
 from holonet.services.lmtp import channel
 from holonet.services.lmtp.paser import LMTPEmailParser
 
@@ -21,8 +25,6 @@ class LMTPRunner(Runner, smtpd.SMTPServer):
         LMTP_HOST = 'localhost'
         LMTP_PORT = 8024
     """
-
-    is_queue_runner = False
 
     name = 'lmtp'
     help = "Start a lmtp server for incoming messages"
@@ -59,10 +61,28 @@ class LMTPRunner(Runner, smtpd.SMTPServer):
             return channel.ERR_501
 
         status = []
-        for _ in recipients:
-            # Send 250 OK for every recipients
-            status.append('250 OK')
+        for recipient in recipients:
+            try:
+                local, domain = split_address(recipient)
+                message_data = {
+                    'original_size': message.original_size,
+                    'received_time': timezone.now()
+                }
 
-        print(message, peer, mailfrom, recipients)
+                # TODO: Handle system messages like bounce and VERP messages
+
+                # If list exists - enqueue mail
+                message_list = List.lookup_list(local, domain)
+                if message_list:
+                    message_data['to_list'] = True
+                    queues.get('in').dispose(message_list, message, message_data)
+
+                status.append(channel.OK_250)
+
+            except Exception:
+                from raven.contrib.django.raven_compat.models import client
+                client.captureException()
+                self.log.error('Failed to lookup message recipient')
+                status.append(channel.ERR_550)
 
         return channel.CRLF.join(status)

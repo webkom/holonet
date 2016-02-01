@@ -1,4 +1,4 @@
-def split_email(address):
+def split_address(address):
     """
     Split an email address into a user name and domain.
     """

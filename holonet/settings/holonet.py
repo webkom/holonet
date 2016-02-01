@@ -11,8 +11,8 @@ SYSTEM_NAME = 'Holonet Mail Delivery System'
 SYSTEM_OWNER = 'Holonet'
 SYSTEM_SUPPORT = 'contact@holonet.no'
 
-# Elasticsearch options
-ELASTICSEARCH_INDEX_PATTERN = 'holonet-%Y.%W'
+# Postfix
+POSTFIX_POSTMAP_COMMAND = 'postmap'
 
 # LMTP
 LMTP_HOST = 'localhost'
@@ -29,3 +29,7 @@ SENDMAIL_BATCH_LENGTH = 40
 EMAIL_SUBJECT_PREFIX = u'[%s] ' % 'Holonet'
 SERVER_EMAIL = 'bounce@holonet.no'
 DEFAULT_FROM_EMAIL = SERVER_EMAIL
+
+# VERP settings
+VERP_ENABLED = True
+VERP_DELIMITER = '+='

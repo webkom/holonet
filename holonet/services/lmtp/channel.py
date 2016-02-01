@@ -6,6 +6,7 @@ ERR_501 = '501 Message has defects'
 ERR_502 = '502 Error: command HELO not implemented'
 ERR_550 = '550 Requested action not taken: mailbox unavailable'
 ERR_550_MID = '550 No Message-ID header provided'
+OK_250 = '250 Ok'
 
 
 class Channel(smtpd.SMTPChannel):
