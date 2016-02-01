@@ -20,8 +20,8 @@ DATABASES = {
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'holonet',
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/1',
     }
 }
 
@@ -32,10 +32,6 @@ INSTALLED_APPS += (
 )
 
 BROKER_URL = 'redis://127.0.0.1'
-
-REDIS = {
-    'host': '127.0.0.1',
-}
 
 ELASTICSEARCH = {
     'default': {

@@ -12,10 +12,6 @@ DATABASES = {
 
 BROKER_URL = 'redis://127.0.0.1'
 
-REDIS = {
-    'host': '127.0.0.1',
-}
-
 ELASTICSEARCH = {
     'default': {
         'hosts': [

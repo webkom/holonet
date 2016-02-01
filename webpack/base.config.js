@@ -9,7 +9,8 @@ module.exports = {
   entry: {
     'app': '../holonet/frontend/index',
     'vendor': [
-      'normalize.css'
+      'normalize.css',
+      'bulma/css/bulma.css'
     ]
   },
 
@@ -37,7 +38,7 @@ module.exports = {
 
   resolve: {
     modulesDirectories: ['node_modules'],
-    extensions: ['', '.js', '.jsx', '.css', '.png', '.styl', '.json', '.jpg', '.jpeg']
+    extensions: ['', '.js', '.jsx', '.css', '.png', '.styl', '.json', '.jpg', '.jpeg', '.sass']
   },
 
   stylus: {

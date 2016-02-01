@@ -2,21 +2,54 @@
 {% load render_bundle from webpack_loader %}
 
 {% block head %}
-    {% autoescape off %}
-        {% render_bundle 'vendor' 'css' %}
-    {% endautoescape %}
+{% autoescape off %}
+{% render_bundle 'vendor' 'css' %}
+{% endautoescape %}
 {% endblock %}
 
 {% block body %}
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form }}
-        <button type="submit">Login</button>
-    </form>
+<section class="hero is-fullheight is-warning">
+    <div class="hero-content">
+        <div class="container" style="width: 300px;">
+            <h1 class="title">
+                Holonet
+            </h1>
+            <h2 class="subtitle">
+              Mail Delivery System
+            </h2>
 
-    {% autoescape off %}
-        {% render_bundle 'vendor' 'js' %}
-    {% endautoescape %}
+            {% if form.errors %}
+                <div class="notification is-danger">
+                    Please enter a correct username and password. Note that both fields may be case-sensitive.
+                </div>
+            {% endif %}
+
+            <form method="post">
+                {% csrf_token %}
+
+                <p class="control">
+                    <input class="input" type="text" placeholder="Username" name="username">
+                </p>
+                <p class="control">
+                    <input class="input" type="password" placeholder="Password" name="password">
+                </p>
+
+                <p class="control">
+                    <button class="button is-success" type="submit">
+                        Login
+                    </button>
+                </p>
+            </form>
+
+            <p style="margin-top: 30px"><i>Developed by Abakus Webkom</i></p>
+
+        </div>
+    </div>
+</section>
+
+{% autoescape off %}
+{% render_bundle 'vendor' 'js' %}
+{% endautoescape %}
 
 {% endblock %}

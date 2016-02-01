@@ -1,7 +1,6 @@
 from django.apps import AppConfig
 
 from .providers.elasticsearch_provider import elasticsearch_provider
-from .providers.redis_provider import redis_provider
 
 
 class DataConfig(AppConfig):
@@ -12,5 +11,4 @@ class DataConfig(AppConfig):
         super(DataConfig, self).ready()
 
         # Setup storage providers
-        redis_provider.set_up()
         elasticsearch_provider.set_up()

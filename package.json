@@ -53,6 +53,7 @@
     "json-loader": "0.5.4"
   },
   "dependencies": {
+    "bulma": "0.0.8",
     "camelize": "1.0.0",
     "history": "1.17.0",
     "moment": "2.11.1",
