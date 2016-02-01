@@ -22,7 +22,7 @@ class PipeRunner(Runner):
         parser.add_argument('recipients', nargs='+', type=str)
 
     def run(self, *args, **kwargs):
-        self.log.info('Parsing message recieved using pipe')
+        self.log.info('Parsing message received using pipe')
 
         sender = kwargs.get('sender')
         recipients = kwargs.get('recipients', [])

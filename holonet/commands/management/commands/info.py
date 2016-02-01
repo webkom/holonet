@@ -1,9 +1,12 @@
+import logging
 import sys
 
 from django.conf import settings
 
 from holonet.commands.base import BaseCommand
 from holonet.settings.version import HOLONET_VERSION
+
+log = logging.getLogger('commands')
 
 
 class Command(BaseCommand):
@@ -13,8 +16,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         super().handle(*args, **options)
 
-        self.stdout.write('-' * 60)
-        self.stdout.write('{}{}'.format('Holonet version'.ljust(30), HOLONET_VERSION))
-        self.stdout.write('{}{}'.format('Python version'.ljust(30), sys.version.split(' ')[0]))
-        self.stdout.write('{}{}'.format('Production mode'.ljust(30), not settings.DEBUG))
-        self.stdout.write('-' * 60)
+        log.info('{0}: {1}'.format('Holonet version', HOLONET_VERSION))
+        log.info('{0}: {1}'.format('Python version', sys.version.split(' ')[0]))
+        log.info('{0}: {1}'.format('Production mode', not settings.DEBUG))
