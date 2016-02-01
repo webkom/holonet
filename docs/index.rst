@@ -9,7 +9,6 @@ Contents:
    :maxdepth: 2
 
    Definitions <definitions>
-   Storage <storage/index>
 
 
 Indices and tables

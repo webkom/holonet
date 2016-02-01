@@ -8,7 +8,7 @@ log = logging.getLogger(__name__)
 class Loop(Rule):
 
     name = 'loop'
-    description = 'Rule thats trying to prevent a posting loop.'
+    description = 'Rule that\'s trying to prevent a posting loop.'
     record = True
 
     def check(self, message_list, message, meta):
