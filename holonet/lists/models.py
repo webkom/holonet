@@ -2,9 +2,7 @@ from basis.models import TimeStampModel
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from holonet.core.defaults import (DEFAULT_AUTORESPONSE_POSTINGS_TEXT,
-                                   DEFAULT_AUTORESPONSE_REQUEST_TEXT,
-                                   DEFAULT_NONMEMBER_REJECTION_NOTICE)
+from holonet.core.defaults import DEFAULT_NONMEMBER_REJECTION_NOTICE
 from holonet.core.fields import DomainField, LocalPartField
 
 
@@ -32,12 +30,6 @@ class List(TimeStampModel):
         (3, 'weekly'),
         (4, 'hourly'),
         (5, 'minutely'),
-    )
-
-    AUTORESPOND_ACTION = (
-        (0, 'continue'),
-        (1, 'respond_and_continue'),
-        (2, 'respond_and_discard'),
     )
 
     list_name = LocalPartField()
@@ -80,20 +72,7 @@ class List(TimeStampModel):
     post_volume = models.PositiveIntegerField(default=0, help_text='0 is unlimited.')
     post_volume_frequency = models.PositiveIntegerField(choices=POST_FREQUENCY, default=0)
 
-    send_goodbye_message = models.BooleanField(default=False)
-    send_welcome_message = models.BooleanField(default=False)
-
     process_bounces = models.BooleanField(default=True)
-
-    digestable = models.BooleanField(default=True)
-    digest_volume_frequency = models.PositiveIntegerField(choices=POST_FREQUENCY, default=3)
-    digest_is_default = models.BooleanField(default=False)
-    digest_last_sent_at = models.DateTimeField(null=True, default=None, blank=True)
-
-    autorespond_postings = models.PositiveIntegerField(choices=AUTORESPOND_ACTION, default=0)
-    autoresponse_postings_text = models.TextField(default=DEFAULT_AUTORESPONSE_POSTINGS_TEXT)
-    autorespond_requests = models.PositiveIntegerField(choices=AUTORESPOND_ACTION, default=0)
-    autoresponse_request_text = models.TextField(default=DEFAULT_AUTORESPONSE_REQUEST_TEXT)
 
     def __str__(self):
         return self.list_name

@@ -17,8 +17,7 @@ class ListAdmin(admin.ModelAdmin):
     model = List
     list_display = ['posting_address', 'display_name', 'active', 'last_post_at']
 
-    list_filter = ('active', 'public', 'archive', 'member_posts', 'anonymous_list', 'use_verp',
-                   'digestable')
+    list_filter = ('active', 'public', 'archive', 'member_posts', 'anonymous_list', 'use_verp')
     search_fields = ('list_name', 'display_name', 'description', 'domain__domain')
     ordering = ('list_name',)
     fieldsets = (
@@ -31,11 +30,6 @@ class ListAdmin(admin.ModelAdmin):
         (_('Rejections'), {'fields': ('member_posts', 'nonmember_rejection_notice')}),
         (_('Bounce'), {'fields': ('process_bounces', 'use_verp', 'verp_interval')}),
         (_('Post Volume'), {'fields': ('post_volume', 'post_volume_frequency')}),
-        (_('Messages'), {'fields': ('send_goodbye_message', 'send_welcome_message')}),
-        (_('Digest'), {'fields': ('digestable', 'digest_volume_frequency', 'digest_is_default',
-                                  'digest_last_sent_at')}),
-        (_('Auto responses'), {'fields': ('autorespond_postings', 'autoresponse_postings_text',
-                                          'autorespond_requests', 'autoresponse_request_text')}),
     )
 
 admin.site.register(List, ListAdmin)
