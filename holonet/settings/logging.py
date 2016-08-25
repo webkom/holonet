@@ -76,6 +76,10 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': True,
             'filters': ['require_debug_true'],
+        },
+        'invoke': {
+            'level': 'WARNING',
+            'propagate': True
         }
     },
 }

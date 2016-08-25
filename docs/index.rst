@@ -1,14 +1,13 @@
-Holonet  |frigg| |coverage|
-===========================
-
-Mail Delivery System
+.. include:: ../README.rst
 
 Contents:
 
 .. toctree::
    :maxdepth: 2
 
+   Plan <plan>
    Definitions <definitions>
+   Transport Maps and LMTP <transport_maps_lmtp>
 
 
 Indices and tables
@@ -17,10 +16,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
-
-.. |frigg| image:: https://ci.frigg.io/badges/webkom/holonet/
-    :target: https://ci.frigg.io/webkom/holonet/last/
-
-.. |coverage| image:: https://ci.frigg.io/badges/coverage/webkom/holonet/
-    :target: https://ci.frigg.io/webkom/holonet/last/

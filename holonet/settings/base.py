@@ -4,7 +4,7 @@ from django.conf.global_settings import AUTHENTICATION_BACKENDS
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -12,30 +12,19 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'holonet.api',
-
-    'cachalot',
     'django_extensions',
-    'djcelery',
     'rest_framework',
     'oauth2_provider',
     'corsheaders',
     'raven.contrib.django.raven_compat',
-    'webpack_loader',
 
-    'holonet.core',
-    'holonet.lists',
-    'holonet.status',
-    'holonet.services',
-    'holonet.mta',
-    'holonet.backends',
-    'holonet.rules',
-    'holonet.handlers',
-    'holonet.commands',
-    'holonet.members',
-    'holonet.queues',
-    'holonet.storage',
-)
+    'holonet.apps.utils',
+    'holonet.apps.api',
+    'holonet.apps.authorization',
+    'holonet.apps.incoming',
+    'holonet.apps.lists',
+    'holonet.apps.sasl',
+]
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -57,14 +46,15 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
-                'django.core.context_processors.i18n',
-                'django.contrib.auth.context_processors.auth',
-                'django.core.context_processors.media',
-                'django.core.context_processors.static',
-                'django.core.context_processors.tz',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
+                'holonet.apps.utils.context_processors.site',
             ],
         },
     },
@@ -79,15 +69,12 @@ WSGI_APPLICATION = 'holonet.wsgi.application'
 CORS_ORIGIN_ALLOW_ALL = True
 
 LANGUAGE_CODE = 'en-us'
+TIME_ZONE = 'UTC'
 
-TIME_ZONE = 'Europe/Oslo'
+AUTH_USER_MODEL = 'authorization.User'
 
-AUTH_USER_MODEL = 'members.Member'
-
-USE_I18N = True
-
+USE_I18N = False
 USE_L10N = True
-
 USE_TZ = True
 
 LOGIN_URL = '/login/'
@@ -104,26 +91,25 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'assets'),
-)
-
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'oauth2_provider.ext.rest_framework.OAuth2Authentication',
         'rest_framework.authentication.SessionAuthentication',
-        'holonet.api.authentication.HolonetAuthentication',
-    ),
+    ],
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
-    'DEFAULT_RENDERER_CLASSES': (
+    'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
-    ),
-    'DEFAULT_PARSER_CLASSES': (
+    ],
+    'DEFAULT_PARSER_CLASSES': [
         'rest_framework.parsers.JSONParser',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'holonet.apps.utils.permissions.HolonetPermissions',
+    ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'EXCEPTION_HANDLER': 'holonet.apps.utils.exceptions.exception_handler',
 }
 
 SHELL_PLUS = 'ipython'
+
+DEVELOPMENT = True

@@ -1,3 +1,7 @@
+SITE = {
+    'name': 'Holonet Mail Delivery System',
+}
+
 # System admins
 # Please don't use emails handled by Holonet. Magic things may happen!
 ADMINS = (
@@ -6,24 +10,20 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-# System Information
-SYSTEM_NAME = 'Holonet Mail Delivery System'
-SYSTEM_OWNER = 'Holonet'
-SYSTEM_SUPPORT = 'contact@holonet.no'
-
 # Postfix
 POSTFIX_POSTMAP_COMMAND = 'postmap'
+POSTFIX_TRANSPORT_MAPS_LOCATION = None
 
 # LMTP
-LMTP_HOST = 'localhost'
+LMTP_HOST = '127.0.0.1'
 LMTP_PORT = 8024
 
-# Backend for outgoing email
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# Transport Maps
+TRANSPORT_MAP_LMTP_HOST = LMTP_HOST
+TRANSPORT_MAP_LMTP_PORT = LMTP_PORT
 
-# Sendmail backend options
-SENDMAIL_EXECUTABLE = '/usr/sbin/sendmail'
-SENDMAIL_BATCH_LENGTH = 40
+# Backend for outgoing email
+EMAIL_BACKEND = 'django.utils.mail.backends.smtp.EmailBackend'
 
 # Email options for system mail
 EMAIL_SUBJECT_PREFIX = u'[%s] ' % 'Holonet'

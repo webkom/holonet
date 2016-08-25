@@ -1,14 +1,13 @@
 {% extends "rest_framework/base.html" %}
-{% load pipeline %}
 
 {% block bootstrap_theme %}
-    {% stylesheet "components" %}
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 {% endblock %}
 
-{% block title %}Holonet{% endblock %}
+{% block title %}{{ SITE.name }}{% endblock %}
 
 {% block branding %}
-    <a class='navbar-brand' rel="nofollow" href='/api/'>
-        Holonet
+    <a class='navbar-brand' rel="nofollow" href='/'>
+        {{ SITE.name }}
     </a>
 {% endblock %}

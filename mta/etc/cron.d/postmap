@@ -1,0 +1,2 @@
+* * * * * root postmap /opt/holonet/postfix_domains
+* * * * * root postmap /opt/holonet/postfix_lmtp

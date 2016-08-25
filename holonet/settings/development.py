@@ -1,6 +1,4 @@
-import os
-
-from .base import BASE_DIR, INSTALLED_APPS
+from .base import BASE_DIR, INSTALLED_APPS, MIDDLEWARE_CLASSES, REST_FRAMEWORK
 
 DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1']
@@ -11,7 +9,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'holonet',
-        'USER': '',
+        'USER': 'holonet',
         'PASSWORD': '',
         'HOST': '127.0.0.1',
         'PORT': '',
@@ -21,15 +19,11 @@ DATABASES = {
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379/1',
+        'LOCATION': 'redis://127.0.0.1:6379/0',
     }
 }
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-INSTALLED_APPS += (
-    'debug_toolbar',
-)
+EMAIL_BACKEND = 'django.utils.mail.backends.console.EmailBackend'
 
 BROKER_URL = 'redis://127.0.0.1'
 
@@ -41,9 +35,10 @@ ELASTICSEARCH = {
     }
 }
 
-WEBPACK_LOADER = {
-    'DEFAULT': {
-        'BUNDLE_DIR_NAME': 'bundles/',
-        'STATS_FILE': os.path.join(BASE_DIR, '../webpack-stats.json')
-    }
-}
+REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] += ['rest_framework.renderers.BrowsableAPIRenderer']
+
+INSTALLED_APPS += ('debug_toolbar', )
+MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware', )
+INTERNAL_IPS = ('127.0.0.1', )
+
+POSTFIX_TRANSPORT_MAPS_LOCATION = '{0}/../mta/shared/'.format(BASE_DIR)

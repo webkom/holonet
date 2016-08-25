@@ -1,24 +1,23 @@
-Django==1.9.1
-ipython==4.0.3
-raven==5.10.2
+django==1.10.5
+ipython==5.0.0
+raven==5.24.3
 
-psycopg2==2.6.1
+psycopg2==2.6.2
 PyYAML==3.11
 redis==2.10.5
-python3-memcached==1.51
-certifi==2015.11.20.1
-click==6.2
+certifi==2016.8.8
+click==6.6
+invoke==0.13.0
+celery==3.1.23
 
-djangorestframework==3.3.2
-django-extensions==1.6.1
+djangorestframework==3.4.3
+django-extensions==1.7.0
 django-cors-headers==1.1.0
-django-celery==3.1.17
-django-cachalot==1.2.0
 django-oauth-toolkit==0.10.0
 django-basis==0.4.0
-django-webpack-loader==0.2.4
 django-environ==0.4.0
-django-redis==4.3.0
+django-redis==4.4.4
+django-filter==0.13.0
+django-debug-toolbar==1.6
 
-elasticsearch==2.2.0
-elasticsearch-dsl==0.0.11
+elasticsearch==2.3.0

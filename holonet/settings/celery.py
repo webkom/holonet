@@ -29,15 +29,14 @@ app.config_from_object('django.conf:settings')
 app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 
 app.conf.update(
-    CELERYBEAT_SCHEDULER='djcelery.schedulers.DatabaseScheduler',
     CELERY_RESULT_BACKEND=None,
     CELERY_TRACK_STARTED=True,
-    CELERY_SEND_EVENTS=False,
-    CELERY_RESULT_SERIALIZER='json',
-    CELERY_TASK_SERIALIZER='json',
+    CELERY_SEND_EVENTS=True,
+    CELERY_TASK_SERIALIZER='pickle',
     CELERY_ENABLE_UTC=True,
     CELERY_DISABLE_RATE_LIMITS=True,
     CELERY_IGNORE_RESULT=True,
     CELERY_ACKS_LATE=True,
-    CELERY_PREFETCH_MULTIPLIER=1
+    CELERY_PREFETCH_MULTIPLIER=5,
+    CELERY_ACCEPT_CONTENT=['pickle', 'json'],
 )

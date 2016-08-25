@@ -1,0 +1,10 @@
+- model: authorization.User
+  pk: 1
+  fields:
+    username: holonet
+    password: pbkdf2_sha256$30000$NznuRKxtE4dW$Lfdh0eIPFA8YM+FuADtP+JDAC7/ClTNVNWmgE5/op5U= # holonet
+    email: holonet@holonet.com
+    first_name: Holonet
+    last_name: User
+    is_staff: True
+    is_superuser: True
