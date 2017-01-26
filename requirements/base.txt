@@ -10,7 +10,7 @@ click==6.7
 invoke==0.14.0
 celery==4.0.2
 
-djangorestframework==3.4.3
+djangorestframework==3.5.3
 django-extensions==1.7.0
 django-cors-headers==1.1.0
 django-oauth-toolkit==0.10.0
