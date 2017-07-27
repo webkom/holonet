@@ -5,7 +5,7 @@ raven==5.32.0
 psycopg2==2.6.2
 PyYAML==3.12
 redis==2.10.5
-certifi==2017.4.17
+certifi==2017.7.27
 click==6.7
 invoke==0.14.0
 celery==4.0.2
