@@ -1,4 +1,4 @@
-django==1.11.3
+django==1.11.4
 ipython==5.1.0
 raven==5.32.0
 
